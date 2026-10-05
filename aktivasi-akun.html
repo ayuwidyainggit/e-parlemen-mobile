@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Aktivasi Akun &middot; e-Parlemen DPRD Kota Magelang</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --green-dark:#0f2318; --green:#1b3a2b; --green-mid:#234a37;
+  --gold:#c9a24a; --gold-light:#e4c976; --cream:#f7f6f1;
+  --ink:#182a20; --muted:#707b73; --border:#e7e4dc;
+  --danger:#d64545; --danger-bg:#fbe7e7;
+  --success:#1f8a4c; --success-bg:#e6f4ea;
+  --info:#2f6fb0; --info-bg:#e7f0fb;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,var(--green-dark),var(--green) 55%,var(--green-mid));
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); padding:24px;
+}
+.ic-svg{width:1em;height:1em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:-0.15em;}
+.crest-svg{width:100%;height:100%;display:block;}
+
+.wrap{width:100%;max-width:440px;}
+.card{background:#fff;border-radius:20px;box-shadow:0 24px 60px rgba(0,0,0,.35);padding:32px 30px;width:100%;}
+.emblem{width:56px;height:56px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;}
+.card h1{font-family:Georgia,'Times New Roman',serif;font-size:19px;text-align:center;margin:0 0 2px;}
+.sub{text-align:center;font-size:11px;color:var(--gold);font-weight:800;letter-spacing:.4px;margin-bottom:20px;}
+
+.steps{display:flex;justify-content:center;gap:8px;margin-bottom:22px;}
+.step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);}
+.step-dot.active{background:var(--green);width:20px;border-radius:5px;}
+.step-dot.done{background:var(--success);}
+
+.account-card{background:var(--cream);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:20px;}
+.account-card .row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:12.5px;border-bottom:1px dashed var(--border);}
+.account-card .row:last-child{border-bottom:none;}
+.account-card .k{color:var(--muted);}
+.account-card .v{font-weight:800;text-align:right;}
+
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:11.8px;font-weight:800;color:var(--ink);margin-bottom:6px;}
+.field input{width:100%;padding:12px 13px;border-radius:10px;border:1px solid var(--border);font-size:13px;background:#fff;font-family:inherit;color:var(--ink);}
+.field input:focus{outline:2px solid var(--gold);outline-offset:1px;}
+.field .rule{font-size:10.5px;color:var(--muted);margin-top:6px;line-height:1.5;}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:13px 16px;border-radius:11px;font-size:13.5px;font-weight:800;text-decoration:none;border:none;cursor:pointer;width:100%;font-family:inherit;}
+.btn-primary{background:linear-gradient(135deg,var(--green-dark),var(--green));color:#fff;box-shadow:inset 0 0 0 1.5px var(--gold);}
+.btn-outline{background:#fff;color:var(--green);border:1.5px solid var(--green);}
+
+.error-box{display:none;background:var(--danger-bg);color:#a12f2f;border-radius:10px;padding:10px 12px;font-size:11.5px;margin-bottom:16px;}
+.info-box{background:var(--info-bg);border-radius:10px;padding:11px 12px;font-size:11.5px;color:#2a5583;display:flex;gap:8px;align-items:flex-start;line-height:1.55;margin-bottom:18px;}
+.success-wrap{text-align:center;}
+.success-icon{width:64px;height:64px;border-radius:50%;background:var(--success-bg);color:var(--success);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+.success-icon .ic-svg{width:30px;height:30px;}
+.success-wrap h2{font-family:Georgia,'Times New Roman',serif;font-size:19px;margin:0 0 8px;}
+.success-wrap p{font-size:12.5px;color:var(--muted);line-height:1.6;margin:0 0 22px;}
+
+.footer-note{text-align:center;font-size:10.5px;color:rgba(255,255,255,.8);margin-top:18px;}
+.footer-note a{color:#fff;text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="card" id="stepInvalid" style="display:none;">
+    <div class="emblem"><svg viewBox="0 0 48 54" class="crest-svg" xmlns="http://www.w3.org/2000/svg"><path d="M24 2 L44 9 V24 C44 37 36 47 24 52 C12 47 4 37 4 24 V9 Z" fill="#0f2318" stroke="#e4c976" stroke-width="2"/><path d="M24 6 L40 11.5 V24 C40 34.5 33.5 42.5 24 47 C14.5 42.5 8 34.5 8 24 V11.5 Z" fill="none" stroke="#c9a24a" stroke-width="1"/><path d="M15 33 L19 18 L24 26 L29 18 L33 33 Z" fill="#c9a24a"/><path d="M17 33 H31 L29 39 H19 Z" fill="#d64545"/></svg></div>
+    <div class="success-wrap">
+      <div class="success-icon" style="background:var(--danger-bg);color:var(--danger);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg></div>
+      <h2>Tautan Tidak Valid</h2>
+      <p>Tautan aktivasi ini tidak lengkap atau sudah tidak berlaku. Silakan hubungi Admin Sekretariat untuk mengirimkan ulang tautan aktivasi ke email Anda.</p>
+    </div>
+  </div>
+
+  <div class="card" id="stepVerify">
+    <div class="emblem"><svg viewBox="0 0 48 54" class="crest-svg" xmlns="http://www.w3.org/2000/svg"><path d="M24 2 L44 9 V24 C44 37 36 47 24 52 C12 47 4 37 4 24 V9 Z" fill="#0f2318" stroke="#e4c976" stroke-width="2"/><path d="M24 6 L40 11.5 V24 C40 34.5 33.5 42.5 24 47 C14.5 42.5 8 34.5 8 24 V11.5 Z" fill="none" stroke="#c9a24a" stroke-width="1"/><path d="M15 33 L19 18 L24 26 L29 18 L33 33 Z" fill="#c9a24a"/><path d="M17 33 H31 L29 39 H19 Z" fill="#d64545"/></svg></div>
+    <h1>Aktivasi Akun Mobile</h1>
+    <div class="sub">e-PARLEMEN DPRD KOTA MAGELANG</div>
+
+    <div class="steps">
+      <span class="step-dot active" id="dot1"></span>
+      <span class="step-dot" id="dot2"></span>
+      <span class="step-dot" id="dot3"></span>
+    </div>
+
+    <div class="info-box">
+      <span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></span>
+      <span>Tautan aktivasi terverifikasi. Akun berikut telah dibuat oleh Admin Sekretariat untuk Anda:</span>
+    </div>
+
+    <div class="account-card">
+      <div class="row"><span class="k">Nama</span><span class="v" id="accNama">&mdash;</span></div>
+      <div class="row"><span class="k">Kode Anggota</span><span class="v" id="accUserId">&mdash;</span></div>
+      <div class="row"><span class="k">Email</span><span class="v" id="accEmail">&mdash;</span></div>
+    </div>
+
+    <div class="error-box" id="errBox">Kata sandi tidak memenuhi ketentuan atau tidak sama. Periksa kembali isian Anda.</div>
+
+    <form onsubmit="return doActivate(event)">
+      <div class="field">
+        <label>Buat Kata Sandi Baru</label>
+        <input type="password" id="pw1" placeholder="Minimal 8 karakter" required minlength="8">
+        <div class="rule">Gunakan minimal 8 karakter, kombinasi huruf &amp; angka untuk keamanan akun.</div>
+      </div>
+      <div class="field">
+        <label>Konfirmasi Kata Sandi</label>
+        <input type="password" id="pw2" placeholder="Ulangi kata sandi" required minlength="8">
+      </div>
+      <button type="submit" class="btn btn-primary"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg> Aktifkan Akun</button>
+    </form>
+  </div>
+
+  <div class="card" id="stepDone" style="display:none;">
+    <div class="steps">
+      <span class="step-dot done"></span>
+      <span class="step-dot done"></span>
+      <span class="step-dot active" style="background:var(--success);"></span>
+    </div>
+    <div class="success-wrap">
+      <div class="success-icon"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></div>
+      <h2>Akun Berhasil Diaktifkan</h2>
+      <p>Kata sandi baru untuk <strong id="doneNama"></strong> telah tersimpan. Silakan masuk (login) menggunakan email <strong id="doneEmail"></strong> dan kata sandi baru Anda di aplikasi mobile e-Parlemen.</p>
+      <a class="btn btn-primary" id="mobileLoginLink" href="login.html"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg> Buka Aplikasi Mobile &amp; Masuk</a>
+    </div>
+  </div>
+
+  <div class="footer-note">e-Parlemen DPRD Kota Magelang &middot; Halaman simulasi tautan aktivasi email</div>
+</div>
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var nama = params.get('nama');
+  var email = params.get('email');
+  var userId = params.get('user_id');
+  var token = params.get('token');
+
+  if(!nama || !email || !token){
+    document.getElementById('stepVerify').style.display = 'none';
+    document.getElementById('stepInvalid').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('accNama').textContent = nama;
+  document.getElementById('accUserId').textContent = userId || '—';
+  document.getElementById('accEmail').textContent = email;
+  window.__activationEmail = email;
+  window.__activationNama = nama;
+})();
+
+function doActivate(e){
+  e.preventDefault();
+  var pw1 = document.getElementById('pw1').value;
+  var pw2 = document.getElementById('pw2').value;
+  var errBox = document.getElementById('errBox');
+
+  if(pw1.length < 8 || pw1 !== pw2){
+    errBox.style.display = 'block';
+    return false;
+  }
+  errBox.style.display = 'none';
+
+  document.getElementById('doneNama').textContent = window.__activationNama || '';
+  document.getElementById('doneEmail').textContent = window.__activationEmail || '';
+  var loginUrl = new URL('login.html', window.location.href);
+  if(window.__activationEmail){ loginUrl.searchParams.set('email', window.__activationEmail); }
+  document.getElementById('mobileLoginLink').href = loginUrl.toString();
+
+  document.getElementById('stepVerify').style.display = 'none';
+  document.getElementById('stepDone').style.display = 'block';
+  return false;
+}
+</script>
+</body>
+</html>

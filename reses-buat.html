@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Tambah Kunjungan &middot; e-Parlemen DPRD Kota Magelang</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+:root{
+  --green-dark:#0f2318;
+  --green:#1b3a2b;
+  --green-mid:#234a37;
+  --green-light:#2f5a44;
+  --gold:#c9a24a;
+  --gold-light:#e4c976;
+  --cream:#f7f6f1;
+  --card:#ffffff;
+  --ink:#182a20;
+  --muted:#707b73;
+  --border:#e7e4dc;
+  --success-bg:#e6f4ea; --success:#1f8a4c;
+  --warn-bg:#fff2df; --warn:#c8791a;
+  --danger-bg:#fbe7e7; --danger:#d64545;
+  --info-bg:#e7f0fb; --info:#2f6fb0;
+  --neutral-bg:#eef0ec; --neutral:#5b6a5e;
+  --purple-bg:#efe6fb; --purple:#7c4fd1;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:#dfe1db;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  display:flex;
+  justify-content:center;
+  padding:28px 12px 60px;
+}
+a{color:inherit;}
+.device{
+  width:390px;
+  max-width:100%;
+  background:var(--cream);
+  border-radius:42px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.35), 0 0 0 10px #111, 0 0 0 12px #2b2b2b;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-height:844px;
+}
+.notch{
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:150px; height:26px; background:#111; border-radius:0 0 18px 18px; z-index:20;
+}
+.statusbar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 26px 2px; color:#fff; font-size:13px; font-weight:700;
+  position:relative; z-index:5;
+}
+.statusbar .icons{display:flex; gap:5px; align-items:center;}
+.si-svg{width:17px; height:12px; color:#fff;}
+.si-svg.batt{width:23px; height:12px;}
+.app-header{
+  background:linear-gradient(135deg,var(--green-dark),var(--green) 60%,var(--green-mid));
+  color:#fff; padding:6px 20px 20px; position:relative; overflow:hidden;
+}
+.app-header::after{
+  content:""; position:absolute; right:-40px; top:-40px; width:160px; height:160px;
+  border-radius:50%; background:radial-gradient(circle,rgba(201,162,74,.18),transparent 70%);
+}
+.hdr-watermark{position:absolute; top:2px; right:14px; width:88px; height:110px; opacity:.11; z-index:1; pointer-events:none;}
+.hdr-watermark-svg{width:100%; height:100%; display:block;}
+.hdr-wave{margin-top:-2px; line-height:0; position:relative; z-index:4;}
+.hdr-wave svg{display:block; width:100%; height:24px;}
+.crest-svg{width:100%; height:100%; display:block;}
+.ic-svg{width:1em; height:1em; vertical-align:-0.15em; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0;}
+.icon-box .ic-svg, .qic .ic-svg, .mic .ic-svg, .stat .ic-svg{width:18px; height:18px;}
+.header-row{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; position:relative; z-index:2;}
+.brand{display:flex; gap:10px; align-items:center;}
+.emblem{
+  width:44px; height:44px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:Georgia,'Times New Roman',serif; font-weight:700; font-size:10px; letter-spacing:.5px;
+  text-align:center; line-height:1.1;
+}
+.brand-text h1{font-family:Georgia,'Times New Roman',serif; font-size:19px; margin:0; font-weight:700;}
+.brand-text .sub{font-size:10.5px; font-weight:700; color:var(--gold-light); letter-spacing:.3px; margin-top:1px;}
+.bell{
+  position:relative; width:36px; height:36px; border-radius:50%;
+  background:rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0;
+}
+.bell .dot{
+  position:absolute; top:-3px; right:-3px; background:var(--danger); color:#fff; font-size:9px; font-weight:800;
+  min-width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--green-dark);
+}
+.back-btn{
+  width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.16);
+  display:flex; align-items:center; justify-content:center; text-decoration:none; color:#fff; font-size:17px; flex-shrink:0;
+}
+.header-actions{margin-left:auto; display:flex; gap:8px;}
+
+.screen{flex:1; padding:16px 16px 26px;}
+.screen-title{font-family:Georgia,'Times New Roman',serif; font-size:24px; font-weight:700; color:var(--green); margin:2px 0 16px;}
+
+.card{background:var(--card); border-radius:14px; padding:14px; border:1px solid var(--border); box-shadow:0 1px 3px rgba(0,0,0,.05); margin-bottom:14px;}
+.section-title{font-size:14.5px; font-weight:800; color:var(--ink); margin:0; display:flex; justify-content:space-between; align-items:center;}
+.hint{font-size:11.5px; color:var(--muted); line-height:1.5;}
+
+.badge{display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:10.5px; font-weight:800; white-space:nowrap;}
+.badge-success{background:var(--success-bg); color:var(--success);}
+.badge-warn{background:var(--warn-bg); color:var(--warn);}
+.badge-danger{background:var(--danger-bg); color:var(--danger);}
+.badge-info{background:var(--info-bg); color:var(--info);}
+.badge-neutral{background:var(--neutral-bg); color:var(--neutral);}
+.badge-purple{background:var(--purple-bg); color:var(--purple);}
+
+.btn{display:flex; align-items:center; justify-content:center; gap:7px; padding:13px 16px; border-radius:11px; font-size:13.5px; font-weight:800; text-decoration:none; border:none; cursor:pointer; width:100%; font-family:inherit;}
+.btn-primary{background:linear-gradient(135deg,var(--green-dark),var(--green)); color:#fff; box-shadow:inset 0 0 0 1.5px var(--gold);}
+.btn-outline{background:#fff; color:var(--green); border:1.5px solid var(--green);}
+.btn-sm{padding:9px 12px; font-size:11.5px; width:auto;}
+.btn-row{display:flex; gap:10px; margin-top:4px;}
+.btn-row .btn{flex:1;}
+
+.field{margin-bottom:14px;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block; font-size:11.8px; font-weight:800; color:var(--ink); margin-bottom:6px;}
+.field .opt{font-weight:600; color:var(--muted); font-size:10.5px;}
+.field input, .field select, .field textarea{
+  width:100%; padding:11px 12px; border-radius:10px; border:1px solid var(--border); font-size:13px;
+  background:#fff; font-family:inherit; color:var(--ink);
+}
+.field textarea{min-height:70px; resize:vertical;}
+.upload-box{border:2px dashed #cfcabb; border-radius:12px; padding:18px 10px; text-align:center; color:var(--muted); font-size:11.5px; cursor:pointer; display:block;}
+.upload-box .ic{font-size:22px; display:block; margin-bottom:6px;}
+.upload-box:hover{border-color:var(--gold);}
+.chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+.chip{padding:7px 13px; border-radius:20px; background:#eceee7; font-size:11.5px; font-weight:700; color:var(--ink); border:1px solid transparent; cursor:pointer; font-family:inherit;}
+.chip.active{background:var(--green); color:#fff;}
+
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+
+.info-box{background:var(--info-bg); border-radius:12px; padding:11px 12px; font-size:11.5px; color:#2a5583; display:flex; gap:9px; align-items:flex-start; line-height:1.5; margin-bottom:16px;}
+
+.divider{height:1px; background:var(--border); margin:14px 0;}
+
+.add-form{background:var(--neutral-bg); border-radius:12px; padding:12px; margin-bottom:12px; display:none;}
+.add-form.open{display:block;}
+.add-form-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
+.add-form-head span{font-size:12px; font-weight:800;}
+.add-form-close{background:none; border:none; color:var(--muted); cursor:pointer; padding:2px;}
+.add-form-close .ic-svg{width:15px; height:15px;}
+
+.sub-item{display:flex; gap:10px; align-items:flex-start; background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px 11px; margin-bottom:8px;}
+.sub-item .si-ic{width:32px; height:32px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff;}
+.sub-item .si-ic .ic-svg{width:15px; height:15px;}
+.sub-item .si-body{flex:1; min-width:0;}
+.sub-item .si-title{font-weight:800; font-size:12px; color:var(--ink);}
+.sub-item .si-meta{font-size:10.3px; color:var(--muted); margin-top:2px; line-height:1.4;}
+.sub-item .si-tags{display:flex; gap:5px; margin-top:6px; flex-wrap:wrap;}
+.sub-item .si-remove{background:none; border:none; color:var(--muted); cursor:pointer; padding:2px; flex-shrink:0;}
+.sub-item .si-remove .ic-svg{width:14px; height:14px;}
+.sub-empty{text-align:center; padding:14px 10px; color:var(--muted); font-size:11px; border:1px dashed var(--border); border-radius:12px; margin-bottom:12px;}
+
+.gps-row{display:flex; gap:10px; align-items:flex-end;}
+.gps-row .field{flex:1; margin-bottom:0;}
+
+.toast{
+  display:none; position:fixed; bottom:110px; left:50%; transform:translateX(-50%);
+  background:var(--green-dark); color:#fff; padding:11px 18px; border-radius:30px; font-size:12px; font-weight:700;
+  box-shadow:0 8px 20px rgba(0,0,0,.3); z-index:50; white-space:nowrap; max-width:80%; text-align:center;
+}
+
+.bottomnav{
+  display:flex; justify-content:space-around; align-items:flex-end; background:#fff; border-top:1px solid var(--border);
+  padding:9px 6px 16px; position:relative; z-index:6;
+}
+.navitem{display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; font-weight:700; color:var(--muted); text-decoration:none; flex:1;}
+.navitem .ic{font-size:19px;}
+.navitem.active{color:var(--green);}
+
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="notch"></div>
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <span class="icons"><svg viewBox="0 0 20 14" class="si-svg"><rect x="0" y="8" width="3" height="6" rx="0.6" fill="currentColor"/><rect x="5.5" y="5" width="3" height="9" rx="0.6" fill="currentColor"/><rect x="11" y="2" width="3" height="12" rx="0.6" fill="currentColor"/><rect x="16.5" y="0" width="3" height="14" rx="0.6" fill="currentColor"/></svg> <svg viewBox="0 0 20 16" class="si-svg"><path d="M1.5 5.8a13.5 13.5 0 0 1 17 0" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/><path d="M4.7 9.4a8.6 8.6 0 0 1 10.6 0" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/><circle cx="10" cy="13.2" r="1.5" fill="currentColor"/></svg> <svg viewBox="0 0 26 14" class="si-svg batt"><rect x="0.8" y="0.8" width="21.4" height="12.4" rx="3" stroke="currentColor" stroke-width="1.3" fill="none"/><rect x="2.4" y="2.4" width="17" height="9.2" rx="1.6" fill="currentColor"/><rect x="23" y="4.4" width="2.2" height="5.2" rx="1" fill="currentColor"/></svg></span>
+    </div>
+
+  <div class="app-header">
+    <div class="hdr-watermark"><svg viewBox="0 0 140 170" class="hdr-watermark-svg" xmlns="http://www.w3.org/2000/svg"><rect x="58" y="70" width="24" height="95" fill="#fff"/><polygon points="46,70 70,26 94,70" fill="#fff"/><rect x="66" y="10" width="8" height="18" fill="#fff"/><circle cx="70" cy="6" r="3" fill="#fff"/><rect x="64" y="90" width="12" height="18" fill="#123424"/><rect x="18" y="140" width="104" height="16" fill="#fff"/><rect x="8" y="156" width="124" height="10" fill="#fff"/><rect x="30" y="120" width="10" height="20" fill="#fff"/><rect x="100" y="120" width="10" height="20" fill="#fff"/></svg></div><div class="header-row" style="align-items:center;">  <a class="back-btn" href="reses-kunjungan.html" style="margin-right:2px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 12H5"/><path d="M11 18l-6-6 6-6"/></svg></a>  <div class="brand">    <div class="emblem" style="width:36px;height:36px;"><span style="display:inline-flex;width:24px;height:24px;"><svg viewBox="0 0 48 54" class="crest-svg" xmlns="http://www.w3.org/2000/svg"><path d="M24 2 L44 9 V24 C44 37 36 47 24 52 C12 47 4 37 4 24 V9 Z" fill="#0f2318" stroke="#e4c976" stroke-width="2"/><path d="M24 6 L40 11.5 V24 C40 34.5 33.5 42.5 24 47 C14.5 42.5 8 34.5 8 24 V11.5 Z" fill="none" stroke="#c9a24a" stroke-width="1"/><path d="M15 33 L19 18 L24 26 L29 18 L33 33 Z" fill="#c9a24a"/><path d="M17 33 H31 L29 39 H19 Z" fill="#d64545"/><path d="M14 20 C10 24 10 30 13 35" stroke="#e4c976" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M34 20 C38 24 38 30 35 35" stroke="#e4c976" stroke-width="1.4" fill="none" stroke-linecap="round"/><text x="24" y="15" text-anchor="middle" font-family="Georgia, serif" font-size="7" fill="#f3e6bb" font-weight="700">DPRD</text></svg></span></div>    <div class="brand-text"><h1 style="font-size:15px;">e-Parlemen</h1><div class="sub" style="font-size:9px;">DPRD KOTA MAGELANG</div></div>  </div>  <div class="header-actions"><a href="notifikasi.html" class="bell" style="width:32px;height:32px;font-size:14px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" style="width:14px;height:14px;font-size:8px;">3</span></a></div></div>
+  </div>
+  <div class="hdr-wave"><svg viewBox="0 0 400 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hdrWaveGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="var(--green-dark)"/><stop offset="60%" stop-color="var(--green)"/><stop offset="100%" stop-color="var(--green-mid)"/></linearGradient></defs><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,0 L0,0 Z" fill="url(#hdrWaveGrad)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,30 L0,30 Z" fill="var(--cream)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14" fill="none" stroke="#c0392b" stroke-width="2.2" opacity=".85"/></svg></div>
+  <div class="screen">
+
+    <div class="screen-title" id="pageTitle">Tambah Kunjungan</div>
+
+    <div class="info-box">
+      <span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span>
+      <span id="infoText">Catat kegiatan reses/kunjungan dapil beserta peserta, aspirasi, dan dokumentasi. Simpan sebagai draf atau ajukan langsung untuk direkap Sekretariat.</span>
+    </div>
+
+    <form onsubmit="return submitReses(event)">
+
+      <div class="card">
+        <div class="section-title" style="margin-bottom:4px;" id="infoSectionTitle">Informasi Reses</div>
+        <div class="hint" style="margin-bottom:14px;" id="infoSectionHint">Detail dasar kegiatan reses/kunjungan.</div>
+
+        <div class="field" id="periodeResesField"><label>Periode Reses</label>
+          <select id="periodeResesSelect" required>
+            <option value="">Pilih periode&hellip;</option>
+            <option>Reses I Tahun 2026</option>
+            <option selected>Reses II Tahun 2026</option>
+            <option>Reses III Tahun 2026</option>
+          </select>
+        </div>
+        <div class="field"><label>Anggota DPRD</label>
+          <select required>
+            <option>Ir. Budi Santoso, M.T.</option>
+          </select>
+        </div>
+        <div class="field"><label>Dapil</label>
+          <select required>
+            <option selected>Dapil 1</option>
+            <option>Dapil 2</option>
+            <option>Dapil 3</option>
+          </select>
+        </div>
+        <div class="field"><label id="nomorKegiatanLabel">Nomor Kegiatan</label><input type="text" id="nomorKegiatanInput" placeholder="Contoh: RES-2026-001" required></div>
+        <div class="field"><label id="tanggalLabel">Tanggal Reses</label><input type="date" required></div>
+        <div class="two-col">
+          <div class="field"><label>Jam Mulai</label><input type="time" value="09:00" required></div>
+          <div class="field"><label>Jam Selesai</label><input type="time" value="12:00" required></div>
+        </div>
+        <div class="field"><label>Jenis Kegiatan</label>
+          <select id="jenisKegiatanSelect" required>
+            <option value="">Pilih jenis kegiatan&hellip;</option>
+            <option>Pertemuan Masyarakat</option>
+            <option>Kunjungan Lapangan</option>
+            <option>Dialog Masyarakat</option>
+            <option>Sosialisasi</option>
+            <option>Penyerapan Aspirasi</option>
+            <option>Kunjungan Fasilitas Publik</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0;"><label>Status</label>
+          <select id="statusSelect" required>
+            <option>Draft</option>
+            <option>Terjadwal</option>
+            <option>Selesai</option>
+            <option>Batal</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title" style="margin-bottom:4px;">Lokasi</div>
+        <div class="hint" style="margin-bottom:14px;">Lokasi tempat kegiatan reses/kunjungan berlangsung.</div>
+
+        <div class="field"><label>Nama Tempat</label><input type="text" id="locNamaTempat" placeholder="Contoh: Balai Desa Sukamaju" required></div>
+        <div class="field"><label>Alamat</label><textarea placeholder="Contoh: Jl. Raya Sukamaju No. 10" required></textarea></div>
+        <div class="two-col">
+          <div class="field"><label>Provinsi</label>
+            <select required><option selected>Jawa Tengah</option></select>
+          </div>
+          <div class="field"><label>Kabupaten/Kota</label>
+            <select required><option selected>Kota Magelang</option></select>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field"><label>Kecamatan</label>
+            <select id="locKecamatan" onchange="populateDesa()" required>
+              <option value="">Pilih kecamatan&hellip;</option>
+              <option>Magelang Utara</option>
+              <option>Magelang Tengah</option>
+              <option>Magelang Selatan</option>
+            </select>
+          </div>
+          <div class="field"><label>Desa/Kelurahan</label>
+            <select id="locDesa" required>
+              <option value="">Pilih kecamatan dulu</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>RT/RW <span class="opt">(opsional)</span></label><input type="text" placeholder="Contoh: 02/04"></div>
+        <div class="gps-row">
+          <div class="field"><label>Latitude</label><input type="text" id="locLat" placeholder="-7.4700"></div>
+          <div class="field"><label>Longitude</label><input type="text" id="locLng" placeholder="110.2177"></div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="ambilGPS()" style="margin-bottom:0;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg> GPS</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span>Peserta</span><button type="button" class="btn btn-outline btn-sm" onclick="toggleForm('pesertaForm')">+ Tambah</button></div>
+        <div class="hint" style="margin:4px 0 12px;">Daftar peserta yang hadir pada kegiatan ini.</div>
+
+        <div class="add-form" id="pesertaForm">
+          <div class="add-form-head"><span>Tambah Peserta</span><button type="button" class="add-form-close" onclick="toggleForm('pesertaForm')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
+          <div class="field"><label>Nama</label><input type="text" id="pNama" placeholder="Nama peserta"></div>
+          <div class="field"><label>NIK <span class="opt">(opsional)</span></label><input type="text" id="pNik" placeholder="16 digit NIK"></div>
+          <div class="two-col">
+            <div class="field"><label>Jenis Kelamin</label><select id="pGender"><option>Laki-laki</option><option>Perempuan</option></select></div>
+            <div class="field"><label>No. HP</label><input type="text" id="pHp" placeholder="08xxxxxxxxxx"></div>
+          </div>
+          <div class="field"><label>Pekerjaan</label><input type="text" id="pKerja" placeholder="Contoh: Petani"></div>
+          <div class="field"><label>Instansi/Organisasi <span class="opt">(opsional)</span></label><input type="text" id="pInstansi" placeholder="Contoh: Karang Taruna"></div>
+          <div class="two-col">
+            <div class="field"><label>Jenis Peserta</label>
+              <select id="pJenis">
+                <option>Masyarakat</option>
+                <option>Kepala Desa</option>
+                <option>Perangkat Desa</option>
+                <option>RT/RW</option>
+                <option>Tokoh Masyarakat</option>
+                <option>Tokoh Pemuda</option>
+                <option>Tokoh Agama</option>
+                <option>Organisasi Masyarakat</option>
+                <option>Perwakilan OPD</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+            <div class="field"><label>Kehadiran</label>
+              <select id="pHadir"><option>Hadir</option><option>Tidak Hadir</option><option>Izin</option></select>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-sm" style="width:100%;" onclick="addPeserta()">Tambah ke Daftar</button>
+        </div>
+
+        <div id="pesertaList"></div>
+        <div class="sub-empty" id="pesertaEmpty">Belum ada peserta ditambahkan.</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span>Aspirasi</span><button type="button" class="btn btn-outline btn-sm" onclick="toggleForm('aspirasiForm')">+ Tambah</button></div>
+        <div class="hint" style="margin:4px 0 12px;">Aspirasi masyarakat yang diserap pada kegiatan ini.</div>
+
+        <div class="add-form" id="aspirasiForm">
+          <div class="add-form-head"><span>Tambah Aspirasi</span><button type="button" class="add-form-close" onclick="toggleForm('aspirasiForm')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
+          <div class="field"><label>Judul Aspirasi</label><input type="text" id="aJudul" placeholder="Contoh: Perbaikan Jalan Desa"></div>
+          <div class="field"><label>Kategori</label>
+            <select id="aKategori">
+              <option>Infrastruktur</option>
+              <option>Ekonomi</option>
+              <option>Pendidikan</option>
+              <option>Kesehatan</option>
+              <option>Lingkungan</option>
+              <option>Sosial</option>
+              <option>Lainnya</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Prioritas</label>
+            <div class="chip-row" id="aPrioritasChips">
+              <button type="button" class="chip" onclick="selectChip(this,'aPrioritasChips')">Rendah</button>
+              <button type="button" class="chip active" onclick="selectChip(this,'aPrioritasChips')">Sedang</button>
+              <button type="button" class="chip" onclick="selectChip(this,'aPrioritasChips')">Tinggi</button>
+            </div>
+          </div>
+          <div class="field"><label>Keterangan <span class="opt">(opsional)</span></label><textarea id="aKet" placeholder="Detail tambahan aspirasi&hellip;"></textarea></div>
+          <button type="button" class="btn btn-primary btn-sm" style="width:100%;" onclick="addAspirasi()">Tambah ke Daftar</button>
+        </div>
+
+        <div id="aspirasiList"></div>
+        <div class="sub-empty" id="aspirasiEmpty">Belum ada aspirasi dicatat.</div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span>Dokumentasi</span><button type="button" class="btn btn-outline btn-sm" onclick="toggleForm('dokForm')">+ Upload</button></div>
+        <div class="hint" style="margin:4px 0 12px;">Foto, video, atau dokumen pendukung kegiatan.</div>
+
+        <div class="add-form" id="dokForm">
+          <div class="add-form-head"><span>Tambah Dokumentasi</span><button type="button" class="add-form-close" onclick="toggleForm('dokForm')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
+          <div class="field"><label>Jenis Dokumentasi</label>
+            <select id="dJenis">
+              <option>Foto Kegiatan</option>
+              <option>Foto Peserta</option>
+              <option>Foto Lokasi</option>
+              <option>Foto Aspirasi</option>
+              <option>Video Kegiatan</option>
+              <option>Dokumen/Berita Acara</option>
+              <option>Daftar Hadir</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>File</label>
+            <label class="upload-box" for="dFile">
+              <span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span>
+              <span id="dFileLabel">Ketuk untuk memilih berkas</span>
+            </label>
+            <input type="file" id="dFile" style="display:none;" onchange="if(this.files[0]) document.getElementById('dFileLabel').textContent = this.files[0].name;">
+          </div>
+          <div class="field"><label>Keterangan <span class="opt">(opsional)</span></label><input type="text" id="dKet" placeholder="Contoh: Dokumentasi sesi dialog warga"></div>
+          <button type="button" class="btn btn-primary btn-sm" style="width:100%;" onclick="addDokumentasi()">Tambah ke Daftar</button>
+        </div>
+
+        <div id="dokList"></div>
+        <div class="sub-empty" id="dokEmpty">Belum ada dokumentasi diunggah.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="margin-top:6px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg> Simpan Kegiatan</button>
+      <div class="hint" style="text-align:center; margin-top:8px;">Status kegiatan mengikuti pilihan pada field &ldquo;Status&rdquo; di atas.</div>
+    </form>
+
+  </div>
+<div class="bottomnav"><a class="navitem" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem active" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+
+function toast(msg){
+  var el = document.getElementById('toast');
+  if(!el) return;
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(function(){ el.style.display = 'none'; }, 2400);
+}
+
+(function applyJenisView(){
+  var jenis = new URLSearchParams(window.location.search).get('jenis') || 'reses';
+  if(jenis !== 'kunjungan') return;
+
+  document.getElementById('pageTitle').textContent = 'Tambah Kunjungan Dapil';
+  document.getElementById('infoText').textContent = 'Catat kunjungan dapil di luar masa reses beserta peserta, aspirasi, dan dokumentasi. Simpan sebagai draf atau ajukan langsung untuk direkap Sekretariat.';
+  document.getElementById('infoSectionTitle').textContent = 'Informasi Kunjungan';
+  document.getElementById('infoSectionHint').textContent = 'Detail dasar kegiatan kunjungan dapil.';
+  document.getElementById('tanggalLabel').textContent = 'Tanggal Kunjungan';
+  document.getElementById('nomorKegiatanLabel').textContent = 'Nomor Kegiatan';
+  document.getElementById('nomorKegiatanInput').placeholder = 'Contoh: KJD-2026-001';
+
+  var periodeField = document.getElementById('periodeResesField');
+  if(periodeField){
+    periodeField.style.display = 'none';
+    document.getElementById('periodeResesSelect').required = false;
+  }
+
+  var jenisSelect = document.getElementById('jenisKegiatanSelect');
+  if(jenisSelect){
+    Array.prototype.forEach.call(jenisSelect.options, function(opt){
+      if(opt.value === 'Kunjungan Lapangan'){ opt.selected = true; }
+    });
+  }
+})();
+function selectChip(el, groupId){
+  document.querySelectorAll('#' + groupId + ' .chip').forEach(function(c){ c.classList.remove('active'); });
+  el.classList.add('active');
+}
+function toggleForm(id){
+  var el = document.getElementById(id);
+  if(el){ el.classList.toggle('open'); }
+}
+
+var desaMap = {
+  'Magelang Utara': ['Kedungsari','Kramat Utara','Kramat Selatan','Wates','Potrobangsan'],
+  'Magelang Tengah': ['Cacaban','Gelangan','Kemirirejo','Panjang','Rejowinangun Utara'],
+  'Magelang Selatan': ['Jurangombo Utara','Jurangombo Selatan','Magersari','Rejowinangun Selatan','Tidar Selatan']
+};
+function populateDesa(){
+  var kec = document.getElementById('locKecamatan').value;
+  var desaSel = document.getElementById('locDesa');
+  var list = desaMap[kec] || [];
+  if(!list.length){
+    desaSel.innerHTML = '<option value="">Pilih kecamatan dulu</option>';
+    return;
+  }
+  desaSel.innerHTML = '<option value="">Pilih desa/kelurahan&hellip;</option>' + list.map(function(d){ return '<option>' + d + '</option>'; }).join('');
+}
+function ambilGPS(){
+  if(!navigator.geolocation){
+    toast('GPS tidak tersedia pada perangkat ini');
+    return;
+  }
+  toast('Mengambil lokasi GPS...');
+  navigator.geolocation.getCurrentPosition(function(pos){
+    document.getElementById('locLat').value = pos.coords.latitude.toFixed(6);
+    document.getElementById('locLng').value = pos.coords.longitude.toFixed(6);
+    toast('Lokasi GPS berhasil diambil');
+  }, function(){
+    toast('Gagal mengambil lokasi. Isi koordinat secara manual.');
+  });
+}
+
+var pesertaCount = 0;
+function addPeserta(){
+  var nama = document.getElementById('pNama').value.trim();
+  if(!nama){ toast('Nama peserta wajib diisi'); return; }
+  var gender = document.getElementById('pGender').value;
+  var hp = document.getElementById('pHp').value.trim();
+  var jenis = document.getElementById('pJenis').value;
+  var hadir = document.getElementById('pHadir').value;
+
+  pesertaCount++;
+  var hadirClass = hadir === 'Hadir' ? 'badge-success' : (hadir === 'Izin' ? 'badge-warn' : 'badge-danger');
+  var item = document.createElement('div');
+  item.className = 'sub-item';
+  item.innerHTML = ''
+    + '<div class="si-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>'
+    + '<div class="si-body">'
+    +   '<div class="si-title">' + nama + '</div>'
+    +   '<div class="si-meta">' + gender + (hp ? ' &middot; ' + hp : '') + '</div>'
+    +   '<div class="si-tags"><span class="badge badge-neutral">' + jenis + '</span><span class="badge ' + hadirClass + '">' + hadir + '</span></div>'
+    + '</div>'
+    + '<button type="button" class="si-remove" onclick="this.closest(\'.sub-item\').remove(); checkEmpty(\'pesertaList\',\'pesertaEmpty\');"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>';
+  document.getElementById('pesertaList').appendChild(item);
+  checkEmpty('pesertaList','pesertaEmpty');
+
+  ['pNama','pNik','pHp','pKerja','pInstansi'].forEach(function(id){ document.getElementById(id).value = ''; });
+  document.getElementById('pGender').selectedIndex = 0;
+  document.getElementById('pJenis').selectedIndex = 0;
+  document.getElementById('pHadir').selectedIndex = 0;
+  toggleForm('pesertaForm');
+  toast('Peserta ditambahkan');
+}
+
+var aspirasiCount = 0;
+function addAspirasi(){
+  var judul = document.getElementById('aJudul').value.trim();
+  if(!judul){ toast('Judul aspirasi wajib diisi'); return; }
+  var kategori = document.getElementById('aKategori').value;
+  var prioritasBtn = document.querySelector('#aPrioritasChips .chip.active');
+  var prioritas = prioritasBtn ? prioritasBtn.textContent : 'Sedang';
+  var prioritasClass = prioritas === 'Tinggi' ? 'badge-danger' : (prioritas === 'Sedang' ? 'badge-warn' : 'badge-neutral');
+
+  aspirasiCount++;
+  var item = document.createElement('div');
+  item.className = 'sub-item';
+  item.innerHTML = ''
+    + '<div class="si-ic" style="background:var(--purple);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div>'
+    + '<div class="si-body">'
+    +   '<div class="si-title">' + aspirasiCount + '. ' + judul + '</div>'
+    +   '<div class="si-tags"><span class="badge badge-neutral">' + kategori + '</span><span class="badge ' + prioritasClass + '">' + prioritas + '</span></div>'
+    + '</div>'
+    + '<button type="button" class="si-remove" onclick="this.closest(\'.sub-item\').remove(); checkEmpty(\'aspirasiList\',\'aspirasiEmpty\');"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>';
+  document.getElementById('aspirasiList').appendChild(item);
+  checkEmpty('aspirasiList','aspirasiEmpty');
+
+  document.getElementById('aJudul').value = '';
+  document.getElementById('aKet').value = '';
+  document.getElementById('aKategori').selectedIndex = 0;
+  toggleForm('aspirasiForm');
+  toast('Aspirasi dicatat');
+}
+
+function addDokumentasi(){
+  var jenis = document.getElementById('dJenis').value;
+  var fileLabel = document.getElementById('dFileLabel').textContent;
+  if(fileLabel === 'Ketuk untuk memilih berkas'){ toast('Pilih berkas terlebih dahulu'); return; }
+  var ket = document.getElementById('dKet').value.trim();
+  var now = new Date();
+  var waktu = ('0'+now.getHours()).slice(-2) + '.' + ('0'+now.getMinutes()).slice(-2) + ' WIB';
+
+  var item = document.createElement('div');
+  item.className = 'sub-item';
+  item.innerHTML = ''
+    + '<div class="si-ic" style="background:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>'
+    + '<div class="si-body">'
+    +   '<div class="si-title">' + jenis + '</div>'
+    +   '<div class="si-meta">' + fileLabel + (ket ? ' &middot; ' + ket : '') + '</div>'
+    +   '<div class="si-meta">Diunggah ' + waktu + ' &middot; Ir. Budi Santoso, M.T.</div>'
+    + '</div>'
+    + '<button type="button" class="si-remove" onclick="this.closest(\'.sub-item\').remove(); checkEmpty(\'dokList\',\'dokEmpty\');"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>';
+  document.getElementById('dokList').appendChild(item);
+  checkEmpty('dokList','dokEmpty');
+
+  document.getElementById('dKet').value = '';
+  document.getElementById('dFileLabel').textContent = 'Ketuk untuk memilih berkas';
+  document.getElementById('dFile').value = '';
+  toggleForm('dokForm');
+  toast('Dokumentasi ditambahkan');
+}
+
+function checkEmpty(listId, emptyId){
+  var list = document.getElementById(listId);
+  var empty = document.getElementById(emptyId);
+  if(empty){ empty.style.display = list.children.length === 0 ? 'block' : 'none'; }
+}
+checkEmpty('pesertaList','pesertaEmpty');
+checkEmpty('aspirasiList','aspirasiEmpty');
+checkEmpty('dokList','dokEmpty');
+
+function submitReses(e){
+  e.preventDefault();
+  var status = document.getElementById('statusSelect').value;
+  toast('Kegiatan disimpan dengan status "' + status + '"');
+  setTimeout(function(){ window.location.href = 'reses-kunjungan.html'; }, 900);
+  return false;
+}
+
+</script>
+</body>
+</html>
