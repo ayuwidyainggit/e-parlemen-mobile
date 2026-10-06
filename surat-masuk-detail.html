@@ -144,6 +144,25 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .btn-row{display:flex; gap:10px; margin-top:4px;}
 .btn-row .btn{flex:1;}
 
+.modal-backdrop{position:absolute; inset:0; background:rgba(15,35,24,.55); z-index:40; display:none; align-items:flex-end; justify-content:center;}
+.modal-backdrop.open{display:flex;}
+.modal-sheet{width:100%; max-height:86%; background:var(--cream); border-radius:22px 22px 0 0; overflow-y:auto; padding:16px 16px 22px; box-shadow:0 -10px 30px rgba(0,0,0,.3);}
+.modal-sheet-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+.modal-sheet-head h3{font-family:Georgia,'Times New Roman',serif; font-size:18px; margin:0; color:var(--ink);}
+.modal-close{width:30px; height:30px; border-radius:50%; background:var(--neutral-bg); display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; color:var(--ink); flex-shrink:0;}
+.modal-close .ic-svg{width:16px; height:16px;}
+
+.cc-search{display:flex; align-items:center; gap:7px; background:var(--neutral-bg); border-radius:9px; padding:8px 10px; margin-bottom:8px;}
+.cc-search .ic-svg{width:14px; height:14px; color:var(--muted); flex-shrink:0;}
+.cc-search input{border:none; outline:none; background:transparent; font-size:12px; font-family:inherit; color:var(--ink); width:100%; min-width:0;}
+.cc-search input::placeholder{color:#a4ac9f;}
+.cc-option-list{max-height:280px; overflow-y:auto;}
+.cc-option-empty{padding:12px 8px; text-align:center; font-size:11.5px; color:var(--muted);}
+.cc-option{display:flex; align-items:center; gap:9px; padding:9px 8px; border-radius:8px; font-size:12px; font-weight:600; color:var(--ink); cursor:pointer;}
+.cc-option:hover{background:var(--neutral-bg);}
+.cc-option.cc-hidden{display:none;}
+.cc-option input{width:16px; height:16px; accent-color:var(--green); flex-shrink:0;}
+
 .tabs{display:flex; gap:4px; background:#eceee7; padding:4px; border-radius:12px; margin-bottom:14px; overflow-x:auto;}
 .tab{flex:1; text-align:center; padding:9px 6px; border-radius:9px; font-size:11.5px; font-weight:800; color:var(--muted); text-decoration:none; white-space:nowrap; background:transparent; border:none; font-family:inherit; cursor:pointer;}
 .tab.active{background:#fff; color:var(--green); box-shadow:0 1px 3px rgba(0,0,0,.09);}
@@ -341,9 +360,46 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     </div>
 
     <div id="actionArea">
-      <a class="btn btn-outline" href="#" onclick="updateStatus('proses'); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg> Tindak Lanjuti</a>
+      <div class="btn-row">
+        <a class="btn btn-outline" href="#" onclick="updateStatus('proses'); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg> Tindak Lanjuti</a>
+        <a class="btn btn-primary" href="#" onclick="openDisposisiModal(); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg> Disposisi</a>
+      </div>
     </div>
 
+  </div>
+
+  <div class="modal-backdrop" id="disposisiModalBackdrop" onclick="if(event.target===this){ closeDisposisiModal(); }">
+    <div class="modal-sheet">
+      <div class="modal-sheet-head">
+        <h3>Disposisi Surat</h3>
+        <button type="button" class="modal-close" onclick="closeDisposisiModal()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>
+      </div>
+      <div class="hint" style="margin-bottom:12px;">Pilih anggota yang akan menerima disposisi surat <strong id="dispModalSuratTitle">Permohonan Data</strong>.</div>
+
+      <div class="field">
+        <label>Tujuan Disposisi</label>
+        <div class="cc-search">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-5-5"/></svg>
+          <input type="text" id="disposisiSearchInput" placeholder="Cari nama anggota..." oninput="filterDisposisiAnggota(this.value)">
+        </div>
+        <div class="cc-option-list" id="disposisiAnggotaList">
+          <label class="cc-option"><input type="radio" name="disposisiTarget" value="Hj. Siti Nurhaliza, S.H."><div class="icon-box" style="width:30px;height:30px;font-size:11px;">SN</div><div style="flex:1; min-width:0;"><div style="font-weight:800; font-size:12.2px; color:var(--ink);">Hj. Siti Nurhaliza, S.H.</div><div style="font-size:10.3px; color:var(--muted);">Anggota Komisi I</div></div></label>
+          <label class="cc-option"><input type="radio" name="disposisiTarget" value="Drs. Ahmad Fauzi, M.Si."><div class="icon-box" style="width:30px;height:30px;font-size:11px;">AF</div><div style="flex:1; min-width:0;"><div style="font-weight:800; font-size:12.2px; color:var(--ink);">Drs. Ahmad Fauzi, M.Si.</div><div style="font-size:10.3px; color:var(--muted);">Anggota Komisi II</div></div></label>
+          <label class="cc-option"><input type="radio" name="disposisiTarget" value="Rina Kartika, S.E."><div class="icon-box" style="width:30px;height:30px;font-size:11px;">RK</div><div style="flex:1; min-width:0;"><div style="font-weight:800; font-size:12.2px; color:var(--ink);">Rina Kartika, S.E.</div><div style="font-size:10.3px; color:var(--muted);">Anggota Komisi III</div></div></label>
+          <label class="cc-option"><input type="radio" name="disposisiTarget" value="H. Slamet Riyadi"><div class="icon-box" style="width:30px;height:30px;font-size:11px;">SR</div><div style="flex:1; min-width:0;"><div style="font-weight:800; font-size:12.2px; color:var(--ink);">H. Slamet Riyadi</div><div style="font-size:10.3px; color:var(--muted);">Anggota Komisi IV</div></div></label>
+          <label class="cc-option"><input type="radio" name="disposisiTarget" value="Ir. Budi Santoso, M.T."><div class="icon-box" style="width:30px;height:30px;font-size:11px;">BS</div><div style="flex:1; min-width:0;"><div style="font-weight:800; font-size:12.2px; color:var(--ink);">Ir. Budi Santoso, M.T.</div><div style="font-size:10.3px; color:var(--muted);">Ketua Komisi I</div></div></label>
+          <label class="cc-option"><input type="radio" name="disposisiTarget" value="Sekretariat Fraksi"><div class="icon-box" style="width:30px;height:30px;font-size:11px;">SF</div><div style="flex:1; min-width:0;"><div style="font-weight:800; font-size:12.2px; color:var(--ink);">Sekretariat Fraksi</div><div style="font-size:10.3px; color:var(--muted);">Sekretariat</div></div></label>
+        </div>
+        <div class="cc-option-empty" id="disposisiAnggotaEmpty" style="display:none;">Tidak ditemukan.</div>
+      </div>
+
+      <div class="field" style="margin-bottom:18px;">
+        <label>Catatan Disposisi <span class="opt">(opsional)</span></label>
+        <textarea id="disposisiCatatan" placeholder="Contoh: Mohon ditindaklanjuti dan dikoordinasikan dengan pihak terkait."></textarea>
+      </div>
+
+      <a class="btn btn-primary" href="#" onclick="submitDisposisi(); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg> Kirim Disposisi</a>
+    </div>
   </div>
 <div class="bottomnav"><a class="navitem active" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
 </div>
@@ -493,7 +549,7 @@ function renderSurat(id){
   var actionArea = document.getElementById('actionArea');
   if(actionArea){
     if(data.status === 'tindaklanjut'){
-      actionArea.innerHTML = '<a class="btn btn-outline" href="#" onclick="updateStatus(\'proses\'); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg> Tindak Lanjuti</a>';
+      actionArea.innerHTML = '<div class="btn-row"><a class="btn btn-outline" href="#" onclick="updateStatus(\'proses\'); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg> Tindak Lanjuti</a><a class="btn btn-primary" href="#" onclick="openDisposisiModal(); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg> Disposisi</a></div>';
     } else if(data.status === 'proses'){
       actionArea.innerHTML = '<a class="btn btn-primary" href="#" onclick="updateStatus(\'selesai\'); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg> Tandai Selesai</a>';
     } else {
@@ -534,6 +590,57 @@ function updateStatus(newStatus){
     toast('Surat ditandai selesai');
   }
   renderSurat(currentSuratId);
+}
+
+function openDisposisiModal(){
+  var data = suratData[currentSuratId];
+  if(data){ setText('dispModalSuratTitle', data.title); }
+  document.getElementById('disposisiSearchInput').value = '';
+  filterDisposisiAnggota('');
+  document.getElementById('disposisiCatatan').value = '';
+  document.querySelectorAll('input[name="disposisiTarget"]').forEach(function(r){ r.checked = false; });
+  var bd = document.getElementById('disposisiModalBackdrop');
+  if(bd){ bd.classList.add('open'); }
+}
+function closeDisposisiModal(){
+  var bd = document.getElementById('disposisiModalBackdrop');
+  if(bd){ bd.classList.remove('open'); }
+}
+function filterDisposisiAnggota(query){
+  var q = query.trim().toLowerCase();
+  var options = document.querySelectorAll('#disposisiAnggotaList .cc-option');
+  var visibleCount = 0;
+  options.forEach(function(opt){
+    var name = opt.querySelector('input').value.toLowerCase();
+    var match = name.indexOf(q) !== -1;
+    opt.classList.toggle('cc-hidden', !match);
+    if(match){ visibleCount++; }
+  });
+  var empty = document.getElementById('disposisiAnggotaEmpty');
+  if(empty){ empty.style.display = visibleCount === 0 ? 'block' : 'none'; }
+}
+function submitDisposisi(){
+  var checked = document.querySelector('input[name="disposisiTarget"]:checked');
+  if(!checked){ toast('Pilih anggota tujuan disposisi terlebih dahulu'); return; }
+  var nama = checked.value;
+  var catatan = document.getElementById('disposisiCatatan').value.trim();
+
+  var data = suratData[currentSuratId];
+  if(!data) return;
+  var last = data.timeline[data.timeline.length - 1];
+  last.state = 'done';
+  last.title = 'Didisposisikan kepada ' + nama;
+  last.time = nowLabel();
+  delete last.desc;
+
+  var desc = 'Menunggu tindak lanjut dari ' + nama + '.';
+  if(catatan){ desc = '"' + catatan + '" &ndash; menunggu tindak lanjut dari ' + nama + '.'; }
+  data.timeline.push({state:'active', title:'Dalam Proses', desc: desc});
+  data.status = 'proses';
+
+  closeDisposisiModal();
+  renderSurat(currentSuratId);
+  toast('Surat didisposisikan kepada ' + nama);
 }
 
 var initialId = new URLSearchParams(window.location.search).get('id') || '4';
