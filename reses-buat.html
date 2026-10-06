@@ -140,6 +140,24 @@ a{color:inherit;}
 
 .two-col{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
 
+.filter-wrap{position:relative;}
+.filter-btn{display:flex; align-items:center; gap:5px; background:#fff; border:1px solid var(--border); border-radius:10px; padding:11px 12px; font-size:13px; font-weight:600; color:var(--ink); white-space:nowrap; font-family:inherit; cursor:pointer;}
+.filter-btn .ic-svg{width:14px; height:14px; color:var(--muted);}
+.filter-btn .chev-ic{transition:transform .15s ease; margin-left:auto;}
+.filter-btn.open .chev-ic{transform:rotate(180deg);}
+.filter-dropdown{display:none; position:absolute; top:calc(100% + 6px); left:0; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.14); z-index:30;}
+.filter-dropdown.open{display:block;}
+.cc-search{display:flex; align-items:center; gap:7px; background:var(--neutral-bg); border-radius:9px; padding:8px 10px; margin-bottom:6px;}
+.cc-search .ic-svg{width:14px; height:14px; color:var(--muted); flex-shrink:0;}
+.cc-search input{border:none; outline:none; background:transparent; font-size:12px; font-family:inherit; color:var(--ink); width:100%; min-width:0;}
+.cc-search input::placeholder{color:#a4ac9f;}
+.cc-option-list{max-height:200px; overflow-y:auto;}
+.cc-option-empty{padding:12px 8px; text-align:center; font-size:11.5px; color:var(--muted);}
+.cc-option{display:flex; flex-direction:column; align-items:flex-start; gap:1px; padding:9px 8px; border-radius:8px; font-size:12px; font-weight:700; color:var(--ink); cursor:pointer;}
+.cc-option .cc-opt-sub{font-size:10px; font-weight:600; color:var(--muted);}
+.cc-option:hover{background:var(--neutral-bg);}
+.cc-option.cc-hidden{display:none;}
+
 .info-box{background:var(--info-bg); border-radius:12px; padding:11px 12px; font-size:11.5px; color:#2a5583; display:flex; gap:9px; align-items:flex-start; line-height:1.5; margin-bottom:16px;}
 
 .divider{height:1px; background:var(--border); margin:14px 0;}
@@ -223,7 +241,7 @@ a{color:inherit;}
           </select>
         </div>
         <div class="field"><label>Dapil</label>
-          <select required>
+          <select id="dapilSelect" required onchange="onDapilChange()">
             <option selected>Dapil 1</option>
             <option>Dapil 2</option>
             <option>Dapil 3</option>
@@ -236,7 +254,7 @@ a{color:inherit;}
           <div class="field"><label>Jam Selesai</label><input type="time" value="12:00" required></div>
         </div>
         <div class="field"><label>Jenis Kegiatan</label>
-          <select id="jenisKegiatanSelect" required>
+          <select id="jenisKegiatanSelect" required onchange="toggleJenisKegiatan()">
             <option value="">Pilih jenis kegiatan&hellip;</option>
             <option>Pertemuan Masyarakat</option>
             <option>Kunjungan Lapangan</option>
@@ -246,6 +264,17 @@ a{color:inherit;}
             <option>Kunjungan Fasilitas Publik</option>
             <option>Lainnya</option>
           </select>
+        </div>
+        <div class="field" id="pokirField" style="display:none;">
+          <label>Pokir Terkait <span class="opt">(opsional)</span></label>
+          <select id="pokirSelect">
+            <option value="">Pilih usulan Pokir&hellip;</option>
+            <option value="POKIR-002">Normalisasi Saluran Drainase</option>
+            <option value="POKIR-004">Rehabilitasi Ruang Kelas SDN 2 Rejowinangun</option>
+            <option value="POKIR-006">Perbaikan Jembatan Kali Bening</option>
+            <option value="POKIR-008">Renovasi Posyandu Melati</option>
+          </select>
+          <div class="hint" style="margin-top:6px;">Hanya menampilkan usulan Pokir dengan status belum selesai (Dalam Proses).</div>
         </div>
         <div class="field" style="margin-bottom:0;"><label>Status</label>
           <select id="statusSelect" required>
@@ -300,7 +329,26 @@ a{color:inherit;}
 
         <div class="add-form" id="pesertaForm">
           <div class="add-form-head"><span>Tambah Peserta</span><button type="button" class="add-form-close" onclick="toggleForm('pesertaForm')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></div>
-          <div class="field"><label>Nama</label><input type="text" id="pNama" placeholder="Nama peserta"></div>
+          <div class="field">
+            <label>Nama <span class="opt">(cari anggota dapil)</span></label>
+            <div class="filter-wrap">
+              <button type="button" class="filter-btn" id="pNamaBtn" onclick="togglePNamaDropdown(event)" style="width:100%;">
+                <span id="pNamaLabel" style="color:var(--muted); font-weight:600;">Cari nama anggota dapil&hellip;</span>
+                <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+              <div class="filter-dropdown" id="pNamaDropdown" style="right:0; width:100%;">
+                <div style="padding:8px 8px 0;">
+                  <div class="cc-search">
+                    <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-5-5"/></svg>
+                    <input type="text" id="pNamaSearchInput" placeholder="Cari nama anggota dapil..." oninput="filterPNamaOptions(this.value)" onclick="event.stopPropagation();">
+                  </div>
+                </div>
+                <div class="cc-option-list" id="pNamaOptionList" style="padding:0 8px 8px;"></div>
+                <div class="cc-option-empty" id="pNamaOptionEmpty" style="display:none;">Tidak ditemukan anggota di dapil ini.</div>
+              </div>
+            </div>
+            <input type="hidden" id="pNama">
+          </div>
           <div class="field"><label>NIK <span class="opt">(opsional)</span></label><input type="text" id="pNik" placeholder="16 digit NIK"></div>
           <div class="two-col">
             <div class="field"><label>Jenis Kelamin</label><select id="pGender"><option>Laki-laki</option><option>Perempuan</option></select></div>
@@ -444,6 +492,15 @@ function toast(msg){
     });
   }
 })();
+function toggleJenisKegiatan(){
+  var sel = document.getElementById('jenisKegiatanSelect');
+  var pokirField = document.getElementById('pokirField');
+  if(!sel || !pokirField) return;
+  var isKunjunganLapangan = sel.value === 'Kunjungan Lapangan';
+  pokirField.style.display = isKunjunganLapangan ? 'block' : 'none';
+  if(!isKunjunganLapangan){ document.getElementById('pokirSelect').value = ''; }
+}
+toggleJenisKegiatan();
 function selectChip(el, groupId){
   document.querySelectorAll('#' + groupId + ' .chip').forEach(function(c){ c.classList.remove('active'); });
   el.classList.add('active');
@@ -483,10 +540,77 @@ function ambilGPS(){
   });
 }
 
+var ANGGOTA_DAPIL = [
+  { nama:'M. Yusuf Ridwan, S.E.', dapil:'Dapil 1' },
+  { nama:'Ir. Budi Santoso, M.T.', dapil:'Dapil 1' },
+  { nama:'R. Hendra Wijaya, S.H.', dapil:'Dapil 2' },
+  { nama:'Drs. Ahmad Fauzi', dapil:'Dapil 2' },
+  { nama:'Hj. Siti Rahmawati', dapil:'Dapil 3' }
+];
+
+function onDapilChange(){
+  document.getElementById('pNama').value = '';
+  var label = document.getElementById('pNamaLabel');
+  if(label){ label.textContent = 'Cari nama anggota dapil…'; label.style.color = 'var(--muted)'; label.style.fontWeight = '600'; }
+  renderPNamaOptions();
+}
+function renderPNamaOptions(){
+  var dapil = document.getElementById('dapilSelect').value;
+  var list = ANGGOTA_DAPIL.filter(function(a){ return a.dapil === dapil; });
+  var listEl = document.getElementById('pNamaOptionList');
+  listEl.innerHTML = list.map(function(a){
+    return '<div class="cc-option" data-name="' + a.nama + '" onclick="selectPNama(this)">' + a.nama + '<span class="cc-opt-sub">' + a.dapil + '</span></div>';
+  }).join('');
+  var empty = document.getElementById('pNamaOptionEmpty');
+  if(empty){ empty.style.display = list.length === 0 ? 'block' : 'none'; }
+}
+function togglePNamaDropdown(e){
+  e.preventDefault();
+  e.stopPropagation();
+  var dd = document.getElementById('pNamaDropdown');
+  var btn = document.getElementById('pNamaBtn');
+  if(!dd) return;
+  dd.classList.toggle('open');
+  var isOpen = dd.classList.contains('open');
+  if(btn){ btn.classList.toggle('open', isOpen); }
+  if(isOpen){
+    var search = document.getElementById('pNamaSearchInput');
+    if(search){ search.value = ''; filterPNamaOptions(''); setTimeout(function(){ search.focus(); }, 0); }
+  }
+}
+function filterPNamaOptions(query){
+  var q = query.trim().toLowerCase();
+  var options = document.querySelectorAll('#pNamaOptionList .cc-option');
+  var visibleCount = 0;
+  options.forEach(function(opt){
+    var match = opt.dataset.name.toLowerCase().indexOf(q) !== -1;
+    opt.classList.toggle('cc-hidden', !match);
+    if(match){ visibleCount++; }
+  });
+  var empty = document.getElementById('pNamaOptionEmpty');
+  if(empty){ empty.style.display = visibleCount === 0 ? 'block' : 'none'; }
+}
+function selectPNama(el){
+  document.getElementById('pNama').value = el.dataset.name;
+  var label = document.getElementById('pNamaLabel');
+  if(label){ label.textContent = el.dataset.name; label.style.color = 'var(--ink)'; label.style.fontWeight = '800'; }
+  var dd = document.getElementById('pNamaDropdown');
+  var btn = document.getElementById('pNamaBtn');
+  if(dd){ dd.classList.remove('open'); }
+  if(btn){ btn.classList.remove('open'); }
+}
+document.addEventListener('click', function(){
+  var dd = document.getElementById('pNamaDropdown');
+  var btn = document.getElementById('pNamaBtn');
+  if(dd){ dd.classList.remove('open'); }
+  if(btn){ btn.classList.remove('open'); }
+});
+renderPNamaOptions();
+
 var pesertaCount = 0;
 function addPeserta(){
   var nama = document.getElementById('pNama').value.trim();
-  if(!nama){ toast('Nama peserta wajib diisi'); return; }
+  if(!nama){ toast('Pilih nama anggota dapil terlebih dahulu'); return; }
   var gender = document.getElementById('pGender').value;
   var hp = document.getElementById('pHp').value.trim();
   var jenis = document.getElementById('pJenis').value;
@@ -508,6 +632,8 @@ function addPeserta(){
   checkEmpty('pesertaList','pesertaEmpty');
 
   ['pNama','pNik','pHp','pKerja','pInstansi'].forEach(function(id){ document.getElementById(id).value = ''; });
+  var pNamaLabel = document.getElementById('pNamaLabel');
+  if(pNamaLabel){ pNamaLabel.textContent = 'Cari nama anggota dapil…'; pNamaLabel.style.color = 'var(--muted)'; pNamaLabel.style.fontWeight = '600'; }
   document.getElementById('pGender').selectedIndex = 0;
   document.getElementById('pJenis').selectedIndex = 0;
   document.getElementById('pHadir').selectedIndex = 0;
