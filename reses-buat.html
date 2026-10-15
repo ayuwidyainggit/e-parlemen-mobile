@@ -475,6 +475,17 @@ a{color:inherit;}
     </form>
 
   </div>
+
+  <div class="modal-backdrop" id="riwayatPersentaseBackdrop" onclick="if(event.target===this){ closeRiwayatPersentaseModal(); }">
+    <div class="modal-sheet">
+      <div class="modal-sheet-head">
+        <h3 id="riwayatModalTitle">Riwayat Progres</h3>
+        <button type="button" class="modal-close" onclick="closeRiwayatPersentaseModal()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>
+      </div>
+      <div id="riwayatPersentaseList"></div>
+      <div class="sub-empty" id="riwayatPersentaseEmpty">Belum ada riwayat progres untuk Pokir ini.</div>
+    </div>
+  </div>
 <div class="bottomnav"><a class="navitem" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem active" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -513,15 +524,92 @@ function toast(msg){
     });
   }
 })();
+var POKIR_PROGRESS = {
+  'POKIR-002': { current:35, riwayat: [
+    {tanggal:'18 Feb 2025', persen:10, catatan:'Survei lokasi dan pengukuran awal saluran drainase.'},
+    {tanggal:'5 Apr 2025', persen:35, catatan:'Pembersihan saluran dan pengecoran tahap 1 selesai.'}
+  ]},
+  'POKIR-004': { current:55, riwayat: [
+    {tanggal:'22 Mar 2025', persen:20, catatan:'Pembongkaran atap ruang kelas lama.'},
+    {tanggal:'10 Mei 2025', persen:55, catatan:'Pemasangan rangka atap baru dan pengecatan dinding.'}
+  ]},
+  'POKIR-006': { current:70, riwayat: [
+    {tanggal:'14 Feb 2025', persen:30, catatan:'Pemasangan pondasi jembatan.'},
+    {tanggal:'12 Apr 2025', persen:70, catatan:'Struktur jembatan utama selesai, tahap finishing.'}
+  ]},
+  'POKIR-008': { current:40, riwayat: [
+    {tanggal:'9 Mar 2025', persen:15, catatan:'Pengajuan material renovasi posyandu.'},
+    {tanggal:'20 Mei 2025', persen:40, catatan:'Renovasi dinding dan lantai sedang berjalan.'}
+  ]}
+};
+
 function toggleJenisKegiatan(){
   var sel = document.getElementById('jenisKegiatanSelect');
   var pokirField = document.getElementById('pokirField');
   if(!sel || !pokirField) return;
   var isKunjunganLapangan = sel.value === 'Kunjungan Lapangan';
   pokirField.style.display = isKunjunganLapangan ? 'block' : 'none';
-  if(!isKunjunganLapangan){ document.getElementById('pokirSelect').value = ''; }
+  document.getElementById('progresField').style.display = isKunjunganLapangan ? 'block' : 'none';
+  document.getElementById('persentaseField').style.display = isKunjunganLapangan ? 'block' : 'none';
+  if(!isKunjunganLapangan){
+    document.getElementById('pokirSelect').value = '';
+    document.getElementById('progresCatatan').value = '';
+    document.getElementById('persentaseInput').value = '';
+    onPokirChange();
+  }
+}
+function onPokirChange(){
+  var pokirId = document.getElementById('pokirSelect').value;
+  var data = POKIR_PROGRESS[pokirId];
+  var currentText = document.getElementById('persentaseCurrentText');
+  var input = document.getElementById('persentaseInput');
+  if(data){
+    currentText.textContent = data.current + '%';
+    input.placeholder = 'Masukkan persentase progres terbaru (saat ini ' + data.current + '%)';
+  } else {
+    currentText.textContent = '—';
+    input.placeholder = 'Pilih Pokir Terkait untuk mencatat progres';
+  }
+}
+function clampPersentaseInput(el){
+  if(el.value === ''){ return; }
+  var val = parseInt(el.value, 10);
+  if(isNaN(val)){ el.value = ''; return; }
+  if(val > 100){ val = 100; }
+  if(val < 0){ val = 0; }
+  el.value = val;
+}
+function openRiwayatPersentaseModal(){
+  var pokirSelect = document.getElementById('pokirSelect');
+  var pokirId = pokirSelect.value;
+  var pokirName = pokirSelect.options[pokirSelect.selectedIndex] ? pokirSelect.options[pokirSelect.selectedIndex].textContent : '';
+  document.getElementById('riwayatModalTitle').textContent = 'Riwayat Progres' + (pokirId ? ' · ' + pokirName : '');
+
+  var data = POKIR_PROGRESS[pokirId];
+  var list = document.getElementById('riwayatPersentaseList');
+  var empty = document.getElementById('riwayatPersentaseEmpty');
+  if(!data || !data.riwayat.length){
+    list.innerHTML = '';
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+    list.innerHTML = data.riwayat.slice().reverse().map(function(r){
+      return '<div class="sub-item">'
+        + '<div class="si-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div>'
+        + '<div class="si-body">'
+        +   '<div class="si-title">' + r.persen + '% &middot; ' + r.tanggal + '</div>'
+        +   '<div class="si-meta">' + r.catatan + '</div>'
+        + '</div>'
+        + '</div>';
+    }).join('');
+  }
+  document.getElementById('riwayatPersentaseBackdrop').classList.add('open');
+}
+function closeRiwayatPersentaseModal(){
+  document.getElementById('riwayatPersentaseBackdrop').classList.remove('open');
 }
 toggleJenisKegiatan();
+onPokirChange();
 function selectChip(el, groupId){
   document.querySelectorAll('#' + groupId + ' .chip').forEach(function(c){ c.classList.remove('active'); });
   el.classList.add('active');

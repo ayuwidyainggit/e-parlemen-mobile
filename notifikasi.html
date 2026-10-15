@@ -306,20 +306,20 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     <div class="tabs">
       <button type="button" class="tab active" data-tabgroup="nt" onclick="showTab('nt','semua',this)">Semua</button>
       <button type="button" class="tab" data-tabgroup="nt" onclick="showTab('nt','undangan',this)">Undangan</button>
-      <button type="button" class="tab" data-tabgroup="nt" onclick="showTab('nt','agenda',this)">Agenda</button>
       <button type="button" class="tab" data-tabgroup="nt" onclick="showTab('nt','persuratan',this)">Persuratan</button>
-      <button type="button" class="tab" data-tabgroup="nt" onclick="showTab('nt','sistem',this)">Sistem</button>
+      <button type="button" class="tab" data-tabgroup="nt" onclick="showTab('nt','reses',this)">Reses &amp; Dapil</button>
     </div>
-    <div class="stats-grid">
-      <div class="stat danger"><div class="stat-ic" style="background:var(--warn-bg);color:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div><div class="num">5</div><div class="lbl">Undangan</div></div>
-      <div class="stat success"><div class="stat-ic" style="background:var(--warn-bg);color:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div><div class="num">8</div><div class="lbl">Agenda</div></div>
-      <div class="stat warn"><div class="stat-ic" style="background:var(--info-bg);color:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div><div class="num">6</div><div class="lbl">Persuratan</div></div>
-      <div class="stat info"><div class="stat-ic" style="background:var(--info-bg);color:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></div><div class="num">3</div><div class="lbl">Sistem</div></div>
-    </div>
-
     <div class="section-title">Terbaru<a class="more" href="#">Tandai Semua Dibaca</a></div>
 
     <div id="nt-semua" data-panel-group="nt" style="display:block;">
+      <a class="list-item bl-info" href="surat-keluar-detail.html">
+        <div class="icon-box" style="background:var(--info-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+        <div class="content">
+          <div class="title">Surat Keluar Disubmit Sekretariat</div>
+          <div class="meta">Sekretariat telah mensubmit Surat Keluar No. 012/SK/DPRD/V/2025 melalui web, siap diproses.</div>
+        </div>
+        <div class="side">10:20</div>
+      </a>
       <a class="list-item bl-danger" href="detail-undangan.html">
         <div class="icon-box" style="background:var(--danger-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
         <div class="content">
@@ -336,14 +336,6 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
         </div>
         <div class="side">08:45</div>
       </a>
-      <div class="list-item bl-warn">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5"/><path d="M9 2h6"/><path d="M18.5 5.5l1.3-1.3"/></svg></div>
-        <div class="content">
-          <div class="title">Pengingat Agenda</div>
-          <div class="meta">Rapat Komisi I akan dimulai dalam 30 menit lagi di Ruang Rapat Komisi I.</div>
-        </div>
-        <div class="side">09:00</div>
-      </div>
       <a class="list-item bl-danger" href="detail-undangan.html">
         <div class="icon-box" style="background:var(--danger-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.5 20c1-3.6 3.6-5.5 5.5-5.5s4.5 1.9 5.5 5.5"/><path d="M14.5 15.2c1.9.2 3.7 2 4.5 4.8"/></svg></div>
         <div class="content">
@@ -360,14 +352,14 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
         </div>
         <div class="side">Kemarin</div>
       </a>
-      <div class="list-item bl-info">
-        <div class="icon-box" style="background:var(--info-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+      <a class="list-item bl-success" href="reses-kunjungan.html">
+        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.5 20c1-3.6 3.6-5.5 5.5-5.5s4.5 1.9 5.5 5.5"/><path d="M14.5 15.2c1.9.2 3.7 2 4.5 4.8"/></svg></div>
         <div class="content">
-          <div class="title">Sistem</div>
-          <div class="meta">Laporan Reses Masa Persidangan II Tahun 2025 berhasil disimpan.</div>
+          <div class="title">Pengingat Kunjungan Dapil</div>
+          <div class="meta">Kunjungan Dapil di Kec. Magelang Utara dijadwalkan besok, 25 Mei 2025.</div>
         </div>
-        <div class="side">2 hari lalu</div>
-      </div>
+        <div class="side">3 hari lalu</div>
+      </a>
     </div>
 
     <div id="nt-undangan" data-panel-group="nt" style="display:none;">
@@ -389,18 +381,15 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       </a>
     </div>
 
-    <div id="nt-agenda" data-panel-group="nt" style="display:none;">
-      <div class="list-item bl-warn">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5"/><path d="M9 2h6"/><path d="M18.5 5.5l1.3-1.3"/></svg></div>
-        <div class="content">
-          <div class="title">Pengingat Agenda</div>
-          <div class="meta">Rapat Komisi I akan dimulai dalam 30 menit lagi di Ruang Rapat Komisi I.</div>
-        </div>
-        <div class="side">09:00</div>
-      </div>
-    </div>
-
     <div id="nt-persuratan" data-panel-group="nt" style="display:none;">
+      <a class="list-item bl-info" href="surat-keluar-detail.html">
+        <div class="icon-box" style="background:var(--info-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+        <div class="content">
+          <div class="title">Surat Keluar Disubmit Sekretariat</div>
+          <div class="meta">Sekretariat telah mensubmit Surat Keluar No. 012/SK/DPRD/V/2025 melalui web, siap diproses.</div>
+        </div>
+        <div class="side">10:20</div>
+      </a>
       <a class="list-item bl-success" href="surat-masuk-detail.html">
         <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div>
         <div class="content">
@@ -419,11 +408,27 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       </a>
     </div>
 
-    <div id="nt-sistem" data-panel-group="nt" style="display:none;">
+    <div id="nt-reses" data-panel-group="nt" style="display:none;">
+      <a class="list-item bl-danger" href="detail-undangan.html">
+        <div class="icon-box" style="background:var(--danger-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.5 20c1-3.6 3.6-5.5 5.5-5.5s4.5 1.9 5.5 5.5"/><path d="M14.5 15.2c1.9.2 3.7 2 4.5 4.8"/></svg></div>
+        <div class="content">
+          <div class="title">Undangan Kunjungan Dapil</div>
+          <div class="meta">Anda diundang kegiatan Kunjungan Dapil di Kec. Mertoyudan, 25 Mei 2025.</div>
+        </div>
+        <div class="side">Kemarin</div>
+      </a>
+      <a class="list-item bl-success" href="reses-kunjungan.html">
+        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.6"/><path d="M2.5 20c1-3.6 3.6-5.5 5.5-5.5s4.5 1.9 5.5 5.5"/><path d="M14.5 15.2c1.9.2 3.7 2 4.5 4.8"/></svg></div>
+        <div class="content">
+          <div class="title">Pengingat Kunjungan Dapil</div>
+          <div class="meta">Kunjungan Dapil di Kec. Magelang Utara dijadwalkan besok, 25 Mei 2025.</div>
+        </div>
+        <div class="side">3 hari lalu</div>
+      </a>
       <div class="list-item bl-info">
         <div class="icon-box" style="background:var(--info-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
         <div class="content">
-          <div class="title">Sistem</div>
+          <div class="title">Laporan Reses Tersimpan</div>
           <div class="meta">Laporan Reses Masa Persidangan II Tahun 2025 berhasil disimpan.</div>
         </div>
         <div class="side">2 hari lalu</div>
