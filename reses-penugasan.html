@@ -131,24 +131,11 @@ a{color:inherit;}
 
 .two-col{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
 
-.filter-wrap{position:relative;}
-.filter-btn{display:flex; align-items:center; gap:5px; background:#fff; border:1px solid var(--border); border-radius:10px; padding:11px 12px; font-size:13px; font-weight:600; color:var(--ink); white-space:nowrap; font-family:inherit; cursor:pointer;}
-.filter-btn .ic-svg{width:14px; height:14px; color:var(--muted);}
-.filter-btn .chev-ic{transition:transform .15s ease; margin-left:auto;}
-.filter-btn.open .chev-ic{transform:rotate(180deg);}
-.filter-dropdown{display:none; position:absolute; top:calc(100% + 6px); left:0; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.14); z-index:30;}
-.filter-dropdown.open{display:block;}
-.cc-option-list{max-height:220px; overflow-y:auto;}
-.cc-option-empty{padding:12px 8px; text-align:center; font-size:11.5px; color:var(--muted);}
-.cc-option-check{display:flex; align-items:center; gap:9px; padding:9px 8px; border-radius:8px; font-size:12px; font-weight:700; color:var(--ink); cursor:pointer;}
-.cc-option-check:hover{background:var(--neutral-bg);}
-.cc-option-check input[type=checkbox]{width:16px; height:16px; flex-shrink:0; accent-color:var(--green);}
-.cc-option-check .cc-opt-sub{font-size:10px; font-weight:600; color:var(--muted); margin-left:auto; flex-shrink:0;}
-
-.chip-row{display:flex; flex-wrap:wrap; gap:7px;}
-.chip-sel{display:inline-flex; align-items:center; gap:6px; padding:6px 8px 6px 12px; border-radius:20px; background:var(--green); color:#fff; font-size:11px; font-weight:700;}
-.chip-sel button{background:rgba(255,255,255,.22); border:none; color:#fff; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; flex-shrink:0;}
-.chip-sel button svg{width:9px; height:9px;}
+.chk-list{border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#fff;}
+.chk-item{display:flex; align-items:center; gap:9px; padding:10px 12px; font-size:12.5px; font-weight:600; color:var(--ink); border-bottom:1px solid var(--border);}
+.chk-item:last-child{border-bottom:none;}
+.chk-item input{width:16px; height:16px; flex-shrink:0; accent-color:var(--green);}
+.chk-item .cs{font-size:10.5px; color:var(--muted); margin-left:auto; flex-shrink:0;}
 
 .info-box{background:var(--info-bg); border-radius:12px; padding:11px 12px; font-size:11.5px; color:#2a5583; display:flex; gap:9px; align-items:flex-start; line-height:1.5; margin-bottom:16px;}
 
@@ -187,96 +174,69 @@ a{color:inherit;}
 
     <div class="info-box">
       <span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span>
-      <span id="infoText">Tetapkan dapil, periode, dan anggota DPRD yang ditugaskan untuk kegiatan reses ini. Simpan sebagai draf atau langsung tetapkan penugasan.</span>
+      <span id="infoText">Isi nomor, kegiatan, dan lokasi untuk penugasan reses Anda. Simpan sebagai draf atau langsung tetapkan penugasan.</span>
     </div>
 
     <form id="penugasanForm" onsubmit="return submitPenugasan(event,false)">
 
       <div class="card">
         <div class="section-title" style="margin-bottom:4px;">Informasi Penugasan</div>
-        <div class="hint" style="margin-bottom:14px;">Jenis kegiatan, dapil, dan anggota yang ditugaskan.</div>
+        <div class="hint" style="margin-bottom:14px;">Nomor, jenis, kegiatan, dan lokasi penugasan.</div>
 
-        <div class="field"><label>Jenis <span class="opt">(wajib)</span></label>
-          <select id="jenisSelect" required onchange="onJenisChange()">
+        <div class="field"><label>No. Penugasan <span class="opt">(wajib &middot; harus unik)</span></label>
+          <input type="text" id="noPenugasanInput" placeholder="Contoh: P-00015" required>
+        </div>
+
+        <div class="field"><label>Jenis Penugasan <span class="opt">(wajib)</span></label>
+          <select id="jenisPenugasanSelect" required onchange="onJenisPenugasanChange()">
             <option value="Reses">Reses</option>
-            <option value="Dapil">Kunjungan Dapil</option>
+            <option value="Kunjungan Dapil">Kunjungan Dapil</option>
+            <option value="Kunjungan Kerja">Kunjungan Kerja</option>
           </select>
         </div>
 
-        <div class="field"><label>Dapil <span class="opt">(wajib)</span></label>
-          <select id="dapilSelect" required onchange="onDapilChangeP()">
-            <option value="">Pilih dapil&hellip;</option>
-            <option>Dapil 1</option>
-            <option>Dapil 2</option>
-            <option>Dapil 3</option>
-          </select>
+        <div class="field"><label>Kegiatan <span class="opt">(wajib)</span></label>
+          <input type="text" id="kegiatanInput" placeholder="Contoh: Dialog Masyarakat Kelurahan Wates" required>
         </div>
 
-        <div class="field">
-          <label>Anggota DPRD <span class="opt">(wajib &middot; bisa pilih lebih dari satu)</span></label>
-          <div class="filter-wrap">
-            <button type="button" class="filter-btn" id="anggotaBtn" onclick="toggleAnggotaDropdown(event)" style="width:100%;">
-              <span id="anggotaBtnLabel" style="color:var(--muted); font-weight:600;">Pilih anggota DPRD&hellip;</span>
-              <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <div class="filter-dropdown" id="anggotaDropdown" style="width:100%;">
-              <div class="cc-option-list" id="anggotaOptionList" style="padding:6px;"></div>
-              <div class="cc-option-empty" id="anggotaOptionEmpty">Pilih dapil terlebih dahulu.</div>
-            </div>
-          </div>
-          <div class="chip-row" id="anggotaChipRow" style="margin-top:9px;"></div>
-        </div>
-
-        <div class="field" id="periodeField"><label>Periode Reses <span class="opt">(wajib)</span></label>
-          <select id="periodeSelect" required>
-            <option value="">Pilih periode&hellip;</option>
-            <option>Reses I Tahun 2026</option>
-            <option selected>Reses II Tahun 2026</option>
-            <option>Reses III Tahun 2026</option>
+        <div class="field"><label>Jenis Lokasi Penugasan <span class="opt">(wajib)</span></label>
+          <select id="lokasiJenisSelect" required onchange="toggleLokasiFields()">
+            <option value="DALAM_KOTA">Dalam Kota</option>
+            <option value="LUAR_KOTA">Luar Kota</option>
+            <option value="LUAR_NEGERI">Luar Negeri</option>
           </select>
+        </div>
+        <div class="field" id="lokasiKelurahanField"><label>Kelurahan</label>
+          <select id="lokasiKelurahanSelect"></select>
+        </div>
+        <div class="two-col" id="lokasiKabupatenProvinsiField" style="display:none;">
+          <div class="field"><label>Provinsi</label><select id="lokasiProvinsiSelect" onchange="onLokasiProvinsiChange()"></select></div>
+          <div class="field"><label>Kabupaten/Kota</label><select id="lokasiKabupatenSelect"></select></div>
+        </div>
+        <div class="field" id="lokasiNegaraField" style="display:none;"><label>Negara</label>
+          <select id="lokasiNegaraSelect"></select>
         </div>
 
         <div class="field"><label id="tanggalLabel">Tanggal Kegiatan</label><input type="date" id="tanggalInput" required></div>
-        <div class="two-col">
+        <div class="two-col" style="margin-bottom:0;">
           <div class="field"><label>Jam Mulai</label><input type="time" id="jamMulaiInput" value="09:00" required></div>
           <div class="field"><label>Jam Selesai</label><input type="time" id="jamSelesaiInput" value="12:00" required></div>
         </div>
-
-        <div class="field"><label>Jenis Kegiatan</label>
-          <select id="jenisKegiatanSelect" required>
-            <option value="">Pilih jenis kegiatan&hellip;</option>
-            <option>Pertemuan Masyarakat</option>
-            <option>Kunjungan Lapangan</option>
-            <option>Dialog Masyarakat</option>
-            <option>Sosialisasi</option>
-            <option>Penyerapan Aspirasi</option>
-            <option>Kunjungan Fasilitas Publik</option>
-            <option>Lainnya</option>
-          </select>
-        </div>
-
-        <div class="field" id="pokirField" style="display:none;">
-          <label>Pokir Terkait <span class="opt">(opsional)</span></label>
-          <select id="pokirSelect" onchange="onPokirChangeP()">
-            <option value="">Pilih usulan Pokir&hellip;</option>
-            <option value="POKIR-002">Normalisasi Saluran Drainase</option>
-            <option value="POKIR-004">Rehabilitasi Ruang Kelas SDN 2 Rejowinangun</option>
-            <option value="POKIR-006">Perbaikan Jembatan Kali Bening</option>
-            <option value="POKIR-008">Renovasi Posyandu Melati</option>
-          </select>
-          <div class="hint" style="margin-top:8px; display:flex; justify-content:space-between; align-items:center; gap:8px;">
-            <span>Progres terakhir: <strong id="pokirPersenTerakhir" style="color:var(--ink);">&mdash;</strong></span>
-          </div>
-        </div>
-
-        <div class="field" style="margin-bottom:0;"><label>Lokasi Rencana</label><textarea id="lokasiInput" placeholder="Contoh: Balai Desa Sukamaju, Kec. Magelang Utara" required></textarea></div>
       </div>
 
       <div class="card" style="margin-bottom:16px;">
         <div class="section-title" style="margin-bottom:4px;">Catatan</div>
-        <div class="hint" style="margin-bottom:14px;">Catatan tambahan untuk anggota yang ditugaskan.</div>
+        <div class="hint" style="margin-bottom:14px;">Catatan tambahan untuk penugasan ini.</div>
         <div class="field" style="margin-bottom:0;"><label>Catatan <span class="opt">(opsional)</span></label><textarea id="catatanInput" placeholder="Contoh: Koordinasikan dengan kelurahan setempat sebelum kegiatan."></textarea></div>
       </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="section-title" style="margin-bottom:4px;">Config Approval</div>
+        <div class="hint" style="margin-bottom:10px;">Pilih 1&ndash;2 approver <span class="opt">(wajib saat disimpan, bukan Draft)</span>. Approval tidak berjenjang &mdash; penugasan lanjut begitu salah satu approver menyetujui/menolak.</div>
+        <div class="chk-list" id="approverList"></div>
+      </div>
+
+      <div class="hint" style="margin:-4px 0 12px;">Bila disimpan lewat tombol "Simpan Penugasan", status Penugasan akan menjadi <strong>Menunggu Approval</strong> dan dikirim ke approver terpilih di atas.</div>
 
       <div class="btn-row">
         <a class="btn btn-outline" href="reses-kunjungan.html">Batal</a>
@@ -305,196 +265,204 @@ var idParam = getParam('id');
 var modeParam = getParam('mode');
 var isEdit = modeParam === 'edit' && !!idParam;
 
-var ANGGOTA_DAPIL = [
-  { nama:'M. Yusuf Ridwan, S.E.', dapil:'Dapil 1' },
-  { nama:'Ir. Budi Santoso, M.T.', dapil:'Dapil 1' },
-  { nama:'R. Hendra Wijaya, S.H.', dapil:'Dapil 2' },
-  { nama:'Drs. Ahmad Fauzi', dapil:'Dapil 2' },
-  { nama:'Hj. Siti Rahmawati', dapil:'Dapil 3' }
+// Kelurahan Kota Magelang (3 kecamatan), dipakai utk opsi "Dalam Kota" - sejalan dgn Master Dapil di web.
+var KELURAHAN_LIST = [
+  { nama:'Jurangombo Utara', kecamatan:'Magelang Selatan' },
+  { nama:'Jurangombo Selatan', kecamatan:'Magelang Selatan' },
+  { nama:'Magersari', kecamatan:'Magelang Selatan' },
+  { nama:'Tidar Selatan', kecamatan:'Magelang Selatan' },
+  { nama:'Rejowinangun Selatan', kecamatan:'Magelang Selatan' },
+  { nama:'Kemirirejo', kecamatan:'Magelang Tengah' },
+  { nama:'Cacaban', kecamatan:'Magelang Tengah' },
+  { nama:'Magelang', kecamatan:'Magelang Tengah' },
+  { nama:'Panjang', kecamatan:'Magelang Tengah' },
+  { nama:'Gelangan', kecamatan:'Magelang Tengah' },
+  { nama:'Kedungsari', kecamatan:'Magelang Utara' },
+  { nama:'Potrobangsan', kecamatan:'Magelang Utara' },
+  { nama:'Wates', kecamatan:'Magelang Utara' },
+  { nama:'Kramat Selatan', kecamatan:'Magelang Utara' },
+  { nama:'Kramat Utara', kecamatan:'Magelang Utara' }
 ];
+var LOKASI_PROVINSI_LIST = ['Aceh','Sumatera Utara','Sumatera Barat','Riau','Kepulauan Riau','Jambi','Sumatera Selatan','Kepulauan Bangka Belitung','Bengkulu','Lampung','DKI Jakarta','Jawa Barat','Jawa Tengah','DI Yogyakarta','Jawa Timur','Banten','Bali','Nusa Tenggara Barat','Nusa Tenggara Timur','Kalimantan Barat','Kalimantan Tengah','Kalimantan Selatan','Kalimantan Timur','Kalimantan Utara','Sulawesi Utara','Sulawesi Tengah','Sulawesi Selatan','Sulawesi Tenggara','Gorontalo','Sulawesi Barat','Maluku','Maluku Utara','Papua','Papua Barat','Papua Tengah','Papua Pegunungan','Papua Selatan','Papua Barat Daya'];
+var LOKASI_KABUPATEN_BY_PROVINSI = {
+  'Sumatera Utara': ['Kota Medan'],
+  'Sumatera Barat': ['Kota Padang'],
+  'Riau': ['Kota Pekanbaru'],
+  'Kepulauan Riau': ['Kota Batam'],
+  'Sumatera Selatan': ['Kota Palembang'],
+  'DKI Jakarta': ['Kota Jakarta Selatan','Kota Jakarta Pusat'],
+  'Jawa Barat': ['Kota Bandung','Kota Bogor','Kabupaten Bogor'],
+  'Jawa Tengah': ['Kota Semarang','Kota Surakarta','Kabupaten Magelang','Kabupaten Purworejo','Kabupaten Temanggung','Kabupaten Wonosobo','Kabupaten Kebumen','Kabupaten Boyolali'],
+  'DI Yogyakarta': ['Kota Yogyakarta','Kabupaten Sleman','Kabupaten Bantul'],
+  'Jawa Timur': ['Kota Surabaya','Kota Malang'],
+  'Bali': ['Kota Denpasar','Kabupaten Badung'],
+  'Kalimantan Barat': ['Kota Pontianak'],
+  'Kalimantan Selatan': ['Kota Banjarmasin'],
+  'Kalimantan Timur': ['Kota Balikpapan'],
+  'Sulawesi Utara': ['Kota Manado'],
+  'Sulawesi Selatan': ['Kota Makassar']
+};
+var LOKASI_NEGARA_LIST = ['Singapura','Malaysia','Thailand','Filipina','Vietnam','Brunei Darussalam','Kamboja','Laos','Myanmar','Timor Leste','Jepang','Korea Selatan','Tiongkok','India','Australia','Selandia Baru','Amerika Serikat','Kanada','Inggris','Jerman','Prancis','Belanda','Belgia','Swiss','Spanyol','Italia','Uni Emirat Arab','Arab Saudi','Turki','Mesir','Afrika Selatan','Lainnya'];
 
-var POKIR_PROGRESS = {
-  'POKIR-002': { current:35 },
-  'POKIR-004': { current:55 },
-  'POKIR-006': { current:70 },
-  'POKIR-008': { current:40 }
+// No. Penugasan yang sudah dipakai (lihat daftar di reses-kunjungan.html) - utk validasi unik di bawah.
+var EXISTING_NO_PENUGASAN = ['P-00002','P-00005','P-00006','P-00008','P-00009','P-00011','P-00013','P-00014'];
+
+// Config Approval: approver selalu dari Pucuk Pimpinan (Ketua DPRD & Ketua Sekretariat), sama seperti
+// di web - approval tidak berjenjang, cukup salah satu dari approver terpilih yang menyetujui/menolak.
+var APPROVER_OPTIONS = [
+  { id:'ketua-dprd', nama:'Ketua DPRD Kota Magelang', label:'Ketua DPRD' },
+  { id:'ketua-sekre', nama:'Sekretariat DPRD Kota Magelang', label:'Ketua Sekretariat' }
+];
+function renderApproverList(selectedIds){
+  selectedIds = selectedIds || [];
+  document.getElementById('approverList').innerHTML = APPROVER_OPTIONS.map(function(a){
+    var checked = selectedIds.indexOf(a.id) !== -1 ? ' checked' : '';
+    return '<label class="chk-item"><input type="checkbox" value="' + a.id + '" onchange="enforceApproverMax()"' + checked + '> ' + a.nama + ' <span class="cs">' + a.label + '</span></label>';
+  }).join('');
+}
+function enforceApproverMax(){
+  var boxes = document.querySelectorAll('#approverList input[type="checkbox"]');
+  var checkedBoxes = Array.prototype.filter.call(boxes, function(b){ return b.checked; });
+  if(checkedBoxes.length > 2){
+    checkedBoxes[checkedBoxes.length - 1].checked = false;
+    toast('Maksimal 2 approver.');
+  }
+}
+function getSelectedApproverIds(){
+  return Array.prototype.map.call(document.querySelectorAll('#approverList input[type="checkbox"]:checked'), function(cb){ return cb.value; });
+}
+
+var JENIS_TITLE_MAP = { 'Reses':'Penugasan Reses', 'Kunjungan Dapil':'Penugasan Kunjungan Dapil', 'Kunjungan Kerja':'Penugasan Kunjungan Kerja' };
+var JENIS_INFO_MAP = {
+  'Reses':'Isi nomor, kegiatan, dan lokasi untuk penugasan reses Anda. Simpan sebagai draf atau langsung tetapkan penugasan.',
+  'Kunjungan Dapil':'Isi nomor, kegiatan, dan lokasi untuk kunjungan dapil Anda. Simpan sebagai draf atau langsung tetapkan penugasan.',
+  'Kunjungan Kerja':'Isi nomor, kegiatan, dan lokasi untuk kunjungan kerja Anda. Simpan sebagai draf atau langsung tetapkan penugasan.'
 };
 
 var ASSIGNMENTS = {
   'reses-4': {
-    jenis:'Reses', dapil:'Dapil 1', anggota:['Ir. Budi Santoso, M.T.'],
-    periode:'Reses III Tahun 2026', tanggal:'', jamMulai:'09:00', jamSelesai:'12:00',
-    jenisKegiatan:'', pokir:'', lokasi:'', catatan:'Belum dijadwalkan, menunggu konfirmasi lokasi.'
+    noPenugasan:'P-00013', jenisPenugasan:'Reses', kegiatan:'Reses Masa Persidangan III Tahun 2025',
+    lokasiJenis:'DALAM_KOTA', lokasiKelurahan:'', lokasiProvinsi:'', lokasiKabupaten:'', lokasiNegara:'',
+    tanggal:'', jamMulai:'09:00', jamSelesai:'12:00',
+    catatan:'Belum dijadwalkan, menunggu konfirmasi lokasi.', approverIds:[]
   },
   'kunjungan-4': {
-    jenis:'Dapil', dapil:'Dapil 2', anggota:['R. Hendra Wijaya, S.H.','Drs. Ahmad Fauzi'],
-    periode:'', tanggal:'', jamMulai:'09:00', jamSelesai:'11:00',
-    jenisKegiatan:'Sosialisasi', pokir:'', lokasi:'Kec. Magelang Tengah',
-    catatan:'Koordinasikan dengan kelurahan sebelum sosialisasi Perda Retribusi.'
+    noPenugasan:'P-00014', jenisPenugasan:'Kunjungan Dapil', kegiatan:'Kunjungan Sosialisasi Perda Retribusi',
+    lokasiJenis:'DALAM_KOTA', lokasiKelurahan:'', lokasiProvinsi:'', lokasiKabupaten:'', lokasiNegara:'',
+    tanggal:'', jamMulai:'09:00', jamSelesai:'11:00',
+    catatan:'Koordinasikan dengan kelurahan sebelum sosialisasi Perda Retribusi.', approverIds:['ketua-dprd']
   }
 };
 
-var selectedAnggota = [];
+var editingNoPenugasanOriginal = null;
 
-function updateTitles(){
-  var jenis = document.getElementById('jenisSelect').value;
-  var isDapil = jenis === 'Dapil';
-  var base = isDapil ? 'Penugasan Kunjungan Dapil' : 'Penugasan Reses';
-  document.getElementById('pageTitle').textContent = (isEdit ? 'Edit ' : 'Tambah ') + base;
-  document.getElementById('infoText').textContent = isDapil
-    ? 'Tetapkan dapil dan anggota DPRD yang ditugaskan untuk kunjungan dapil ini. Simpan sebagai draf atau langsung tetapkan penugasan.'
-    : 'Tetapkan dapil, periode, dan anggota DPRD yang ditugaskan untuk kegiatan reses ini. Simpan sebagai draf atau langsung tetapkan penugasan.';
-  document.getElementById('tanggalLabel').textContent = isDapil ? 'Tanggal Kegiatan' : 'Tanggal Kegiatan';
+function onJenisPenugasanChange(){
+  var jenis = document.getElementById('jenisPenugasanSelect').value;
+  document.getElementById('pageTitle').textContent = (isEdit ? 'Edit ' : 'Tambah ') + (JENIS_TITLE_MAP[jenis] || 'Penugasan');
+  document.getElementById('infoText').textContent = JENIS_INFO_MAP[jenis] || '';
 }
 
-function onJenisChange(){
-  var isDapil = document.getElementById('jenisSelect').value === 'Dapil';
-  var periodeField = document.getElementById('periodeField');
-  var periodeSelect = document.getElementById('periodeSelect');
-  periodeField.style.display = isDapil ? 'none' : 'block';
-  periodeSelect.required = !isDapil;
-
-  var pokirField = document.getElementById('pokirField');
-  pokirField.style.display = isDapil ? 'block' : 'none';
-  if(!isDapil){
-    document.getElementById('pokirSelect').value = '';
-    onPokirChangeP();
-  }
-  updateTitles();
+function populateLokasiKelurahanSelect(selected){
+  var sel = document.getElementById('lokasiKelurahanSelect');
+  sel.innerHTML = '<option value="">Pilih kelurahan&hellip;</option>' + KELURAHAN_LIST.map(function(k){ return '<option value="' + k.nama + '">' + k.nama + ' (Kec. ' + k.kecamatan + ')</option>'; }).join('');
+  sel.value = selected || '';
 }
-
-function onPokirChangeP(){
-  var pokirId = document.getElementById('pokirSelect').value;
-  var data = POKIR_PROGRESS[pokirId];
-  document.getElementById('pokirPersenTerakhir').textContent = data ? data.current + '%' : '—';
+function populateLokasiProvinsiSelect(selected){
+  var sel = document.getElementById('lokasiProvinsiSelect');
+  sel.innerHTML = '<option value="">Pilih provinsi&hellip;</option>' + LOKASI_PROVINSI_LIST.map(function(p){ return '<option value="' + p + '">' + p + '</option>'; }).join('');
+  sel.value = selected || '';
 }
-
-function onDapilChangeP(){
-  selectedAnggota = selectedAnggota.filter(function(nama){
-    var dapil = document.getElementById('dapilSelect').value;
-    var a = ANGGOTA_DAPIL.filter(function(x){ return x.dapil === dapil; });
-    return a.some(function(x){ return x.nama === nama; });
-  });
-  renderAnggotaOptions();
-  renderAnggotaChips();
-}
-
-function renderAnggotaOptions(){
-  var dapil = document.getElementById('dapilSelect').value;
-  var listEl = document.getElementById('anggotaOptionList');
-  var emptyEl = document.getElementById('anggotaOptionEmpty');
-  var list = ANGGOTA_DAPIL.filter(function(a){ return a.dapil === dapil; });
-  if(!dapil){
-    listEl.innerHTML = '';
-    emptyEl.textContent = 'Pilih dapil terlebih dahulu.';
-    emptyEl.style.display = 'block';
-    return;
-  }
-  if(!list.length){
-    listEl.innerHTML = '';
-    emptyEl.textContent = 'Tidak ada anggota pada dapil ini.';
-    emptyEl.style.display = 'block';
-    return;
-  }
-  emptyEl.style.display = 'none';
-  listEl.innerHTML = list.map(function(a){
-    var checked = selectedAnggota.indexOf(a.nama) !== -1 ? 'checked' : '';
-    return '<label class="cc-option-check">'
-      + '<input type="checkbox" ' + checked + ' onchange="toggleAnggotaOption(\'' + a.nama.replace(/'/g,"\\'") + '\', this.checked)">'
-      + '<span>' + a.nama + '</span>'
-      + '<span class="cc-opt-sub">' + a.dapil + '</span>'
-      + '</label>';
-  }).join('');
-}
-
-function toggleAnggotaOption(nama, checked){
-  if(checked){
-    if(selectedAnggota.indexOf(nama) === -1){ selectedAnggota.push(nama); }
+function populateLokasiKabupatenSelect(selected, provinsi){
+  var sel = document.getElementById('lokasiKabupatenSelect');
+  var opts = provinsi ? (LOKASI_KABUPATEN_BY_PROVINSI[provinsi] || []) : [];
+  if(!provinsi){
+    sel.innerHTML = '<option value="">Pilih provinsi terlebih dahulu&hellip;</option>';
+    sel.disabled = true;
   } else {
-    selectedAnggota = selectedAnggota.filter(function(n){ return n !== nama; });
+    sel.disabled = false;
+    sel.innerHTML = '<option value="">Pilih kabupaten/kota&hellip;</option>' + opts.map(function(k){ return '<option value="' + k + '">' + k + '</option>'; }).join('');
   }
-  renderAnggotaChips();
+  sel.value = selected || '';
+}
+function onLokasiProvinsiChange(){
+  var provinsi = document.getElementById('lokasiProvinsiSelect').value;
+  populateLokasiKabupatenSelect(null, provinsi);
+}
+function populateLokasiNegaraSelect(selected){
+  var sel = document.getElementById('lokasiNegaraSelect');
+  sel.innerHTML = '<option value="">Pilih negara&hellip;</option>' + LOKASI_NEGARA_LIST.map(function(n){ return '<option value="' + n + '">' + n + '</option>'; }).join('');
+  sel.value = selected || '';
+}
+function toggleLokasiFields(){
+  var val = document.getElementById('lokasiJenisSelect').value;
+  document.getElementById('lokasiKelurahanField').style.display = val === 'DALAM_KOTA' ? 'block' : 'none';
+  document.getElementById('lokasiKabupatenProvinsiField').style.display = val === 'LUAR_KOTA' ? 'grid' : 'none';
+  document.getElementById('lokasiNegaraField').style.display = val === 'LUAR_NEGERI' ? 'block' : 'none';
+  document.getElementById('lokasiKelurahanSelect').required = val === 'DALAM_KOTA';
+  document.getElementById('lokasiKabupatenSelect').required = val === 'LUAR_KOTA';
+  document.getElementById('lokasiProvinsiSelect').required = val === 'LUAR_KOTA';
+  document.getElementById('lokasiNegaraSelect').required = val === 'LUAR_NEGERI';
 }
 
-function removeAnggota(nama){
-  selectedAnggota = selectedAnggota.filter(function(n){ return n !== nama; });
-  renderAnggotaOptions();
-  renderAnggotaChips();
-}
-
-function renderAnggotaChips(){
-  var row = document.getElementById('anggotaChipRow');
-  row.innerHTML = selectedAnggota.map(function(nama){
-    return '<span class="chip-sel">' + nama + '<button type="button" onclick="removeAnggota(\'' + nama.replace(/'/g,"\\'") + '\')"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill="none" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button></span>';
-  }).join('');
-  var label = document.getElementById('anggotaBtnLabel');
-  if(selectedAnggota.length){
-    label.textContent = selectedAnggota.length + ' anggota dipilih';
-    label.style.color = 'var(--ink)'; label.style.fontWeight = '800';
-  } else {
-    label.textContent = 'Pilih anggota DPRD…';
-    label.style.color = 'var(--muted)'; label.style.fontWeight = '600';
-  }
-}
-
-function toggleAnggotaDropdown(e){
-  e.preventDefault();
-  e.stopPropagation();
-  var dd = document.getElementById('anggotaDropdown');
-  var btn = document.getElementById('anggotaBtn');
-  dd.classList.toggle('open');
-  btn.classList.toggle('open', dd.classList.contains('open'));
-}
-document.addEventListener('click', function(){
-  document.getElementById('anggotaDropdown').classList.remove('open');
-  document.getElementById('anggotaBtn').classList.remove('open');
-});
-
-function validateAnggota(){
-  if(selectedAnggota.length === 0){
-    toast('Pilih minimal satu anggota DPRD');
-    return false;
-  }
+function validateNoPenugasan(){
+  var val = document.getElementById('noPenugasanInput').value.trim();
+  if(!val){ toast('Isi No. Penugasan terlebih dahulu'); return false; }
+  var isDup = EXISTING_NO_PENUGASAN.some(function(n){ return n === val && n !== editingNoPenugasanOriginal; });
+  if(isDup){ toast('No. Penugasan "' + val + '" sudah digunakan, gunakan nomor lain.'); return false; }
   return true;
 }
-function validateDapil(){
-  if(!document.getElementById('dapilSelect').value){
-    toast('Pilih dapil terlebih dahulu');
-    return false;
-  }
+function validateLokasi(){
+  var val = document.getElementById('lokasiJenisSelect').value;
+  if(val === 'DALAM_KOTA' && !document.getElementById('lokasiKelurahanSelect').value){ toast('Pilih Kelurahan terlebih dahulu'); return false; }
+  if(val === 'LUAR_KOTA' && (!document.getElementById('lokasiProvinsiSelect').value || !document.getElementById('lokasiKabupatenSelect').value)){ toast('Pilih Provinsi & Kabupaten/Kota terlebih dahulu'); return false; }
+  if(val === 'LUAR_NEGERI' && !document.getElementById('lokasiNegaraSelect').value){ toast('Pilih Negara terlebih dahulu'); return false; }
   return true;
 }
 
 function submitPenugasan(e, isDraft){
   if(e) e.preventDefault();
-  if(!validateDapil()) return false;
-  if(!validateAnggota()) return false;
-  var status = isDraft ? 'Draft' : 'Terjadwal';
+  if(!validateNoPenugasan()) return false;
+  if(!document.getElementById('kegiatanInput').value.trim()){ toast('Isi nama Kegiatan terlebih dahulu'); return false; }
+  if(!validateLokasi()) return false;
+  if(!isDraft){
+    if(!document.getElementById('tanggalInput').value){ toast('Isi Tanggal Kegiatan terlebih dahulu'); return false; }
+    var jamMulai = document.getElementById('jamMulaiInput').value;
+    var jamSelesai = document.getElementById('jamSelesaiInput').value;
+    if(!jamMulai || !jamSelesai){ toast('Isi Jam Mulai & Jam Selesai'); return false; }
+    if(jamSelesai <= jamMulai){ toast('Jam Selesai harus setelah Jam Mulai'); return false; }
+    var approverIds = getSelectedApproverIds();
+    if(approverIds.length < 1 || approverIds.length > 2){ toast('Pilih 1-2 approver pada Config Approval.'); return false; }
+  }
+  var status = isDraft ? 'Draft' : 'Menunggu Approval';
   toast('Penugasan disimpan dengan status "' + status + '"');
   setTimeout(function(){ window.location.href = 'reses-kunjungan.html'; }, 900);
   return false;
 }
 
 function applyAssignment(data){
-  document.getElementById('jenisSelect').value = data.jenis;
-  document.getElementById('dapilSelect').value = data.dapil;
-  renderAnggotaOptions();
-  selectedAnggota = (data.anggota || []).slice();
-  renderAnggotaOptions();
-  renderAnggotaChips();
-  if(data.periode){ document.getElementById('periodeSelect').value = data.periode; }
+  editingNoPenugasanOriginal = data.noPenugasan || null;
+  document.getElementById('noPenugasanInput').value = data.noPenugasan || '';
+  document.getElementById('jenisPenugasanSelect').value = data.jenisPenugasan;
+  document.getElementById('kegiatanInput').value = data.kegiatan || '';
+  document.getElementById('lokasiJenisSelect').value = data.lokasiJenis || 'DALAM_KOTA';
+  populateLokasiKelurahanSelect(data.lokasiKelurahan);
+  populateLokasiProvinsiSelect(data.lokasiProvinsi);
+  populateLokasiKabupatenSelect(data.lokasiKabupaten, data.lokasiProvinsi);
+  populateLokasiNegaraSelect(data.lokasiNegara);
+  toggleLokasiFields();
   if(data.tanggal){ document.getElementById('tanggalInput').value = data.tanggal; }
   if(data.jamMulai){ document.getElementById('jamMulaiInput').value = data.jamMulai; }
   if(data.jamSelesai){ document.getElementById('jamSelesaiInput').value = data.jamSelesai; }
-  if(data.jenisKegiatan){ document.getElementById('jenisKegiatanSelect').value = data.jenisKegiatan; }
-  if(data.lokasi){ document.getElementById('lokasiInput').value = data.lokasi; }
   if(data.catatan){ document.getElementById('catatanInput').value = data.catatan; }
-  onJenisChange();
-  if(data.pokir){ document.getElementById('pokirSelect').value = data.pokir; onPokirChangeP(); }
+  renderApproverList(data.approverIds || []);
+  onJenisPenugasanChange();
 }
 
 (function init(){
-  document.getElementById('jenisSelect').value = jenisParam === 'kunjungan' ? 'Dapil' : 'Reses';
+  populateLokasiKelurahanSelect(null);
+  populateLokasiProvinsiSelect(null);
+  populateLokasiKabupatenSelect(null, null);
+  populateLokasiNegaraSelect(null);
 
   if(isEdit){
     var key = jenisParam + '-' + idParam;
@@ -502,9 +470,10 @@ function applyAssignment(data){
     if(data){ applyAssignment(data); return; }
   }
 
-  renderAnggotaOptions();
-  renderAnggotaChips();
-  onJenisChange();
+  document.getElementById('jenisPenugasanSelect').value = jenisParam === 'kunjungan' ? 'Kunjungan Dapil' : 'Reses';
+  toggleLokasiFields();
+  renderApproverList([]);
+  onJenisPenugasanChange();
 })();
 
 </script>

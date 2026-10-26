@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>Pokir &middot; e-Parlemen DPRD Kota Magelang</title>
+<title>Aspirasi &middot; e-Parlemen DPRD Kota Magelang</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
@@ -23,6 +23,7 @@
   --danger-bg:#fbe7e7; --danger:#d64545;
   --info-bg:#e7f0fb; --info:#2f6fb0;
   --neutral-bg:#eef0ec; --neutral:#5b6a5e;
+  --purple-bg:#efe6fb; --purple:#7c4fd1;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
@@ -73,8 +74,7 @@ a{color:inherit;}
 .hdr-wave svg{display:block; width:100%; height:24px;}
 .crest-svg{width:100%; height:100%; display:block;}
 .ic-svg{width:1em; height:1em; vertical-align:-0.15em; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0;}
-.icon-box .ic-svg, .qic .ic-svg, .mic .ic-svg, .stat .ic-svg{width:18px; height:18px;}
-.stat-ic{width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 6px;}
+.icon-box .ic-svg, .qic .ic-svg, .mic .ic-svg{width:18px; height:18px;}
 .header-row{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; position:relative; z-index:2;}
 .brand{display:flex; gap:10px; align-items:center;}
 .emblem{
@@ -119,14 +119,6 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .muted{color:var(--muted);}
 .hint{font-size:11.5px; color:var(--muted); line-height:1.5;}
 
-.stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:6px;}
-.stats-grid.cols-3{grid-template-columns:repeat(3,1fr);}
-.stats-grid.cols-2{grid-template-columns:repeat(2,1fr);}
-.stat{background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px 4px; text-align:center;}
-.stat .num{font-size:17px; font-weight:800; color:var(--green);}
-.stat .lbl{font-size:9.5px; color:var(--muted); margin-top:2px; line-height:1.25;}
-.stat.warn .num{color:var(--warn);} .stat.danger .num{color:var(--danger);} .stat.info .num{color:var(--info);} .stat.success .num{color:var(--success);}
-
 .badge{display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:10.5px; font-weight:800; white-space:nowrap;}
 .badge-success{background:var(--success-bg); color:var(--success);}
 .badge-warn{background:var(--warn-bg); color:var(--warn);}
@@ -134,6 +126,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .badge-info{background:var(--info-bg); color:var(--info);}
 .badge-neutral{background:var(--neutral-bg); color:var(--neutral);}
 .badge-gold{background:#fbf1dc; color:#9a7b1f;}
+.badge-purple{background:var(--purple-bg); color:var(--purple);}
 
 .btn{display:flex; align-items:center; justify-content:center; gap:7px; padding:13px 16px; border-radius:11px; font-size:13.5px; font-weight:800; text-decoration:none; border:none; cursor:pointer; width:100%; font-family:inherit;}
 .btn-primary{background:linear-gradient(135deg,var(--green-dark),var(--green)); color:#fff; box-shadow:inset 0 0 0 1.5px var(--gold);}
@@ -144,22 +137,56 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .btn-row{display:flex; gap:10px; margin-top:4px;}
 .btn-row .btn{flex:1;}
 
-.tabs{display:flex; gap:4px; background:#eceee7; padding:4px; border-radius:12px; margin-bottom:14px; overflow-x:auto;}
-.tab{flex:1; text-align:center; padding:9px 6px; border-radius:9px; font-size:11.5px; font-weight:800; color:var(--muted); text-decoration:none; white-space:nowrap; background:transparent; border:none; font-family:inherit; cursor:pointer;}
-.tab.active{background:#fff; color:var(--green); box-shadow:0 1px 3px rgba(0,0,0,.09);}
-
-.list-item{display:flex; gap:11px; background:#fff; border-radius:13px; padding:12px; border:1px solid var(--border); margin-bottom:10px; border-left:4px solid var(--green); text-decoration:none; color:inherit; align-items:flex-start;}
+.list-item{display:flex; gap:9px; background:#fff; border-radius:16px; padding:14px 13px 14px 15px; border:1px solid var(--border); margin-bottom:11px; border-left:4px solid var(--green); text-decoration:none; color:inherit; align-items:center; box-shadow:0 1px 3px rgba(20,30,20,.04); transition:box-shadow .15s ease, transform .1s ease;}
+.list-item:active{transform:scale(.99); box-shadow:0 1px 2px rgba(20,30,20,.04);}
 .list-item.bl-gold{border-left-color:var(--gold);}
 .list-item.bl-danger{border-left-color:var(--danger);}
 .list-item.bl-info{border-left-color:var(--info);}
 .list-item.bl-warn{border-left-color:var(--warn);}
 .list-item.bl-success{border-left-color:var(--success);}
-.list-item .icon-box{width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:17px; background:var(--neutral-bg);}
+.list-item.bl-purple{border-left-color:var(--purple);}
 .list-item .content{flex:1; min-width:0;}
-.list-item .content .title{font-weight:800; font-size:12.8px; color:var(--ink); margin-bottom:2px;}
+.list-item .content .title{font-weight:800; font-size:13.2px; color:var(--ink); line-height:1.35;}
 .list-item .content .meta{font-size:10.8px; color:var(--muted); display:flex; gap:7px; flex-wrap:wrap; align-items:center;}
+.asp-head{display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px;}
+.asp-head .badge{flex-shrink:0; margin-top:1px;}
+.asp-desc{font-size:11.5px; color:var(--ink); opacity:.82; line-height:1.5; margin-bottom:10px;}
+.asp-proposer{display:flex; align-items:center; gap:7px; font-size:11px; font-weight:700; color:var(--ink); margin-bottom:9px;}
+.asp-avatar{width:22px; height:22px; border-radius:50%; background:linear-gradient(145deg,var(--green-light),var(--green-dark)); color:var(--gold-light); font-size:8.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.asp-tags{display:flex; flex-wrap:wrap; gap:6px;}
+.asp-tag{display:inline-flex; align-items:center; gap:4px; font-size:9.8px; font-weight:700; color:var(--muted); background:var(--neutral-bg); padding:4px 9px; border-radius:20px; white-space:nowrap;}
+.asp-tag-origin{background:var(--info-bg); color:#2a5583;}
+.asp-tag-origin .ic-svg{width:10px; height:10px;}
+.asp-tag-evidence{background:#fbf1dc; color:#9a7b1f; cursor:pointer; border:none; font-family:inherit;}
+.asp-tag{cursor:default;}
+.asp-tag .ic-svg{width:10px; height:10px;}
+.asp-lokasi{display:flex; align-items:flex-start; gap:7px; margin-bottom:9px;}
+.asp-lokasi .ic-svg{width:13px; height:13px; margin-top:2px; flex-shrink:0; color:var(--muted);}
+.asp-lokasi-text{min-width:0;}
+.asp-lokasi-alamat{font-size:11px; font-weight:700; color:var(--ink); line-height:1.4;}
+.asp-lokasi-wilayah{font-size:10px; color:var(--muted); margin-top:1px;}
+
+.modal-backdrop{position:absolute; inset:0; background:rgba(15,35,24,.72); z-index:40; display:none; align-items:center; justify-content:center; padding:20px;}
+.modal-backdrop.open{display:flex;}
+.evidence-modal{width:100%; max-width:320px; background:#15241c; border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.45);}
+.evidence-modal-head{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:12px 14px;}
+.evidence-modal-title{font-weight:800; font-size:12.5px; color:#fff; min-width:0;}
+.evidence-close{width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.14); border:none; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; padding:0;}
+.evidence-close .ic-svg{width:13px; height:13px;}
+.evidence-stage{position:relative; display:flex; align-items:center; justify-content:center; background:linear-gradient(160deg,#0b1a12,#16301f 60%,#0b1a12); aspect-ratio:1;}
+.evidence-photo{display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(255,255,255,.55); font-size:12px; font-weight:700;}
+.evidence-photo .ic-svg{width:34px; height:34px;}
+.evidence-arrow{position:absolute; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.16); border:none; color:#fff; font-size:19px; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;}
+.evidence-arrow.left{left:10px;}
+.evidence-arrow.right{right:10px;}
+.evidence-foot{display:flex; align-items:center; justify-content:space-between; padding:10px 14px; color:rgba(255,255,255,.7); font-size:10.5px;}
+.evidence-dots{display:flex; gap:5px;}
+.evidence-dots .dot{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.3);}
+.evidence-dots .dot.active{background:var(--gold-light);}
+.asp-actions{display:flex; gap:8px; margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);}
+.asp-actions .btn{flex:1;}
 .list-item .side{text-align:right; font-size:10.5px; color:var(--muted); flex-shrink:0; display:flex; flex-direction:column; align-items:flex-end; gap:6px;}
-.chev{color:#b7bcae; font-size:15px; align-self:center;}
+.chev{color:#c3c7bc; font-size:19px; flex-shrink:0; align-self:center;}
 
 .field{margin-bottom:14px;}
 .field label{display:block; font-size:11.8px; font-weight:800; color:var(--ink); margin-bottom:6px;}
@@ -301,182 +328,247 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
   <div class="hdr-wave"><svg viewBox="0 0 400 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hdrWaveGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="var(--green-dark)"/><stop offset="60%" stop-color="var(--green)"/><stop offset="100%" stop-color="var(--green-mid)"/></linearGradient></defs><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,0 L0,0 Z" fill="url(#hdrWaveGrad)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,30 L0,30 Z" fill="var(--cream)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14" fill="none" stroke="#c0392b" stroke-width="2.2" opacity=".85"/></svg></div>
   <div class="screen">
 
-    <div class="screen-title">Pokir</div>
+    <div class="screen-title">Aspirasi</div>
 
-    <div class="stats-grid">
-      <div class="stat"><div class="stat-ic" style="background:var(--info-bg);color:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div><div class="num">24</div><div class="lbl">Usulan Saya</div></div>
-      <div class="stat warn"><div class="stat-ic" style="background:var(--warn-bg);color:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div><div class="num">12</div><div class="lbl">Dalam Proses</div></div>
-      <div class="stat success"><div class="stat-ic" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></div><div class="num">8</div><div class="lbl">Diterima</div></div>
-      <div class="stat danger"><div class="stat-ic" style="background:var(--danger-bg);color:var(--danger);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 5l14 14"/><path d="M19 5L5 19"/></svg></div><div class="num">4</div><div class="lbl">Ditolak</div></div>
-    </div>
-    <div class="tabs">
-      <button type="button" class="tab active" data-tabgroup="pk" onclick="showTab('pk','usulan',this)">Usulan Saya</button>
-      <button type="button" class="tab" data-tabgroup="pk" onclick="showTab('pk','semua',this)">Semua Usulan</button>
-      <button type="button" class="tab" data-tabgroup="pk" onclick="showTab('pk','prioritas',this)">Prioritas</button>
-    </div>
+    <div class="hint" style="margin-bottom:12px;">Seluruh usulan Aspirasi dari Anda dan Anggota DPRD Kota Magelang.</div>
 
-    <div id="pk-usulan" data-panel-group="pk" style="display:block;">
-      <a class="list-item bl-success" href="#">
-        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18c4-8 14-8 18 0" /></svg></div>
-        <div class="content">
-          <div class="title">Pembangunan Jalan Lingkungan</div>
-          <div class="meta">Kel. Magersari, Kec. Magelang Selatan &middot; Infrastruktur</div>
-          <div class="meta">10 Jan 2025 &middot; Pagu Rp 450.000.000</div>
+    <div class="list-item bl-info">
+      <div class="content">
+        <div class="asp-head"><div class="title">Pembangunan Jalan Lingkungan</div><span class="badge badge-info">Infrastruktur</span></div>
+        <div class="asp-desc">Usulan pembangunan jalan lingkungan untuk memperlancar akses warga menuju fasilitas umum.</div>
+        <div class="asp-proposer"><span class="asp-avatar">BS</span> Ir. Budi Santoso, M.T.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">Jl. Magersari RT 02/RW 03, Kel. Magersari</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
         </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-success">Diterima</span></div>
-      </a>
-      <a class="list-item bl-warn" href="#">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></div>
-        <div class="content">
-          <div class="title">Normalisasi Saluran Drainase</div>
-          <div class="meta">Kel. Rejowinangun, Kec. Magelang Selatan &middot; Infrastruktur</div>
-          <div class="meta">18 Feb 2025 &middot; Pagu Rp 120.000.000</div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 1</span>
+          <button type="button" class="asp-tag asp-tag-evidence" onclick="openEvidenceModal('Pembangunan Jalan Lingkungan', 2)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> 2 Evidence</button>
+          <span class="asp-tag asp-tag-origin"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg> Reses Masa Persidangan II Tahun 2025</span>
         </div>
-        <div class="side"><span class="badge badge-warn">Dalam Proses</span></div>
-      </a>
-      <a class="list-item bl-success" href="#">
-        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div>
-        <div class="content">
-          <div class="title">Pemasangan Lampu Jalan</div>
-          <div class="meta">Kel. Jurangombo, Kec. Magelang Selatan &middot; Infrastruktur</div>
-          <div class="meta">5 Mar 2025 &middot; Pagu Rp 200.000.000</div>
+        <div class="asp-actions">
+          <a class="btn btn-outline btn-sm" href="tambah-pokir.html?id=1&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+          <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusAspirasi(this,'Pembangunan Jalan Lingkungan')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
         </div>
-        <div class="side"><span class="badge badge-success">Diterima</span></div>
-      </a>
-      <a class="list-item bl-warn" href="#">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5L12 5l9 4.5-9 4.5-9-4.5z"/><path d="M7 12v5c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-5"/></svg></div>
-        <div class="content">
-          <div class="title">Rehabilitasi Ruang Kelas SDN 2 Rejowinangun</div>
-          <div class="meta">Kel. Rejowinangun &middot; Pendidikan</div>
-          <div class="meta">22 Mar 2025 &middot; Pagu Rp 175.000.000</div>
-        </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-warn">Dalam Proses</span></div>
-      </a>
-      <a class="list-item bl-danger" href="#">
-        <div class="icon-box" style="background:var(--danger-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="9" width="16" height="12" rx="1"/><path d="M9 21v-5h6v5"/><path d="M4 9l8-5 8 5"/></svg></div>
-        <div class="content">
-          <div class="title">Pembangunan Lapangan Olahraga</div>
-          <div class="meta">Kel. Tidar Utara &middot; Olahraga</div>
-          <div class="meta">30 Apr 2025 &middot; Pagu Rp 0</div>
-        </div>
-        <div class="side"><span class="badge badge-danger">Ditolak</span></div>
-      </a>
+      </div>
     </div>
-
-    <div id="pk-semua" data-panel-group="pk" style="display:none;">
-      <div class="hint" style="margin-bottom:12px;">Seluruh usulan Pokir dari semua Anggota DPRD Kota Magelang.</div>
-      <a class="list-item bl-success" href="#">
-        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18c4-8 14-8 18 0" /></svg></div>
-        <div class="content">
-          <div class="title">Pembangunan Jalan Lingkungan</div>
-          <div class="meta">Diusulkan oleh Anda &middot; Infrastruktur</div>
-          <div class="meta">10 Jan 2025 &middot; Pagu Rp 450.000.000</div>
+    <div class="list-item bl-info">
+      <div class="content">
+        <div class="asp-head"><div class="title">Normalisasi Saluran Drainase</div><span class="badge badge-info">Infrastruktur</span></div>
+        <div class="asp-desc">Usulan normalisasi saluran drainase untuk mengatasi genangan air saat musim hujan.</div>
+        <div class="asp-proposer"><span class="asp-avatar">BS</span> Ir. Budi Santoso, M.T.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">Saluran Drainase RT 05/RW 02, Kel. Rejowinangun Selatan</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
         </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-success">Diterima</span></div>
-      </a>
-      <a class="list-item bl-warn" href="#">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></div>
-        <div class="content">
-          <div class="title">Perbaikan Jembatan Kali Bening</div>
-          <div class="meta">Diusulkan oleh Hj. Siti Nurhaliza, S.H. &middot; Infrastruktur</div>
-          <div class="meta">14 Feb 2025 &middot; Pagu Rp 310.000.000</div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 1</span>
+          <button type="button" class="asp-tag asp-tag-evidence" onclick="openEvidenceModal('Normalisasi Saluran Drainase', 1)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> 1 Evidence</button>
+          <span class="asp-tag asp-tag-origin"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg> Kunjungan Lapangan Proyek Drainase Kel. Wates</span>
         </div>
-        <div class="side"><span class="badge badge-warn">Dalam Proses</span></div>
-      </a>
-      <a class="list-item bl-success" href="#">
-        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div>
-        <div class="content">
-          <div class="title">Bantuan Alat Pertanian Kelompok Tani</div>
-          <div class="meta">Diusulkan oleh Drs. Ahmad Fauzi, M.Si. &middot; Ekonomi &amp; UMKM</div>
-          <div class="meta">2 Mar 2025 &middot; Pagu Rp 95.000.000</div>
+        <div class="asp-actions">
+          <a class="btn btn-outline btn-sm" href="tambah-pokir.html?id=2&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+          <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusAspirasi(this,'Normalisasi Saluran Drainase')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
         </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-success">Diterima</span></div>
-      </a>
-      <a class="list-item bl-warn" href="#">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5L12 5l9 4.5-9 4.5-9-4.5z"/><path d="M7 12v5c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-5"/></svg></div>
-        <div class="content">
-          <div class="title">Renovasi Posyandu Melati</div>
-          <div class="meta">Diusulkan oleh Rina Kartika, S.E. &middot; Kesehatan</div>
-          <div class="meta">9 Mar 2025 &middot; Pagu Rp 60.000.000</div>
-        </div>
-        <div class="side"><span class="badge badge-warn">Dalam Proses</span></div>
-      </a>
-      <a class="list-item bl-warn" href="#">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5L12 5l9 4.5-9 4.5-9-4.5z"/><path d="M7 12v5c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-5"/></svg></div>
-        <div class="content">
-          <div class="title">Rehabilitasi Ruang Kelas SDN 2 Rejowinangun</div>
-          <div class="meta">Diusulkan oleh Anda &middot; Pendidikan</div>
-          <div class="meta">22 Mar 2025 &middot; Pagu Rp 175.000.000</div>
-        </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-warn">Dalam Proses</span></div>
-      </a>
-      <a class="list-item bl-danger" href="#">
-        <div class="icon-box" style="background:var(--danger-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="9" width="16" height="12" rx="1"/><path d="M9 21v-5h6v5"/><path d="M4 9l8-5 8 5"/></svg></div>
-        <div class="content">
-          <div class="title">Pembangunan Lapangan Olahraga</div>
-          <div class="meta">Diusulkan oleh Anda &middot; Olahraga</div>
-          <div class="meta">30 Apr 2025 &middot; Pagu Rp 0</div>
-        </div>
-        <div class="side"><span class="badge badge-danger">Ditolak</span></div>
-      </a>
+      </div>
     </div>
-
-    <div id="pk-prioritas" data-panel-group="pk" style="display:none;">
-      <div class="hint" style="margin-bottom:12px;">Usulan yang ditandai prioritas untuk mendapat perhatian lebih dalam pembahasan Musrenbang.</div>
-      <a class="list-item bl-success" href="#">
-        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 18c4-8 14-8 18 0" /></svg></div>
-        <div class="content">
-          <div class="title">Pembangunan Jalan Lingkungan</div>
-          <div class="meta">Diusulkan oleh Anda &middot; Infrastruktur</div>
-          <div class="meta">10 Jan 2025 &middot; Pagu Rp 450.000.000</div>
+    <div class="list-item bl-info">
+      <div class="content">
+        <div class="asp-head"><div class="title">Pemasangan Lampu Jalan</div><span class="badge badge-info">Infrastruktur</span></div>
+        <div class="asp-desc">Usulan pemasangan lampu penerangan jalan untuk meningkatkan keamanan warga di malam hari.</div>
+        <div class="asp-proposer"><span class="asp-avatar">BS</span> Ir. Budi Santoso, M.T.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">Jl. Jurangombo RT 03/RW 01, Kel. Jurangombo Selatan</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
         </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-success">Diterima</span></div>
-      </a>
-      <a class="list-item bl-success" href="#">
-        <div class="icon-box" style="background:var(--success-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div>
-        <div class="content">
-          <div class="title">Bantuan Alat Pertanian Kelompok Tani</div>
-          <div class="meta">Diusulkan oleh Drs. Ahmad Fauzi, M.Si. &middot; Ekonomi &amp; UMKM</div>
-          <div class="meta">2 Mar 2025 &middot; Pagu Rp 95.000.000</div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 1</span>
         </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-success">Diterima</span></div>
-      </a>
-      <a class="list-item bl-warn" href="#">
-        <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5L12 5l9 4.5-9 4.5-9-4.5z"/><path d="M7 12v5c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-5"/></svg></div>
-        <div class="content">
-          <div class="title">Rehabilitasi Ruang Kelas SDN 2 Rejowinangun</div>
-          <div class="meta">Diusulkan oleh Anda &middot; Pendidikan</div>
-          <div class="meta">22 Mar 2025 &middot; Pagu Rp 175.000.000</div>
+        <div class="asp-actions">
+          <a class="btn btn-outline btn-sm" href="tambah-pokir.html?id=3&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+          <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusAspirasi(this,'Pemasangan Lampu Jalan')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
         </div>
-        <div class="side"><span class="badge badge-gold">Prioritas</span><span class="badge badge-warn">Dalam Proses</span></div>
-      </a>
+      </div>
     </div>
+    <div class="list-item bl-purple">
+      <div class="content">
+        <div class="asp-head"><div class="title">Rehabilitasi Ruang Kelas SDN 2 Rejowinangun</div><span class="badge badge-purple">Pendidikan</span></div>
+        <div class="asp-desc">Usulan rehabilitasi ruang kelas yang sudah rusak agar kegiatan belajar mengajar lebih nyaman.</div>
+        <div class="asp-proposer"><span class="asp-avatar">BS</span> Ir. Budi Santoso, M.T.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">SDN 2 Rejowinangun, Kel. Rejowinangun Selatan</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
+        </div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 1</span>
+          <button type="button" class="asp-tag asp-tag-evidence" onclick="openEvidenceModal('Rehabilitasi Ruang Kelas SDN 2 Rejowinangun', 3)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> 3 Evidence</button>
+          <span class="asp-tag asp-tag-origin"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg> Reses Masa Persidangan I Tahun 2025</span>
+        </div>
+        <div class="asp-actions">
+          <a class="btn btn-outline btn-sm" href="tambah-pokir.html?id=4&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+          <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusAspirasi(this,'Rehabilitasi Ruang Kelas SDN 2 Rejowinangun')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
+        </div>
+      </div>
+    </div>
+    <div class="list-item bl-warn">
+      <div class="content">
+        <div class="asp-head"><div class="title">Pembangunan Lapangan Olahraga</div><span class="badge badge-warn">Olahraga</span></div>
+        <div class="asp-desc">Usulan pembangunan lapangan olahraga untuk mendukung kegiatan warga di bidang olahraga.</div>
+        <div class="asp-proposer"><span class="asp-avatar">BS</span> Ir. Budi Santoso, M.T.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">Lapangan RW 04, Kel. Tidar Selatan</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
+        </div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 1</span>
+        </div>
+        <div class="asp-actions">
+          <a class="btn btn-outline btn-sm" href="tambah-pokir.html?id=5&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+          <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusAspirasi(this,'Pembangunan Lapangan Olahraga')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
+        </div>
+      </div>
+    </div>
+    <a class="list-item bl-info" href="#">
+      <div class="content">
+        <div class="asp-head"><div class="title">Perbaikan Jembatan Kali Bening</div><span class="badge badge-info">Infrastruktur</span></div>
+        <div class="asp-desc">Usulan perbaikan jembatan yang rusak untuk menjamin keselamatan dan kelancaran akses warga.</div>
+        <div class="asp-proposer"><span class="asp-avatar">SN</span> Hj. Siti Nurhaliza, S.H.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">Jembatan Kali Bening, Kel. Magelang</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
+        </div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 2</span>
+          <button type="button" class="asp-tag asp-tag-evidence" onclick="openEvidenceModal('Perbaikan Jembatan Kali Bening', 1)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> 1 Evidence</button>
+        </div>
+      </div>
+      <span class="chev">&#8250;</span>
+    </a>
+    <a class="list-item bl-gold" href="#">
+      <div class="content">
+        <div class="asp-head"><div class="title">Bantuan Alat Pertanian Kelompok Tani</div><span class="badge badge-gold">Ekonomi &amp; UMKM</span></div>
+        <div class="asp-desc">Usulan bantuan alat pertanian untuk meningkatkan produktivitas kelompok tani setempat.</div>
+        <div class="asp-proposer"><span class="asp-avatar">AF</span> Drs. Ahmad Fauzi, M.Si.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">Kelompok Tani RT 01/RW 02, Kel. Cacaban</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
+        </div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 2</span>
+        </div>
+      </div>
+      <span class="chev">&#8250;</span>
+    </a>
+    <a class="list-item bl-success" href="#">
+      <div class="content">
+        <div class="asp-head"><div class="title">Renovasi Posyandu Melati</div><span class="badge badge-success">Kesehatan</span></div>
+        <div class="asp-desc">Usulan renovasi gedung posyandu untuk meningkatkan layanan kesehatan ibu dan anak.</div>
+        <div class="asp-proposer"><span class="asp-avatar">RK</span> Rina Kartika, S.E.</div>
+        <div class="asp-lokasi">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg>
+          <div class="asp-lokasi-text">
+            <div class="asp-lokasi-alamat">Posyandu Melati, Kel. Kedungsari</div>
+            <div class="asp-lokasi-wilayah">Kota Magelang, Jawa Tengah</div>
+          </div>
+        </div>
+        <div class="asp-tags">
+          <span class="asp-tag">Dapil 3</span>
+          <button type="button" class="asp-tag asp-tag-evidence" onclick="openEvidenceModal('Renovasi Posyandu Melati', 2)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> 2 Evidence</button>
+          <span class="asp-tag asp-tag-origin"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg> Kunjungan Fasilitas Kesehatan Puskesmas Magelang Utara</span>
+        </div>
+      </div>
+      <span class="chev">&#8250;</span>
+    </a>
 
-    <a class="btn btn-primary" href="tambah-pokir.html"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14"/><path d="M5 12h14"/></svg> Tambah Usulan Pokir Baru</a>
+    <a class="btn btn-primary" href="tambah-pokir.html"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14"/><path d="M5 12h14"/></svg> Tambah Usulan Aspirasi Baru</a>
     <div class="info-box" style="margin-top:14px;">
       <span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span>
-      <span>Usulan Pokir yang diterima akan dibahas dalam Musrenbang dan diusulkan ke RKPD.</span>
+      <span>Usulan Aspirasi yang diterima akan dibahas dalam Musrenbang dan diusulkan ke RKPD.</span>
     </div>
 
+  </div>
+
+  <div class="modal-backdrop" id="evidenceModalBackdrop" onclick="if(event.target===this){ closeEvidenceModal(); }">
+    <div class="evidence-modal">
+      <div class="evidence-modal-head">
+        <div class="evidence-modal-title" id="evidenceModalTitle">Evidence</div>
+        <button type="button" class="evidence-close" onclick="closeEvidenceModal()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>
+      </div>
+      <div class="evidence-stage">
+        <button type="button" class="evidence-arrow left" onclick="evidenceNav(-1)">&#8249;</button>
+        <div class="evidence-photo" id="evidenceSlideImg"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span id="evidenceSlideLabel">Foto 1</span></div>
+        <button type="button" class="evidence-arrow right" onclick="evidenceNav(1)">&#8250;</button>
+      </div>
+      <div class="evidence-foot">
+        <span id="evidenceCounter">1 / 1</span>
+        <div class="evidence-dots" id="evidenceDots"></div>
+      </div>
+    </div>
   </div>
 <div class="bottomnav"><a class="navitem" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem active" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
 
-function showTab(group, name, btn){
-  document.querySelectorAll('[data-panel-group="' + group + '"]').forEach(function(p){ p.style.display = 'none'; });
-  var target = document.getElementById(group + '-' + name);
-  if(target){ target.style.display = 'block'; }
-  document.querySelectorAll('[data-tabgroup="' + group + '"]').forEach(function(t){ t.classList.remove('active'); });
-  if(btn){ btn.classList.add('active'); }
-}
 function toast(msg){
   var el = document.getElementById('toast');
   if(!el) return;
   el.textContent = msg;
   el.style.display = 'block';
   setTimeout(function(){ el.style.display = 'none'; }, 2200);
+}
+function hapusAspirasi(btn, nama){
+  if(!confirm('Hapus usulan "' + nama + '"? Data ini tidak dapat dikembalikan.')) return;
+  var card = btn.closest('.list-item');
+  if(card){ card.remove(); }
+  toast('Usulan berhasil dihapus');
+}
+
+var evidenceTitle = '';
+var evidenceCount = 0;
+var evidenceIndex = 0;
+function openEvidenceModal(title, count){
+  evidenceTitle = title;
+  evidenceCount = count;
+  evidenceIndex = 0;
+  document.getElementById('evidenceModalTitle').textContent = title;
+  renderEvidenceSlide();
+  document.getElementById('evidenceModalBackdrop').classList.add('open');
+}
+function closeEvidenceModal(){
+  document.getElementById('evidenceModalBackdrop').classList.remove('open');
+}
+function evidenceNav(dir){
+  evidenceIndex = (evidenceIndex + dir + evidenceCount) % evidenceCount;
+  renderEvidenceSlide();
+}
+function renderEvidenceSlide(){
+  document.getElementById('evidenceSlideLabel').textContent = 'Foto ' + (evidenceIndex + 1);
+  document.getElementById('evidenceCounter').textContent = (evidenceIndex + 1) + ' / ' + evidenceCount;
+  document.getElementById('evidenceDots').innerHTML = Array.apply(null, Array(evidenceCount)).map(function(_, i){
+    return '<span class="dot' + (i === evidenceIndex ? ' active' : '') + '"></span>';
+  }).join('');
 }
 
 

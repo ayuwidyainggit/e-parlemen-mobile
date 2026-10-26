@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>Tambah Usulan Pokir &middot; e-Parlemen DPRD Kota Magelang</title>
+<title>Tambah Usulan Aspirasi &middot; e-Parlemen DPRD Kota Magelang</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 
@@ -171,6 +171,18 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .field textarea{min-height:78px; resize:vertical;}
 .upload-box{border:2px dashed #cfcabb; border-radius:12px; padding:20px 10px; text-align:center; color:var(--muted); font-size:11.5px;}
 .upload-box .ic{font-size:22px; display:block; margin-bottom:6px;}
+.evidence-actions{display:flex; gap:8px; margin-bottom:10px;}
+.evidence-actions .btn{flex:1; cursor:pointer;}
+.evidence-actions .btn input[type="file"]{display:none;}
+.evidence-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+.evidence-thumb{position:relative; border-radius:10px; overflow:hidden; aspect-ratio:1; background:var(--neutral-bg); border:1px solid var(--border);}
+.evidence-thumb img{width:100%; height:100%; object-fit:cover; display:block;}
+.evidence-thumb.is-file{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; color:var(--muted); padding:6px;}
+.evidence-thumb.is-file .ic-svg{width:20px; height:20px;}
+.evidence-thumb .rm{position:absolute; top:4px; right:4px; width:19px; height:19px; border-radius:50%; background:rgba(0,0,0,.55); color:#fff; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; padding:0;}
+.evidence-thumb .rm svg{width:10px; height:10px;}
+.evidence-thumb .fname{position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.55); color:#fff; font-size:7.5px; padding:2px 4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.evidence-thumb.is-file .fname{position:static; background:none; color:var(--muted); font-size:8px; padding:0;}
 .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
 .chip{padding:7px 13px; border-radius:20px; background:#eceee7; font-size:11.5px; font-weight:700; color:var(--ink); border:1px solid transparent; cursor:pointer; font-family:inherit;}
 .chip.active{background:var(--green); color:#fff;}
@@ -301,61 +313,83 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
   <div class="hdr-wave"><svg viewBox="0 0 400 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hdrWaveGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="var(--green-dark)"/><stop offset="60%" stop-color="var(--green)"/><stop offset="100%" stop-color="var(--green-mid)"/></linearGradient></defs><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,0 L0,0 Z" fill="url(#hdrWaveGrad)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,30 L0,30 Z" fill="var(--cream)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14" fill="none" stroke="#c0392b" stroke-width="2.2" opacity=".85"/></svg></div>
   <div class="screen">
 
-    <div class="screen-title">Tambah Usulan Pokir</div>
+    <div class="screen-title" id="pageTitle">Tambah Usulan Aspirasi</div>
 
     <div class="info-box" style="margin-bottom:16px;">
       <span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></span>
-      <span>Catat pokok pikiran (misalnya infrastruktur rusak, fasilitas pendidikan/kesehatan yang kurang) untuk diusulkan ke Majelis/Sekretariat dan dibahas lebih lanjut dalam Musrenbang.</span>
+      <span>Catat usulan aspirasi masyarakat (misalnya infrastruktur rusak, fasilitas pendidikan/kesehatan yang kurang) untuk diusulkan ke Sekretariat dan dibahas lebih lanjut dalam Musrenbang.</span>
     </div>
     <div class="card">
       <div class="field">
-        <label>Judul Usulan</label>
-        <input type="text" placeholder="Contoh: Perbaikan Jalan Lingkungan RT 03">
+        <label>Judul</label>
+        <input type="text" id="judulInput" placeholder="Contoh: Perbaikan Jalan Lingkungan RT 03">
+      </div>
+      <div class="field">
+        <label>Deskripsi</label>
+        <textarea id="deskripsiInput" placeholder="Jelaskan kondisi dan kebutuhan masyarakat secara singkat..."></textarea>
       </div>
       <div class="field">
         <label>Kategori</label>
         <div class="chip-row">
-          <span class="chip active">Infrastruktur</span>
-          <span class="chip chip-outline">Pendidikan</span>
-          <span class="chip chip-outline">Kesehatan</span>
-          <span class="chip chip-outline">Ekonomi &amp; UMKM</span>
-          <span class="chip chip-outline">Lainnya</span>
+          <span class="chip active" onclick="selectChip(this)">Infrastruktur</span>
+          <span class="chip chip-outline" onclick="selectChip(this)">Pendidikan</span>
+          <span class="chip chip-outline" onclick="selectChip(this)">Kesehatan</span>
+          <span class="chip chip-outline" onclick="selectChip(this)">Ekonomi &amp; UMKM</span>
+          <span class="chip chip-outline" onclick="selectChip(this)">Olahraga</span>
+          <span class="chip chip-outline" onclick="selectChip(this)">Lainnya</span>
         </div>
       </div>
       <div class="field">
-        <label style="display:flex; align-items:center; gap:9px; cursor:pointer; margin-bottom:4px;">
-          <input type="checkbox" id="prioritasCheck" style="width:18px; height:18px; padding:0; border-radius:5px; accent-color:var(--green); flex-shrink:0;">
-          <span>Tandai sebagai Prioritas</span>
-        </label>
-        <div class="hint">Usulan prioritas akan mendapat perhatian lebih dalam pembahasan Musrenbang.</div>
+        <label>Asal Kegiatan <span class="opt">(opsional)</span></label>
+        <select id="asalKegiatanSelect">
+          <option value="">Tidak ada &mdash; usulan langsung</option>
+          <option>Reses Masa Persidangan I Tahun 2025</option>
+          <option>Reses Masa Persidangan II Tahun 2025</option>
+          <option>Reses Masa Persidangan III Tahun 2025</option>
+          <option>Kunjungan Sosialisasi Perda Retribusi</option>
+          <option>Kunjungan Lapangan Proyek Drainase Kel. Wates</option>
+          <option>Kunjungan Fasilitas Kesehatan Puskesmas Magelang Utara</option>
+          <option>Kunjungan Fasilitas Publik Pasar Rejowinangun</option>
+        </select>
       </div>
       <div class="field">
-        <label>Sumber Aspirasi</label>
-        <select>
-          <option>Reses Masa Persidangan II 2025</option>
-          <option>Kunjungan Dapil</option>
-          <option>Aduan Masyarakat (Offline)</option>
-          <option>Inisiatif Pribadi</option>
+        <label>Dapil</label>
+        <select id="dapilSelect">
+          <option value="">Pilih dapil&hellip;</option>
+          <option>Dapil 1</option>
+          <option>Dapil 2</option>
+          <option>Dapil 3</option>
         </select>
       </div>
       <div class="field">
         <label>Lokasi</label>
-        <input type="text" placeholder="Kelurahan / Kecamatan">
+        <div class="two-col">
+          <select id="lokasiProvinsiSelect" onchange="onLokasiProvinsiChange()"></select>
+          <select id="lokasiKabupatenSelect"></select>
+        </div>
+        <input type="text" id="lokasiAlamatInput" placeholder="Nama jalan, RT/RW, Kelurahan..." style="margin-top:10px;">
       </div>
       <div class="field">
-        <label>Deskripsi Masalah</label>
-        <textarea placeholder="Jelaskan kondisi dan kebutuhan masyarakat secara singkat..."></textarea>
+        <label>Evidence <span class="opt">(opsional &middot; bisa lebih dari satu)</span></label>
+        <div class="evidence-actions">
+          <label class="btn btn-outline btn-sm">
+            <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ambil Foto
+            <input type="file" accept="image/png,image/jpeg,image/jpg" capture="environment" multiple onchange="handleEvidenceFiles(this.files)">
+          </label>
+          <label class="btn btn-outline btn-sm">
+            <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.6-2.5h4.8L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg> Pilih File
+            <input type="file" accept="image/png,image/jpeg,image/jpg" multiple onchange="handleEvidenceFiles(this.files)">
+          </label>
+        </div>
+        <div class="evidence-grid" id="evidenceGrid"></div>
+        <div class="hint" id="evidenceEmpty">Belum ada evidence ditambahkan. Format PNG/JPG/JPEG.</div>
       </div>
-      <div class="field">
-        <label>Perkiraan Pagu Anggaran <span class="opt">(opsional)</span></label>
-        <input type="text" placeholder="Rp">
-      </div>
-      <div class="field">
-        <label>Foto Kondisi</label>
-        <div class="upload-box"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.6-2.5h4.8L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg></span>Ketuk untuk unggah foto lokasi/kondisi</div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Pemberi Aspirasi</label>
+        <input type="text" id="pemberiInput" value="Ir. Budi Santoso, M.T.">
       </div>
     </div>
-    <a class="btn btn-primary" href="pokir.html" onclick="ajukanPokir(event)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4l16 8-16 8 4-8-4-8z"/></svg> Ajukan ke Sekretariat</a>
+    <a class="btn btn-primary" href="pokir.html" onclick="ajukanPokir(event)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 4l16 8-16 8 4-8-4-8z"/></svg> <span id="submitBtnLabel">Ajukan ke Sekretariat</span></a>
     <div class="hint" style="text-align:center; margin-top:10px;">Usulan akan diverifikasi Sekretariat sebelum dibahas dalam Musrenbang dan diusulkan ke RKPD.</div>
 
   </div>
@@ -364,13 +398,6 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 <div class="toast" id="toast"></div>
 <script>
 
-function showTab(group, name, btn){
-  document.querySelectorAll('[data-panel-group="' + group + '"]').forEach(function(p){ p.style.display = 'none'; });
-  var target = document.getElementById(group + '-' + name);
-  if(target){ target.style.display = 'block'; }
-  document.querySelectorAll('[data-tabgroup="' + group + '"]').forEach(function(t){ t.classList.remove('active'); });
-  if(btn){ btn.classList.add('active'); }
-}
 function toast(msg){
   var el = document.getElementById('toast');
   if(!el) return;
@@ -378,9 +405,142 @@ function toast(msg){
   el.style.display = 'block';
   setTimeout(function(){ el.style.display = 'none'; }, 2200);
 }
+function selectChip(el){
+  el.parentElement.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('active'); c.classList.add('chip-outline'); });
+  el.classList.add('active');
+  el.classList.remove('chip-outline');
+}
+
+function getParam(name){ return new URLSearchParams(window.location.search).get(name); }
+var idParam = getParam('id');
+var modeParam = getParam('mode');
+var isEdit = modeParam === 'edit' && !!idParam;
+var prefill = { judul: getParam('judul'), kategori: getParam('kategori'), asal: getParam('asal'), dapil: getParam('dapil') };
+var hasPrefill = !isEdit && (prefill.judul || prefill.kategori || prefill.asal || prefill.dapil);
+
+// ---------- Lokasi: dropdown Provinsi + Kabupaten/Kota (statis, prototipe) ----------
+var LOKASI_PROVINSI_LIST = ['Aceh','Sumatera Utara','Sumatera Barat','Riau','Kepulauan Riau','Jambi','Sumatera Selatan','Kepulauan Bangka Belitung','Bengkulu','Lampung','DKI Jakarta','Jawa Barat','Jawa Tengah','DI Yogyakarta','Jawa Timur','Banten','Bali','Nusa Tenggara Barat','Nusa Tenggara Timur','Kalimantan Barat','Kalimantan Tengah','Kalimantan Selatan','Kalimantan Timur','Kalimantan Utara','Sulawesi Utara','Sulawesi Tengah','Sulawesi Selatan','Sulawesi Tenggara','Gorontalo','Sulawesi Barat','Maluku','Maluku Utara','Papua','Papua Barat','Papua Tengah','Papua Pegunungan','Papua Selatan','Papua Barat Daya'];
+var LOKASI_KABUPATEN_BY_PROVINSI = {
+  'Sumatera Utara': ['Kota Medan'],
+  'Sumatera Barat': ['Kota Padang'],
+  'Riau': ['Kota Pekanbaru'],
+  'Kepulauan Riau': ['Kota Batam'],
+  'Sumatera Selatan': ['Kota Palembang'],
+  'DKI Jakarta': ['Kota Jakarta Selatan','Kota Jakarta Pusat'],
+  'Jawa Barat': ['Kota Bandung','Kota Bogor','Kabupaten Bogor'],
+  'Jawa Tengah': ['Kota Magelang','Kabupaten Magelang','Kota Semarang','Kota Surakarta','Kabupaten Purworejo','Kabupaten Temanggung','Kabupaten Wonosobo','Kabupaten Kebumen','Kabupaten Boyolali'],
+  'DI Yogyakarta': ['Kota Yogyakarta','Kabupaten Sleman','Kabupaten Bantul'],
+  'Jawa Timur': ['Kota Surabaya','Kota Malang'],
+  'Bali': ['Kota Denpasar','Kabupaten Badung'],
+  'Kalimantan Barat': ['Kota Pontianak'],
+  'Kalimantan Selatan': ['Kota Banjarmasin'],
+  'Kalimantan Timur': ['Kota Balikpapan'],
+  'Sulawesi Utara': ['Kota Manado'],
+  'Sulawesi Selatan': ['Kota Makassar']
+};
+function populateLokasiProvinsiSelect(selected){
+  var sel = document.getElementById('lokasiProvinsiSelect');
+  sel.innerHTML = LOKASI_PROVINSI_LIST.map(function(p){ return '<option value="' + p + '">' + p + '</option>'; }).join('');
+  sel.value = selected || 'Jawa Tengah';
+}
+function populateLokasiKabupatenSelect(selected, provinsi){
+  var sel = document.getElementById('lokasiKabupatenSelect');
+  var opts = LOKASI_KABUPATEN_BY_PROVINSI[provinsi] || [];
+  sel.innerHTML = '<option value="">Pilih kabupaten/kota&hellip;</option>' + opts.map(function(k){ return '<option value="' + k + '">' + k + '</option>'; }).join('');
+  sel.value = selected || (provinsi === 'Jawa Tengah' ? 'Kota Magelang' : '');
+}
+function onLokasiProvinsiChange(){
+  populateLokasiKabupatenSelect(null, document.getElementById('lokasiProvinsiSelect').value);
+}
+
+// ---------- Evidence: multi-file (kamera / pilih file), preview via FileReader ----------
+var evidenceFiles = [];
+var evidenceSeq = 0;
+var ALLOWED_EVIDENCE_TYPES = ['image/png', 'image/jpeg'];
+function handleEvidenceFiles(fileList){
+  Array.prototype.forEach.call(fileList, function(file){
+    if(ALLOWED_EVIDENCE_TYPES.indexOf(file.type) === -1){
+      toast('Format "' + file.name + '" tidak didukung. Gunakan PNG/JPG/JPEG.');
+      return;
+    }
+    var id = ++evidenceSeq;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      evidenceFiles.push({ id: id, name: file.name, dataUrl: e.target.result });
+      renderEvidenceGrid();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+function removeEvidence(id){
+  evidenceFiles = evidenceFiles.filter(function(f){ return f.id !== id; });
+  renderEvidenceGrid();
+}
+function renderEvidenceGrid(){
+  var grid = document.getElementById('evidenceGrid');
+  var empty = document.getElementById('evidenceEmpty');
+  if(!evidenceFiles.length){
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  grid.innerHTML = evidenceFiles.map(function(f){
+    var rmBtn = '<button type="button" class="rm" onclick="removeEvidence(' + f.id + ')"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill="none" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>';
+    if(f.dataUrl){
+      return '<div class="evidence-thumb"><img src="' + f.dataUrl + '" alt="' + f.name + '">' + rmBtn + '<span class="fname">' + f.name + '</span></div>';
+    }
+    return '<div class="evidence-thumb is-file"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg>' + rmBtn + '<span class="fname">' + f.name + '</span></div>';
+  }).join('');
+}
+
+var ASPIRASI_DATA = {
+  '1': { judul:'Pembangunan Jalan Lingkungan', deskripsi:'Usulan pembangunan jalan lingkungan untuk memperlancar akses warga menuju fasilitas umum.', kategori:'Infrastruktur', asal:'Reses Masa Persidangan II Tahun 2025', dapil:'Dapil 1', provinsi:'Jawa Tengah', kabupaten:'Kota Magelang', alamat:'Jl. Magersari RT 02/RW 03, Kel. Magersari', evidence:[{name:'kondisi-jalan-1.jpg'},{name:'kondisi-jalan-2.jpg'}], pemberi:'Ir. Budi Santoso, M.T.' },
+  '2': { judul:'Normalisasi Saluran Drainase', deskripsi:'Usulan normalisasi saluran drainase untuk mengatasi genangan air saat musim hujan.', kategori:'Infrastruktur', asal:'Kunjungan Lapangan Proyek Drainase Kel. Wates', dapil:'Dapil 1', provinsi:'Jawa Tengah', kabupaten:'Kota Magelang', alamat:'Saluran Drainase RT 05/RW 02, Kel. Rejowinangun Selatan', evidence:[{name:'drainase-tersumbat.jpg'}], pemberi:'Ir. Budi Santoso, M.T.' },
+  '3': { judul:'Pemasangan Lampu Jalan', deskripsi:'Usulan pemasangan lampu penerangan jalan untuk meningkatkan keamanan warga di malam hari.', kategori:'Infrastruktur', asal:'', dapil:'Dapil 1', provinsi:'Jawa Tengah', kabupaten:'Kota Magelang', alamat:'Jl. Jurangombo RT 03/RW 01, Kel. Jurangombo Selatan', evidence:[], pemberi:'Ir. Budi Santoso, M.T.' },
+  '4': { judul:'Rehabilitasi Ruang Kelas SDN 2 Rejowinangun', deskripsi:'Usulan rehabilitasi ruang kelas yang sudah rusak agar kegiatan belajar mengajar lebih nyaman.', kategori:'Pendidikan', asal:'Reses Masa Persidangan I Tahun 2025', dapil:'Dapil 1', provinsi:'Jawa Tengah', kabupaten:'Kota Magelang', alamat:'SDN 2 Rejowinangun, Kel. Rejowinangun Selatan', evidence:[{name:'ruang-kelas-1.jpg'},{name:'ruang-kelas-2.jpg'},{name:'ruang-kelas-3.jpg'}], pemberi:'Ir. Budi Santoso, M.T.' },
+  '5': { judul:'Pembangunan Lapangan Olahraga', deskripsi:'Usulan pembangunan lapangan olahraga untuk mendukung kegiatan warga di bidang olahraga.', kategori:'Olahraga', asal:'', dapil:'Dapil 1', provinsi:'Jawa Tengah', kabupaten:'Kota Magelang', alamat:'Lapangan RW 04, Kel. Tidar Selatan', evidence:[], pemberi:'Ir. Budi Santoso, M.T.' }
+};
+
+function applyAspirasiData(data){
+  document.getElementById('judulInput').value = data.judul || '';
+  document.getElementById('deskripsiInput').value = data.deskripsi || '';
+  document.querySelectorAll('.chip-row .chip').forEach(function(c){
+    var match = c.textContent.trim() === data.kategori;
+    c.classList.toggle('active', match);
+    c.classList.toggle('chip-outline', !match);
+  });
+  document.getElementById('asalKegiatanSelect').value = data.asal || '';
+  document.getElementById('dapilSelect').value = data.dapil || '';
+  populateLokasiProvinsiSelect(data.provinsi);
+  populateLokasiKabupatenSelect(data.kabupaten, data.provinsi);
+  document.getElementById('lokasiAlamatInput').value = data.alamat || '';
+  evidenceFiles = (data.evidence || []).map(function(f){ evidenceSeq++; return { id: evidenceSeq, name: f.name, dataUrl: f.dataUrl || null }; });
+  renderEvidenceGrid();
+  document.getElementById('pemberiInput').value = data.pemberi || '';
+}
+
+(function init(){
+  if(isEdit){
+    var data = ASPIRASI_DATA[idParam];
+    if(data){
+      document.getElementById('pageTitle').textContent = 'Edit Usulan Aspirasi';
+      document.getElementById('submitBtnLabel').textContent = 'Simpan Perubahan';
+      applyAspirasiData(data);
+      return;
+    }
+  }
+  if(hasPrefill){
+    applyAspirasiData({ judul: prefill.judul, kategori: prefill.kategori, asal: prefill.asal, dapil: prefill.dapil });
+    return;
+  }
+  populateLokasiProvinsiSelect(null);
+  populateLokasiKabupatenSelect(null, 'Jawa Tengah');
+  renderEvidenceGrid();
+})();
+
 function ajukanPokir(e){
-  var isPrioritas = document.getElementById('prioritasCheck').checked;
-  toast(isPrioritas ? 'Usulan pokir prioritas diajukan' : 'Usulan pokir diajukan');
+  toast(isEdit ? 'Perubahan usulan disimpan' : 'Usulan Aspirasi diajukan ke Sekretariat');
 }
 
 

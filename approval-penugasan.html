@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Approval Penugasan &middot; e-Parlemen DPRD Kota Magelang</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+:root{
+  --green-dark:#0f2318;
+  --green:#1b3a2b;
+  --green-mid:#234a37;
+  --green-light:#2f5a44;
+  --gold:#c9a24a;
+  --gold-light:#e4c976;
+  --cream:#f7f6f1;
+  --card:#ffffff;
+  --ink:#182a20;
+  --muted:#707b73;
+  --border:#e7e4dc;
+  --success-bg:#e6f4ea; --success:#1f8a4c;
+  --warn-bg:#fff2df; --warn:#c8791a;
+  --danger-bg:#fbe7e7; --danger:#d64545;
+  --info-bg:#e7f0fb; --info:#2f6fb0;
+  --neutral-bg:#eef0ec; --neutral:#5b6a5e;
+  --purple-bg:#efe6fb; --purple:#7c4fd1;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:#dfe1db;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  display:flex;
+  justify-content:center;
+  padding:28px 12px 60px;
+}
+a{color:inherit;}
+.device{
+  width:390px;
+  max-width:100%;
+  background:var(--cream);
+  border-radius:42px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.35), 0 0 0 10px #111, 0 0 0 12px #2b2b2b;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-height:844px;
+}
+.notch{
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:150px; height:26px; background:#111; border-radius:0 0 18px 18px; z-index:20;
+}
+.statusbar{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 26px 2px; color:#fff; font-size:13px; font-weight:700;
+  position:relative; z-index:5;
+}
+.statusbar .icons{display:flex; gap:5px; align-items:center;}
+.si-svg{width:17px; height:12px; color:#fff;}
+.si-svg.batt{width:23px; height:12px;}
+.app-header{
+  background:linear-gradient(135deg,var(--green-dark),var(--green) 60%,var(--green-mid));
+  color:#fff; padding:6px 20px 20px; position:relative; overflow:hidden;
+}
+.app-header::after{
+  content:""; position:absolute; right:-40px; top:-40px; width:160px; height:160px;
+  border-radius:50%; background:radial-gradient(circle,rgba(201,162,74,.18),transparent 70%);
+}
+.hdr-watermark{position:absolute; top:2px; right:14px; width:88px; height:110px; opacity:.11; z-index:1; pointer-events:none;}
+.hdr-watermark-svg{width:100%; height:100%; display:block;}
+.hdr-wave{margin-top:-2px; line-height:0; position:relative; z-index:4;}
+.hdr-wave svg{display:block; width:100%; height:24px;}
+.crest-svg{width:100%; height:100%; display:block;}
+.ic-svg{width:1em; height:1em; vertical-align:-0.15em; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0;}
+.header-row{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; position:relative; z-index:2;}
+.brand{display:flex; gap:10px; align-items:center;}
+.emblem{
+  width:44px; height:44px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:Georgia,'Times New Roman',serif; font-weight:700; font-size:10px; letter-spacing:.5px;
+  text-align:center; line-height:1.1;
+}
+.brand-text h1{font-family:Georgia,'Times New Roman',serif; font-size:19px; margin:0; font-weight:700;}
+.brand-text .sub{font-size:10.5px; font-weight:700; color:var(--gold-light); letter-spacing:.3px; margin-top:1px;}
+.bell{
+  position:relative; width:36px; height:36px; border-radius:50%;
+  background:rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0;
+}
+.bell .dot{
+  position:absolute; top:-3px; right:-3px; background:var(--danger); color:#fff; font-size:9px; font-weight:800;
+  min-width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--green-dark);
+}
+.back-btn{
+  width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.16);
+  display:flex; align-items:center; justify-content:center; text-decoration:none; color:#fff; font-size:17px; flex-shrink:0;
+}
+.header-actions{margin-left:auto; display:flex; gap:8px;}
+
+.screen{flex:1; padding:16px 16px 90px;}
+.screen-title{font-family:Georgia,'Times New Roman',serif; font-size:24px; font-weight:700; color:var(--ink); margin:2px 0 16px;}
+
+.card{background:var(--card); border-radius:14px; padding:14px; border:1px solid var(--border); box-shadow:0 1px 3px rgba(0,0,0,.05); margin-bottom:14px;}
+.section-title{font-size:14.5px; font-weight:800; color:var(--ink); margin:18px 0 10px;}
+.hint{font-size:11.5px; color:var(--muted); line-height:1.5;}
+
+.stats-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:16px;}
+.stat{background:#fff; border:1px solid var(--border); border-radius:12px; padding:12px 8px; text-align:center;}
+.stat .num{font-size:21px; font-weight:800; color:var(--green);}
+.stat .lbl{font-size:10px; color:var(--muted); margin-top:3px; line-height:1.3;}
+.stat.purple .num{color:var(--purple);}
+.stat.success .num{color:var(--success);}
+
+.badge{display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:10.5px; font-weight:800; white-space:nowrap;}
+.badge-success{background:var(--success-bg); color:var(--success);}
+.badge-warn{background:var(--warn-bg); color:var(--warn);}
+.badge-danger{background:var(--danger-bg); color:var(--danger);}
+.badge-info{background:var(--info-bg); color:var(--info);}
+.badge-neutral{background:var(--neutral-bg); color:var(--neutral);}
+.badge-purple{background:var(--purple-bg); color:var(--purple);}
+
+.btn{display:flex; align-items:center; justify-content:center; gap:7px; padding:13px 16px; border-radius:11px; font-size:13.5px; font-weight:800; text-decoration:none; border:none; cursor:pointer; width:100%; font-family:inherit;}
+.btn-primary{background:linear-gradient(135deg,var(--green-dark),var(--green)); color:#fff; box-shadow:inset 0 0 0 1.5px var(--gold);}
+.btn-outline{background:#fff; color:var(--green); border:1.5px solid var(--green);}
+.btn-danger-outline{background:#fff; color:var(--danger); border:1.5px solid var(--danger);}
+.btn-sm{padding:9px 12px; font-size:12px; width:auto;}
+.btn-row{display:flex; gap:10px; margin-top:4px;}
+.btn-row .btn{flex:1;}
+
+.ap-card{background:#fff; border-radius:13px; padding:13px; border:1px solid var(--border); border-left:4px solid var(--purple); margin-bottom:10px;}
+.ap-head{display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:8px;}
+.ap-title{font-weight:800; font-size:13px; color:var(--ink); line-height:1.35;}
+.ap-no{font-size:10px; color:var(--muted); margin-top:2px;}
+.kv-row{display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px dashed var(--border); font-size:11.5px;}
+.kv-row:last-child{border-bottom:none;}
+.kv-row .k{color:var(--muted); flex-shrink:0;}
+.kv-row .v{font-weight:700; text-align:right;}
+.ap-actions{display:flex; gap:8px; margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);}
+.ap-actions .btn{flex:1;}
+.ap-locked{margin-top:10px; padding-top:10px; border-top:1px dashed var(--border); font-size:10.8px; color:var(--muted); display:flex; gap:7px; align-items:flex-start;}
+.ap-locked .ic-svg{width:14px; height:14px; flex-shrink:0; margin-top:1px;}
+
+.field{margin-bottom:14px;}
+.field label{display:block; font-size:11.8px; font-weight:800; color:var(--ink); margin-bottom:6px;}
+.field .opt{font-weight:600; color:var(--muted); font-size:10.5px;}
+.field textarea{
+  width:100%; padding:11px 12px; border-radius:10px; border:1px solid var(--border); font-size:13px;
+  background:#fff; font-family:inherit; color:var(--ink); min-height:78px; resize:vertical;
+}
+.chk-list{border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#fff;}
+.chk-item{display:flex; align-items:center; gap:9px; padding:10px 12px; font-size:12.5px; color:var(--ink); border-bottom:1px solid var(--border);}
+.chk-item:last-child{border-bottom:none;}
+
+.modal-backdrop{position:absolute; inset:0; background:rgba(15,35,24,.55); z-index:40; display:none; align-items:flex-end; justify-content:center;}
+.modal-backdrop.open{display:flex;}
+.modal-sheet{width:100%; max-height:86%; background:var(--cream); border-radius:22px 22px 0 0; overflow-y:auto; padding:16px 16px 22px; box-shadow:0 -10px 30px rgba(0,0,0,.3);}
+.modal-sheet-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;}
+.modal-sheet-head h3{font-family:Georgia,'Times New Roman',serif; font-size:18px; margin:0; color:var(--ink);}
+.modal-close{width:30px; height:30px; border-radius:50%; background:var(--neutral-bg); display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; color:var(--ink); flex-shrink:0;}
+.modal-close .ic-svg{width:16px; height:16px;}
+
+.empty{text-align:center; padding:34px 10px; color:var(--muted);}
+.empty .ic{font-size:34px; display:block; margin-bottom:8px;}
+
+.toast{
+  display:none; position:fixed; bottom:110px; left:50%; transform:translateX(-50%);
+  background:var(--green-dark); color:#fff; padding:11px 18px; border-radius:30px; font-size:12px; font-weight:700;
+  box-shadow:0 8px 20px rgba(0,0,0,.3); z-index:50; white-space:nowrap; max-width:80%; text-align:center;
+}
+
+.bottomnav{
+  display:flex; justify-content:space-around; align-items:flex-end; background:#fff; border-top:1px solid var(--border);
+  padding:9px 6px 16px; position:relative; z-index:6;
+}
+.navitem{display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; font-weight:700; color:var(--muted); text-decoration:none; flex:1;}
+.navitem .ic{font-size:19px;}
+.navitem.active{color:var(--green);}
+
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="notch"></div>
+
+    <div class="statusbar">
+      <span>9:41</span>
+      <span class="icons"><svg viewBox="0 0 20 14" class="si-svg"><rect x="0" y="8" width="3" height="6" rx="0.6" fill="currentColor"/><rect x="5.5" y="5" width="3" height="9" rx="0.6" fill="currentColor"/><rect x="11" y="2" width="3" height="12" rx="0.6" fill="currentColor"/><rect x="16.5" y="0" width="3" height="14" rx="0.6" fill="currentColor"/></svg> <svg viewBox="0 0 20 16" class="si-svg"><path d="M1.5 5.8a13.5 13.5 0 0 1 17 0" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/><path d="M4.7 9.4a8.6 8.6 0 0 1 10.6 0" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round"/><circle cx="10" cy="13.2" r="1.5" fill="currentColor"/></svg> <svg viewBox="0 0 26 14" class="si-svg batt"><rect x="0.8" y="0.8" width="21.4" height="12.4" rx="3" stroke="currentColor" stroke-width="1.3" fill="none"/><rect x="2.4" y="2.4" width="17" height="9.2" rx="1.6" fill="currentColor"/><rect x="23" y="4.4" width="2.2" height="5.2" rx="1" fill="currentColor"/></svg></span>
+    </div>
+
+  <div class="app-header">
+    <div class="hdr-watermark"><svg viewBox="0 0 140 170" class="hdr-watermark-svg" xmlns="http://www.w3.org/2000/svg"><rect x="58" y="70" width="24" height="95" fill="#fff"/><polygon points="46,70 70,26 94,70" fill="#fff"/><rect x="66" y="10" width="8" height="18" fill="#fff"/><circle cx="70" cy="6" r="3" fill="#fff"/><rect x="64" y="90" width="12" height="18" fill="#123424"/><rect x="18" y="140" width="104" height="16" fill="#fff"/><rect x="8" y="156" width="124" height="10" fill="#fff"/><rect x="30" y="120" width="10" height="20" fill="#fff"/><rect x="100" y="120" width="10" height="20" fill="#fff"/></svg></div><div class="header-row" style="align-items:center;">  <a class="back-btn" href="beranda.html" style="margin-right:2px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 12H5"/><path d="M11 18l-6-6 6-6"/></svg></a>  <div class="brand">    <div class="emblem" style="width:36px;height:36px;"><span style="display:inline-flex;width:24px;height:24px;"><svg viewBox="0 0 48 54" class="crest-svg" xmlns="http://www.w3.org/2000/svg"><path d="M24 2 L44 9 V24 C44 37 36 47 24 52 C12 47 4 37 4 24 V9 Z" fill="#0f2318" stroke="#e4c976" stroke-width="2"/><path d="M24 6 L40 11.5 V24 C40 34.5 33.5 42.5 24 47 C14.5 42.5 8 34.5 8 24 V11.5 Z" fill="none" stroke="#c9a24a" stroke-width="1"/><path d="M15 33 L19 18 L24 26 L29 18 L33 33 Z" fill="#c9a24a"/><path d="M17 33 H31 L29 39 H19 Z" fill="#d64545"/><path d="M14 20 C10 24 10 30 13 35" stroke="#e4c976" stroke-width="1.4" fill="none" stroke-linecap="round"/><path d="M34 20 C38 24 38 30 35 35" stroke="#e4c976" stroke-width="1.4" fill="none" stroke-linecap="round"/><text x="24" y="15" text-anchor="middle" font-family="Georgia, serif" font-size="7" fill="#f3e6bb" font-weight="700">DPRD</text></svg></span></div>    <div class="brand-text"><h1 style="font-size:15px;">e-Parlemen</h1><div class="sub" style="font-size:9px;">DPRD KOTA MAGELANG</div></div>  </div>  <div class="header-actions"><a href="notifikasi.html" class="bell" style="width:32px;height:32px;font-size:14px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="dot" style="width:14px;height:14px;font-size:8px;">3</span></a></div></div>
+  </div>
+  <div class="hdr-wave"><svg viewBox="0 0 400 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hdrWaveGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="var(--green-dark)"/><stop offset="60%" stop-color="var(--green)"/><stop offset="100%" stop-color="var(--green-mid)"/></linearGradient></defs><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,0 L0,0 Z" fill="url(#hdrWaveGrad)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,30 L0,30 Z" fill="var(--cream)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14" fill="none" stroke="#c0392b" stroke-width="2.2" opacity=".85"/></svg></div>
+  <div class="screen">
+
+    <div class="screen-title">Approval Penugasan</div>
+
+    <div class="hint" style="margin-bottom:14px;">Menampilkan seluruh Penugasan berstatus <strong>Menunggu Approval</strong>. Tombol Setujui/Tolak hanya aktif untuk Penugasan yang menunjuk Anda (Ketua DPRD) sebagai salah satu approver terpilih (Config Approval, approval tidak berjenjang) &mdash; selain itu akan tampil keterangan menunggu approver lain.</div>
+
+    <div class="stats-grid">
+      <div class="stat purple"><div class="num" id="statTotal">0</div><div class="lbl">Total Menunggu Approval</div></div>
+      <div class="stat success"><div class="num" id="statPerlu">0</div><div class="lbl">Perlu Keputusan Anda</div></div>
+    </div>
+
+    <div class="section-title" style="margin-top:0;">Daftar Penugasan</div>
+    <div id="approvalList"></div>
+
+  </div>
+
+  <div class="modal-backdrop" id="approveModalBackdrop" onclick="if(event.target===this){ closeApproveModal(); }">
+    <div class="modal-sheet">
+      <div class="modal-sheet-head">
+        <h3>Setujui Penugasan</h3>
+        <button type="button" class="modal-close" onclick="closeApproveModal()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>
+      </div>
+      <div class="hint" id="approveModalText" style="margin-bottom:12px;"></div>
+      <div class="field">
+        <label>Approver Terpilih <span class="opt">(approval tidak berjenjang &mdash; cukup salah satu)</span></label>
+        <div class="chk-list" id="approveModalApprovers"></div>
+      </div>
+      <a class="btn btn-primary" href="#" onclick="confirmApprove(); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg> Setujui Penugasan</a>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="rejectModalBackdrop" onclick="if(event.target===this){ closeRejectModal(); }">
+    <div class="modal-sheet">
+      <div class="modal-sheet-head">
+        <h3>Tolak Penugasan</h3>
+        <button type="button" class="modal-close" onclick="closeRejectModal()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>
+      </div>
+      <div class="hint" id="rejectModalText" style="margin-bottom:12px;"></div>
+      <div class="field" style="margin-bottom:18px;">
+        <label>Alasan Penolakan <span class="opt">(wajib diisi)</span></label>
+        <textarea id="rejectReasonInput" placeholder="Jelaskan alasan menolak penugasan ini&hellip;"></textarea>
+      </div>
+      <a class="btn btn-danger-outline" href="#" onclick="confirmReject(); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg> Tolak Penugasan</a>
+    </div>
+  </div>
+
+<div class="bottomnav"><a class="navitem" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem active" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+
+function toast(msg){
+  var el = document.getElementById('toast');
+  if(!el) return;
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(function(){ el.style.display = 'none'; }, 2400);
+}
+
+// Persona "login" tetap utk halaman ini - hanya Ketua DPRD/Ketua Sekretariat yg relevan membuka
+// Approval Penugasan (sama seperti web: approver selalu dari Pucuk Pimpinan). Config Approval tiap
+// Penugasan memilih 1-2 dari ['ketua-dprd','ketua-sekre'] - lihat reses-penugasan.html.
+var CURRENT_APPROVER = 'ketua-dprd';
+var APPROVER_LABELS = { 'ketua-dprd': 'Ketua DPRD Kota Magelang', 'ketua-sekre': 'Sekretariat DPRD Kota Magelang' };
+
+var PENDING_LIST = [
+  { id:1, noPenugasan:'P-00015', jenisPenugasan:'Reses', kegiatan:'Reses Masa Persidangan III Tahun 2025', lokasiJenis:'Dalam Kota', lokasi:'Kel. Kemirirejo, Kota Magelang', anggota:'R. Hendra Wijaya, S.H.', tanggal:'2 Jun 2026', jamMulai:'09:00', jamSelesai:'12:00', approverIds:['ketua-dprd','ketua-sekre'], status:'Menunggu Approval' },
+  { id:2, noPenugasan:'P-00016', jenisPenugasan:'Kunjungan Dapil', kegiatan:'Kunjungan Lapangan Perbaikan Talud Kali Progo', lokasiJenis:'Dalam Kota', lokasi:'Kel. Potrobangsan, Kota Magelang', anggota:'Hj. Siti Rahmawati', tanggal:'4 Jun 2026', jamMulai:'09:00', jamSelesai:'11:00', approverIds:['ketua-sekre'], status:'Menunggu Approval' },
+  { id:3, noPenugasan:'P-00017', jenisPenugasan:'Kunjungan Kerja', kegiatan:'Studi Banding Pengelolaan Sampah Kota Surakarta', lokasiJenis:'Luar Kota', lokasi:'Kota Surakarta, Jawa Tengah', anggota:'Drs. Ahmad Fauzi', tanggal:'10 Jun 2026', jamMulai:'08:00', jamSelesai:'16:00', approverIds:['ketua-dprd'], status:'Menunggu Approval' },
+  { id:4, noPenugasan:'P-00018', jenisPenugasan:'Reses', kegiatan:'Reses Masa Persidangan III Tahun 2025', lokasiJenis:'Dalam Kota', lokasi:'Kel. Jurangombo Utara, Kota Magelang', anggota:'M. Yusuf Ridwan, S.E.', tanggal:'3 Jun 2026', jamMulai:'09:00', jamSelesai:'12:00', approverIds:['ketua-dprd','ketua-sekre'], status:'Menunggu Approval' }
+];
+
+var STATUS_BADGE_CLASS = { 'Menunggu Approval':'badge-purple', 'Disetujui':'badge-success', 'Ditolak':'badge-danger' };
+
+function isApproverFor(item){
+  return (item.approverIds || []).indexOf(CURRENT_APPROVER) !== -1;
+}
+function isPending(item){
+  return item.status === 'Menunggu Approval';
+}
+
+function renderList(){
+  var box = document.getElementById('approvalList');
+  if(!PENDING_LIST.length){
+    box.innerHTML = '<div class="empty"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:34px;height:34px;"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></span>Tidak ada Penugasan yang menunggu approval.</div>';
+    updateStats();
+    return;
+  }
+  box.innerHTML = PENDING_LIST.map(function(item){
+    var approverNames = (item.approverIds || []).map(function(a){ return APPROVER_LABELS[a]; }).join(', ');
+    var actionsHtml;
+    if(!isPending(item)){
+      actionsHtml = item.status === 'Disetujui'
+        ? '<div class="ap-locked"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg> Disetujui oleh ' + APPROVER_LABELS[CURRENT_APPROVER] + '.</div>'
+        : '<div class="ap-locked"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg> Ditolak' + (item.rejectReason ? (': ' + item.rejectReason) : '') + '</div>';
+    } else if(isApproverFor(item)){
+      actionsHtml = '<div class="ap-actions">'
+        + '<button type="button" class="btn btn-outline btn-sm" onclick="openApproveModal(' + item.id + ')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg> Setujui</button>'
+        + '<button type="button" class="btn btn-danger-outline btn-sm" onclick="openRejectModal(' + item.id + ')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg> Tolak</button>'
+        + '</div>';
+    } else {
+      actionsHtml = '<div class="ap-locked"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg> Menunggu keputusan dari ' + approverNames + ' &mdash; bukan approver Anda.</div>';
+    }
+
+    return '<div class="ap-card">'
+      + '<div class="ap-head"><div><div class="ap-title">' + item.kegiatan + '</div><div class="ap-no">' + item.noPenugasan + '</div></div><span class="badge ' + (STATUS_BADGE_CLASS[item.status] || 'badge-purple') + '">' + item.status + '</span></div>'
+      + '<div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">' + item.jenisPenugasan + '</span></div>'
+      + '<div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">' + item.lokasiJenis + '</span></div>'
+      + '<div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">' + item.lokasi + '</span></div>'
+      + '<div class="kv-row"><span class="k">Anggota</span><span class="v">' + item.anggota + '</span></div>'
+      + '<div class="kv-row"><span class="k">Tanggal / Jam</span><span class="v">' + item.tanggal + ', ' + item.jamMulai + '&ndash;' + item.jamSelesai + '</span></div>'
+      + '<div class="kv-row"><span class="k">Approver Terpilih</span><span class="v">' + approverNames + '</span></div>'
+      + actionsHtml
+    + '</div>';
+  }).join('');
+  updateStats();
+}
+
+function updateStats(){
+  var pending = PENDING_LIST.filter(isPending);
+  document.getElementById('statTotal').textContent = pending.length;
+  document.getElementById('statPerlu').textContent = pending.filter(isApproverFor).length;
+}
+
+var approvingId = null;
+function openApproveModal(id){
+  var item = PENDING_LIST.find(function(x){ return x.id === id; });
+  if(!item || !isApproverFor(item)){ toast('Anda bukan approver untuk penugasan ini.'); return; }
+  approvingId = id;
+  document.getElementById('approveModalText').innerHTML = 'Setujui penugasan "' + item.kegiatan + '" untuk <strong>' + item.anggota + '</strong>?';
+  document.getElementById('approveModalApprovers').innerHTML = (item.approverIds || []).map(function(a){
+    var flag = a === CURRENT_APPROVER ? ' <span class="badge badge-info" style="margin-left:6px;">Anda</span>' : '';
+    return '<div class="chk-item">' + APPROVER_LABELS[a] + flag + '</div>';
+  }).join('');
+  document.getElementById('approveModalBackdrop').classList.add('open');
+}
+function closeApproveModal(){
+  document.getElementById('approveModalBackdrop').classList.remove('open');
+  approvingId = null;
+}
+function confirmApprove(){
+  var item = PENDING_LIST.find(function(x){ return x.id === approvingId; });
+  if(!item || !isApproverFor(item)){ toast('Anda bukan approver untuk penugasan ini.'); closeApproveModal(); return; }
+  item.status = 'Disetujui';
+  closeApproveModal();
+  renderList();
+  toast('Penugasan disetujui');
+}
+
+var rejectingId = null;
+function openRejectModal(id){
+  var item = PENDING_LIST.find(function(x){ return x.id === id; });
+  if(!item || !isApproverFor(item)){ toast('Anda bukan approver untuk penugasan ini.'); return; }
+  rejectingId = id;
+  document.getElementById('rejectModalText').innerHTML = 'Tolak penugasan "' + item.kegiatan + '" untuk <strong>' + item.anggota + '</strong>?';
+  document.getElementById('rejectReasonInput').value = '';
+  document.getElementById('rejectModalBackdrop').classList.add('open');
+}
+function closeRejectModal(){
+  document.getElementById('rejectModalBackdrop').classList.remove('open');
+  rejectingId = null;
+}
+function confirmReject(){
+  var item = PENDING_LIST.find(function(x){ return x.id === rejectingId; });
+  if(!item || !isApproverFor(item)){ toast('Anda bukan approver untuk penugasan ini.'); closeRejectModal(); return; }
+  var reason = document.getElementById('rejectReasonInput').value.trim();
+  if(!reason){ toast('Isi alasan penolakan terlebih dahulu'); return; }
+  item.status = 'Ditolak';
+  item.rejectReason = reason;
+  closeRejectModal();
+  renderList();
+  toast('Penugasan ditolak');
+}
+
+renderList();
+
+</script>
+</body>
+</html>
