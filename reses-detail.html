@@ -179,6 +179,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       <div class="kv-row"><span class="k">Waktu</span><span class="v" id="waktuText">09.00 &ndash; 12.00 WIB</span></div>
       <div class="kv-row"><span class="k">Jenis Kegiatan</span><span class="v" id="jenisKegiatanText">Pertemuan Masyarakat</span></div>
       <div class="kv-row"><span class="k">Dapil</span><span class="v" id="dapilText">Dapil 1</span></div>
+      <a class="btn btn-outline" id="btnLihatPdf" href="#" target="_blank" style="margin-top:12px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Lihat File PDF</a>
     </div>
 
     <div class="card">
@@ -195,17 +196,12 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     </div>
 
     <div class="card">
-      <h3 class="ctitle">Aspirasi <span id="aspirasiCount" class="hint">(0)</span></h3>
-      <div id="aspirasiListEl"></div>
-    </div>
-
-    <div class="card">
       <h3 class="ctitle">Dokumentasi <span id="dokCount" class="hint">(0)</span></h3>
       <div id="dokListEl"></div>
     </div>
 
     <div class="card">
-      <h3 class="ctitle">Laporan Pokir</h3>
+      <h3 class="ctitle">Laporan Aspirasi</h3>
       <div class="hint" style="margin-bottom:10px;">Aspirasi yang telah dikonversi menjadi usulan Pokok Pikiran (Pokir).</div>
       <div id="pokirListEl"></div>
       <a class="btn btn-outline" href="pokir.html" style="margin-top:10px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg> Lihat Semua di Pokir</a>
@@ -230,6 +226,7 @@ var resesDetailData = {
     jenis: 'RESES', judul: 'Reses Masa Persidangan II Tahun 2025', nomor: 'RES-2025-002',
     tanggal: '10&ndash;17 Mei 2025', waktu: '09.00 &ndash; 12.00 WIB', jenisKegiatan: 'Pertemuan Masyarakat', dapil: 'Dapil 1',
     lokasiNama: 'Balai Desa Sukamaju', lokasiKec: 'Magelang Utara', lokasiDesa: 'Kedungsari', lokasiAlamat: 'Jl. Raya Sukamaju No. 10',
+    laporanPdf: 'files/laporan_RES-2025-002.pdf',
     peserta: [
       {nama:'Budi Hartono', jenis:'Kepala Desa', hadir:'Hadir'},
       {nama:'Siti Aminah', jenis:'Tokoh Masyarakat', hadir:'Hadir'},
@@ -347,8 +344,6 @@ var resesDetailData = {
   }
 };
 
-var pokirStatusClass = { 'Diajukan':'badge-neutral', 'Diproses':'badge-warn', 'Selesai':'badge-success' };
-var prioritasClass = { 'Tinggi':'badge-danger', 'Sedang':'badge-warn', 'Rendah':'badge-neutral' };
 
 function renderResesDetail(id){
   var data = resesDetailData[id] || resesDetailData['1'];
@@ -368,14 +363,13 @@ function renderResesDetail(id){
   document.getElementById('lokasiDesaText').textContent = data.lokasiDesa;
   document.getElementById('lokasiAlamatText').textContent = data.lokasiAlamat;
 
+  var btnPdf = document.getElementById('btnLihatPdf');
+  if(data.laporanPdf){ btnPdf.href = data.laporanPdf; btnPdf.style.display = 'flex'; }
+  else { btnPdf.style.display = 'none'; }
+
   document.getElementById('pesertaCount').textContent = '(' + data.peserta.length + ' orang)';
   document.getElementById('pesertaListEl').innerHTML = data.peserta.map(function(p){
     return '<div class="rd-item"><div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div><div class="ri-body"><div class="ri-title">' + p.nama + '</div><div class="ri-meta">' + p.jenis + '</div></div><span class="badge badge-success">' + p.hadir + '</span></div>';
-  }).join('');
-
-  document.getElementById('aspirasiCount').textContent = '(' + data.aspirasi.length + ')';
-  document.getElementById('aspirasiListEl').innerHTML = data.aspirasi.map(function(a, i){
-    return '<div class="rd-item"><div class="ri-ic" style="background:var(--purple);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div><div class="ri-body"><div class="ri-title">' + (i+1) + '. ' + a.judul + '</div><div class="ri-tags"><span class="badge badge-neutral">' + a.kategori + '</span><span class="badge ' + (prioritasClass[a.prioritas]||'badge-neutral') + '">' + a.prioritas + '</span></div></div></div>';
   }).join('');
 
   document.getElementById('dokCount').textContent = '(' + data.dokumentasi.length + ')';
@@ -384,7 +378,7 @@ function renderResesDetail(id){
   }).join('');
 
   document.getElementById('pokirListEl').innerHTML = data.pokir.map(function(p){
-    return '<div class="rd-item"><div class="ri-ic" style="background:var(--green);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div><div class="ri-body"><div class="ri-title">' + p.judul + '</div></div><span class="badge ' + (pokirStatusClass[p.status]||'badge-neutral') + '">' + p.status + '</span></div>';
+    return '<div class="rd-item"><div class="ri-ic" style="background:var(--green);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div><div class="ri-body"><div class="ri-title">' + p.judul + '</div></div></div>';
   }).join('');
 }
 

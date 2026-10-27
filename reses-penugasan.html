@@ -137,6 +137,13 @@ a{color:inherit;}
 .chk-item input{width:16px; height:16px; flex-shrink:0; accent-color:var(--green);}
 .chk-item .cs{font-size:10.5px; color:var(--muted); margin-left:auto; flex-shrink:0;}
 
+.upload-box{border:2px dashed #cfcabb; border-radius:12px; padding:20px 10px; text-align:center; color:var(--muted); font-size:11.5px; cursor:pointer;}
+.upload-box .ic{font-size:22px; display:block; margin-bottom:6px;}
+.upload-file{display:flex; align-items:center; gap:9px; background:var(--neutral-bg); border-radius:10px; padding:10px 12px; font-size:12px; font-weight:700; color:var(--ink);}
+.upload-file .ic-svg{color:var(--green); flex-shrink:0;}
+.upload-file .name{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.upload-file .rm{background:none; border:none; color:var(--muted); font-size:17px; font-weight:800; cursor:pointer; padding:0; line-height:1; flex-shrink:0;}
+
 .info-box{background:var(--info-bg); border-radius:12px; padding:11px 12px; font-size:11.5px; color:#2a5583; display:flex; gap:9px; align-items:flex-start; line-height:1.5; margin-bottom:16px;}
 
 .toast{
@@ -170,7 +177,7 @@ a{color:inherit;}
   <div class="hdr-wave"><svg viewBox="0 0 400 30" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="hdrWaveGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="var(--green-dark)"/><stop offset="60%" stop-color="var(--green)"/><stop offset="100%" stop-color="var(--green-mid)"/></linearGradient></defs><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,0 L0,0 Z" fill="url(#hdrWaveGrad)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14 L400,30 L0,30 Z" fill="var(--cream)"/><path d="M0,12 C90,32 130,-6 220,10 C290,22 330,4 400,14" fill="none" stroke="#c0392b" stroke-width="2.2" opacity=".85"/></svg></div>
   <div class="screen">
 
-    <div class="screen-title" id="pageTitle">Tambah Penugasan Reses</div>
+    <div class="screen-title" id="pageTitle">Tambah Penugasan</div>
 
     <div class="info-box">
       <span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span>
@@ -228,6 +235,20 @@ a{color:inherit;}
         <div class="section-title" style="margin-bottom:4px;">Catatan</div>
         <div class="hint" style="margin-bottom:14px;">Catatan tambahan untuk penugasan ini.</div>
         <div class="field" style="margin-bottom:0;"><label>Catatan <span class="opt">(opsional)</span></label><textarea id="catatanInput" placeholder="Contoh: Koordinasikan dengan kelurahan setempat sebelum kegiatan."></textarea></div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;">
+        <div class="section-title" style="margin-bottom:4px;">Dokumen Surat Tugas</div>
+        <div class="hint" style="margin-bottom:14px;">Unggah surat tugas dalam format PDF <span class="opt">(opsional)</span>.</div>
+        <input type="file" id="suratTugasFileInput" accept="application/pdf" style="display:none;" onchange="onSuratTugasFileChange(this)">
+        <div class="upload-box" id="suratTugasUploadBox" onclick="document.getElementById('suratTugasFileInput').click()">
+          <span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12"/><path d="M7.5 8.5L12 4l4.5 4.5"/><path d="M5 21h14"/></svg></span>Ketuk untuk unggah file PDF
+        </div>
+        <div class="upload-file" id="suratTugasFileChip" style="display:none;">
+          <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5"/><path d="M9.5 16.5h5"/></svg>
+          <span class="name" id="suratTugasFileName"></span>
+          <button type="button" class="rm" onclick="removeSuratTugasFile(event)">&times;</button>
+        </div>
       </div>
 
       <div class="card" style="margin-bottom:16px;">
@@ -332,7 +353,6 @@ function getSelectedApproverIds(){
   return Array.prototype.map.call(document.querySelectorAll('#approverList input[type="checkbox"]:checked'), function(cb){ return cb.value; });
 }
 
-var JENIS_TITLE_MAP = { 'Reses':'Penugasan Reses', 'Kunjungan Dapil':'Penugasan Kunjungan Dapil', 'Kunjungan Kerja':'Penugasan Kunjungan Kerja' };
 var JENIS_INFO_MAP = {
   'Reses':'Isi nomor, kegiatan, dan lokasi untuk penugasan reses Anda. Simpan sebagai draf atau langsung tetapkan penugasan.',
   'Kunjungan Dapil':'Isi nomor, kegiatan, dan lokasi untuk kunjungan dapil Anda. Simpan sebagai draf atau langsung tetapkan penugasan.',
@@ -344,13 +364,13 @@ var ASSIGNMENTS = {
     noPenugasan:'P-00013', jenisPenugasan:'Reses', kegiatan:'Reses Masa Persidangan III Tahun 2025',
     lokasiJenis:'DALAM_KOTA', lokasiKelurahan:'', lokasiProvinsi:'', lokasiKabupaten:'', lokasiNegara:'',
     tanggal:'', jamMulai:'09:00', jamSelesai:'12:00',
-    catatan:'Belum dijadwalkan, menunggu konfirmasi lokasi.', approverIds:[]
+    catatan:'Belum dijadwalkan, menunggu konfirmasi lokasi.', approverIds:[], fileSurat:''
   },
   'kunjungan-4': {
     noPenugasan:'P-00014', jenisPenugasan:'Kunjungan Dapil', kegiatan:'Kunjungan Sosialisasi Perda Retribusi',
     lokasiJenis:'DALAM_KOTA', lokasiKelurahan:'', lokasiProvinsi:'', lokasiKabupaten:'', lokasiNegara:'',
     tanggal:'', jamMulai:'09:00', jamSelesai:'11:00',
-    catatan:'Koordinasikan dengan kelurahan sebelum sosialisasi Perda Retribusi.', approverIds:['ketua-dprd']
+    catatan:'Koordinasikan dengan kelurahan sebelum sosialisasi Perda Retribusi.', approverIds:['ketua-dprd'], fileSurat:'surat-tugas-P-00014.pdf'
   }
 };
 
@@ -358,7 +378,7 @@ var editingNoPenugasanOriginal = null;
 
 function onJenisPenugasanChange(){
   var jenis = document.getElementById('jenisPenugasanSelect').value;
-  document.getElementById('pageTitle').textContent = (isEdit ? 'Edit ' : 'Tambah ') + (JENIS_TITLE_MAP[jenis] || 'Penugasan');
+  document.getElementById('pageTitle').textContent = (isEdit ? 'Edit ' : 'Tambah ') + 'Penugasan';
   document.getElementById('infoText').textContent = JENIS_INFO_MAP[jenis] || '';
 }
 
@@ -402,6 +422,29 @@ function toggleLokasiFields(){
   document.getElementById('lokasiKabupatenSelect').required = val === 'LUAR_KOTA';
   document.getElementById('lokasiProvinsiSelect').required = val === 'LUAR_KOTA';
   document.getElementById('lokasiNegaraSelect').required = val === 'LUAR_NEGERI';
+}
+
+function onSuratTugasFileChange(input){
+  var file = input.files && input.files[0];
+  if(!file) return;
+  if(!/\.pdf$/i.test(file.name)){
+    toast('File surat tugas harus berformat PDF');
+    input.value = '';
+    return;
+  }
+  showSuratTugasFile(file.name);
+}
+function showSuratTugasFile(name){
+  if(!name) return;
+  document.getElementById('suratTugasFileName').textContent = name;
+  document.getElementById('suratTugasUploadBox').style.display = 'none';
+  document.getElementById('suratTugasFileChip').style.display = 'flex';
+}
+function removeSuratTugasFile(e){
+  if(e) e.preventDefault();
+  document.getElementById('suratTugasFileInput').value = '';
+  document.getElementById('suratTugasFileChip').style.display = 'none';
+  document.getElementById('suratTugasUploadBox').style.display = 'block';
 }
 
 function validateNoPenugasan(){
@@ -454,6 +497,8 @@ function applyAssignment(data){
   if(data.jamMulai){ document.getElementById('jamMulaiInput').value = data.jamMulai; }
   if(data.jamSelesai){ document.getElementById('jamSelesaiInput').value = data.jamSelesai; }
   if(data.catatan){ document.getElementById('catatanInput').value = data.catatan; }
+  removeSuratTugasFile();
+  if(data.fileSurat){ showSuratTugasFile(data.fileSurat); }
   renderApproverList(data.approverIds || []);
   onJenisPenugasanChange();
 }

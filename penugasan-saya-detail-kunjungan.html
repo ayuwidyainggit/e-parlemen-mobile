@@ -257,7 +257,10 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       <div class="rd-item" style="background:var(--success-bg); border-color:#bfe3cc;">
         <div class="ri-ic" style="background:var(--green);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
         <div class="ri-body"><div class="ri-title">Ir. Budi Santoso, M.T. <span class="hint">(Saya)</span></div><div class="ri-meta">Anggota DPRD</div></div>
-        <button type="button" class="btn btn-primary" style="width:auto; padding:8px 14px;" id="absenBtn" onclick="absenSaya(this)">Absen</button>
+        <div id="absenBtnGroup" style="display:flex; gap:6px; flex-shrink:0;">
+          <button type="button" class="btn btn-danger-outline btn-sm" style="width:auto; padding:8px 12px;" onclick="tolakKehadiran(this)">Tolak</button>
+          <button type="button" class="btn btn-primary" style="width:auto; padding:8px 12px;" onclick="terimaKehadiran(this)">Terima</button>
+        </div>
       </div>
       <div class="rd-item">
         <div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
@@ -267,12 +270,15 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       <div class="rd-item">
         <div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
         <div class="ri-body"><div class="ri-title">Rudi Hartanto</div><div class="ri-meta">Tokoh Masyarakat</div></div>
-        <span class="badge badge-warn">Belum Hadir</span>
+        <span class="badge badge-warn">Belum Konfirmasi</span>
       </div>
     </div>
 
     <div class="card">
-      <h3 class="ctitle">Aspirasi <span class="hint">(1)</span></h3>
+      <h3 class="ctitle" style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+        <span>Aspirasi <span class="hint">(1)</span></span>
+        <a class="btn btn-outline btn-sm" style="width:auto; padding:7px 12px; flex-shrink:0;" href="tambah-pokir.html?asal=Kunjungan%20Lapangan%20Proyek%20Drainase%20Kel.%20Wates&amp;dapil=Dapil%201&amp;lockAsal=1"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14"/><path d="M5 12h14"/></svg> Tambah Aspirasi</a>
+      </h3>
 
       <div class="list-item bl-info">
         <div class="content">
@@ -346,12 +352,21 @@ function toast(msg){
   setTimeout(function(){ el.style.display = 'none'; }, 2200);
 }
 
-function absenSaya(btn){
+function terimaKehadiran(btn){
   var badge = document.createElement('span');
   badge.className = 'badge badge-success';
   badge.textContent = 'Hadir';
-  btn.replaceWith(badge);
-  toast('Absen berhasil, status Anda: Hadir');
+  btn.closest('#absenBtnGroup').replaceWith(badge);
+  toast('Anda menerima undangan, status: Hadir');
+}
+
+function tolakKehadiran(btn){
+  if(!confirm('Tolak kehadiran pada kegiatan ini?')) return;
+  var badge = document.createElement('span');
+  badge.className = 'badge badge-danger';
+  badge.textContent = 'Tidak Hadir';
+  btn.closest('#absenBtnGroup').replaceWith(badge);
+  toast('Anda menolak undangan, status: Tidak Hadir');
 }
 
 var dokCount = 1;

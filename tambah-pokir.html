@@ -169,6 +169,10 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
   background:#fff; font-family:inherit; color:var(--ink);
 }
 .field textarea{min-height:78px; resize:vertical;}
+.field select:disabled{background:var(--neutral-bg); color:var(--muted); cursor:not-allowed;}
+.field .lock-hint{display:none; align-items:center; gap:5px; font-size:10.5px; color:var(--muted); margin-top:6px;}
+.field .lock-hint.show{display:flex;}
+.field .lock-hint .ic-svg{width:11px; height:11px;}
 .upload-box{border:2px dashed #cfcabb; border-radius:12px; padding:20px 10px; text-align:center; color:var(--muted); font-size:11.5px;}
 .upload-box .ic{font-size:22px; display:block; margin-bottom:6px;}
 .evidence-actions{display:flex; gap:8px; margin-bottom:10px;}
@@ -351,6 +355,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
           <option>Kunjungan Fasilitas Kesehatan Puskesmas Magelang Utara</option>
           <option>Kunjungan Fasilitas Publik Pasar Rejowinangun</option>
         </select>
+        <div class="lock-hint" id="asalLockHint"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Terisi otomatis dari kegiatan ini</div>
       </div>
       <div class="field">
         <label>Dapil</label>
@@ -417,6 +422,7 @@ var modeParam = getParam('mode');
 var isEdit = modeParam === 'edit' && !!idParam;
 var prefill = { judul: getParam('judul'), kategori: getParam('kategori'), asal: getParam('asal'), dapil: getParam('dapil') };
 var hasPrefill = !isEdit && (prefill.judul || prefill.kategori || prefill.asal || prefill.dapil);
+var lockAsal = !isEdit && getParam('lockAsal') === '1' && !!prefill.asal;
 
 // ---------- Lokasi: dropdown Provinsi + Kabupaten/Kota (statis, prototipe) ----------
 var LOKASI_PROVINSI_LIST = ['Aceh','Sumatera Utara','Sumatera Barat','Riau','Kepulauan Riau','Jambi','Sumatera Selatan','Kepulauan Bangka Belitung','Bengkulu','Lampung','DKI Jakarta','Jawa Barat','Jawa Tengah','DI Yogyakarta','Jawa Timur','Banten','Bali','Nusa Tenggara Barat','Nusa Tenggara Timur','Kalimantan Barat','Kalimantan Tengah','Kalimantan Selatan','Kalimantan Timur','Kalimantan Utara','Sulawesi Utara','Sulawesi Tengah','Sulawesi Selatan','Sulawesi Tenggara','Gorontalo','Sulawesi Barat','Maluku','Maluku Utara','Papua','Papua Barat','Papua Tengah','Papua Pegunungan','Papua Selatan','Papua Barat Daya'];
@@ -532,6 +538,10 @@ function applyAspirasiData(data){
   }
   if(hasPrefill){
     applyAspirasiData({ judul: prefill.judul, kategori: prefill.kategori, asal: prefill.asal, dapil: prefill.dapil });
+    if(lockAsal){
+      document.getElementById('asalKegiatanSelect').disabled = true;
+      document.getElementById('asalLockHint').classList.add('show');
+    }
     return;
   }
   populateLokasiProvinsiSelect(null);
