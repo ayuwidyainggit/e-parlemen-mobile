@@ -191,7 +191,8 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     </div>
 
     <div class="card">
-      <h3 class="ctitle">Peserta <span id="pesertaCount" class="hint">(0 orang)</span></h3>
+      <div class="kv-row"><span class="k">Status Anggota</span><span class="v"><span class="badge badge-neutral" id="statusAnggotaBadge">Pending</span></span></div>
+      <h3 class="ctitle" style="margin-top:10px;">Peserta <span id="pesertaCount" class="hint">(0 orang)</span></h3>
       <div id="pesertaListEl"></div>
     </div>
 
@@ -204,7 +205,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       <h3 class="ctitle">Laporan Aspirasi</h3>
       <div class="hint" style="margin-bottom:10px;">Aspirasi yang telah dikonversi menjadi usulan Pokok Pikiran (Pokir).</div>
       <div id="pokirListEl"></div>
-      <a class="btn btn-outline" href="pokir.html" style="margin-top:10px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg> Lihat Semua di Pokir</a>
+      <a class="btn btn-outline" href="pokir.html" style="margin-top:10px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg> Lihat Semua Aspirasi</a>
     </div>
 
   </div>
@@ -226,7 +227,7 @@ var resesDetailData = {
     jenis: 'RESES', judul: 'Reses Masa Persidangan II Tahun 2025', nomor: 'RES-2025-002',
     tanggal: '10&ndash;17 Mei 2025', waktu: '09.00 &ndash; 12.00 WIB', jenisKegiatan: 'Pertemuan Masyarakat', dapil: 'Dapil 1',
     lokasiNama: 'Balai Desa Sukamaju', lokasiKec: 'Magelang Utara', lokasiDesa: 'Kedungsari', lokasiAlamat: 'Jl. Raya Sukamaju No. 10',
-    laporanPdf: 'files/laporan_RES-2025-002.pdf',
+    laporanPdf: 'files/laporan_RES-2025-002.pdf', statusAnggota: 'Disetujui',
     peserta: [
       {nama:'Budi Hartono', jenis:'Kepala Desa', hadir:'Hadir'},
       {nama:'Siti Aminah', jenis:'Tokoh Masyarakat', hadir:'Hadir'},
@@ -250,6 +251,7 @@ var resesDetailData = {
     jenis: 'RESES', judul: 'Reses Masa Persidangan I Tahun 2025', nomor: 'RES-2025-001',
     tanggal: '10&ndash;18 Feb 2025', waktu: '09.00 &ndash; 12.00 WIB', jenisKegiatan: 'Dialog Masyarakat', dapil: 'Dapil 1',
     lokasiNama: 'Balai Kelurahan Wates', lokasiKec: 'Magelang Utara', lokasiDesa: 'Wates', lokasiAlamat: 'Jl. Wates Raya No. 5',
+    statusAnggota: 'Disetujui',
     peserta: [
       {nama:'Slamet Riyadi', jenis:'Perangkat Desa', hadir:'Hadir'},
       {nama:'Dwi Lestari', jenis:'Tokoh Pemuda', hadir:'Hadir'}
@@ -269,6 +271,7 @@ var resesDetailData = {
     jenis: 'RESES', judul: 'Reses Masa Sidang III Tahun 2024', nomor: 'RES-2024-003',
     tanggal: '15&ndash;22 Agu 2024', waktu: '09.00 &ndash; 12.00 WIB', jenisKegiatan: 'Sosialisasi', dapil: 'Dapil 1',
     lokasiNama: 'Aula Kecamatan Magelang Selatan', lokasiKec: 'Magelang Selatan', lokasiDesa: 'Magersari', lokasiAlamat: 'Jl. Tidar No. 21',
+    statusAnggota: 'Sebagian Disetujui',
     peserta: [
       {nama:'Hari Wijaya', jenis:'Perwakilan OPD', hadir:'Hadir'},
       {nama:'Nur Kholis', jenis:'Tokoh Agama', hadir:'Hadir'}
@@ -289,6 +292,7 @@ var resesDetailData = {
     jenis: 'KUNJUNGAN', judul: 'Kunjungan Fasilitas Kesehatan Puskesmas Magelang Utara', nomor: 'KJD-2025-003',
     tanggal: '20 Mei 2025', waktu: '09.00 &ndash; 11.00 WIB', jenisKegiatan: 'Kunjungan Fasilitas Publik', dapil: 'Dapil 1',
     lokasiNama: 'Puskesmas Magelang Utara', lokasiKec: 'Magelang Utara', lokasiDesa: 'Kramat Utara', lokasiAlamat: 'Jl. Sudirman No. 2',
+    statusAnggota: 'Disetujui',
     peserta: [
       {nama:'dr. Rina Kusuma', jenis:'Perwakilan OPD', hadir:'Hadir'},
       {nama:'Bambang Sutrisno', jenis:'Kepala Desa', hadir:'Hadir'}
@@ -309,6 +313,7 @@ var resesDetailData = {
     jenis: 'KUNJUNGAN', judul: 'Kunjungan Lapangan Proyek Drainase Kel. Wates', nomor: 'KJD-2025-002',
     tanggal: '12 Mei 2025', waktu: '08.30 &ndash; 10.30 WIB', jenisKegiatan: 'Kunjungan Lapangan', dapil: 'Dapil 1',
     lokasiNama: 'Proyek Drainase Kel. Wates', lokasiKec: 'Magelang Utara', lokasiDesa: 'Wates', lokasiAlamat: 'Jl. Wates Timur',
+    statusAnggota: 'Pending',
     peserta: [
       {nama:'Slamet Riyadi', jenis:'Perangkat Desa', hadir:'Hadir'}
     ],
@@ -326,6 +331,7 @@ var resesDetailData = {
     jenis: 'KUNJUNGAN', judul: 'Kunjungan Fasilitas Publik Pasar Rejowinangun', nomor: 'KJD-2025-001',
     tanggal: '28 Apr 2025', waktu: '09.00 &ndash; 11.00 WIB', jenisKegiatan: 'Kunjungan Fasilitas Publik', dapil: 'Dapil 1',
     lokasiNama: 'Pasar Rejowinangun', lokasiKec: 'Magelang Tengah', lokasiDesa: 'Rejowinangun Utara', lokasiAlamat: 'Jl. Pasar Rejowinangun',
+    statusAnggota: 'Disetujui',
     peserta: [
       {nama:'Wahyu Nugroho', jenis:'Organisasi Masyarakat', hadir:'Hadir'},
       {nama:'Yuni Astuti', jenis:'Tokoh Masyarakat', hadir:'Hadir'}
@@ -366,6 +372,11 @@ function renderResesDetail(id){
   var btnPdf = document.getElementById('btnLihatPdf');
   if(data.laporanPdf){ btnPdf.href = data.laporanPdf; btnPdf.style.display = 'flex'; }
   else { btnPdf.style.display = 'none'; }
+
+  var statusAnggotaClass = { 'Disetujui':'badge-success', 'Pending':'badge-neutral', 'Sebagian Disetujui':'badge-warn', 'Ditolak':'badge-danger' };
+  var statusAnggotaBadge = document.getElementById('statusAnggotaBadge');
+  statusAnggotaBadge.className = 'badge ' + (statusAnggotaClass[data.statusAnggota] || 'badge-neutral');
+  statusAnggotaBadge.textContent = data.statusAnggota || 'Pending';
 
   document.getElementById('pesertaCount').textContent = '(' + data.peserta.length + ' orang)';
   document.getElementById('pesertaListEl').innerHTML = data.peserta.map(function(p){

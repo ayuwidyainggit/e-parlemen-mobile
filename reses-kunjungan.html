@@ -23,6 +23,7 @@
   --danger-bg:#fbe7e7; --danger:#d64545;
   --info-bg:#e7f0fb; --info:#2f6fb0;
   --neutral-bg:#eef0ec; --neutral:#5b6a5e;
+  --purple-bg:#efe6fb; --purple:#7c4fd1;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
@@ -117,6 +118,11 @@ a{color:inherit;}
 .rk-card{background:#fff; border-radius:13px; padding:12px; border:1px solid var(--border); border-left:4px solid var(--green); margin-bottom:10px;}
 .rk-card.bl-warn{border-left-color:var(--warn);}
 .rk-card.bl-info{border-left-color:var(--info);}
+.rk-card.bl-danger{border-left-color:var(--danger);}
+.rk-card.bl-success{border-left-color:var(--success);}
+.rk-card.bl-neutral{border-left-color:var(--neutral);}
+.rk-card.bl-purple{border-left-color:var(--purple);}
+.rk-expand{margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);}
 .rk-row{display:flex; gap:11px; align-items:flex-start;}
 .rk-row .icon-box{width:38px; height:38px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:var(--neutral-bg);}
 .rk-row .content{flex:1; min-width:0;}
@@ -129,6 +135,21 @@ a{color:inherit;}
 h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .muted{color:var(--muted);}
 .hint{font-size:11.5px; color:var(--muted); line-height:1.5;}
+
+.filter-row{display:flex; gap:7px; margin-bottom:14px;}
+.filter-wrap{position:relative; flex:1; min-width:0;}
+.filter-btn{display:flex; align-items:center; justify-content:space-between; gap:4px; width:100%; background:#fff; border:1px solid var(--border); border-radius:10px; padding:9px 9px; font-size:10.8px; font-weight:700; color:var(--ink); white-space:nowrap; overflow:hidden; font-family:inherit; cursor:pointer;}
+.filter-btn .filter-label{overflow:hidden; text-overflow:ellipsis;}
+.filter-btn.has-value{border-color:var(--green); color:var(--green); background:var(--success-bg);}
+.filter-btn .ic-svg{width:12px; height:12px; color:var(--muted); flex-shrink:0;}
+.filter-btn.has-value .ic-svg{color:var(--green);}
+.filter-btn .chev-ic{transition:transform .15s ease;}
+.filter-btn.open .chev-ic{transform:rotate(180deg);}
+.filter-dropdown{display:none; position:absolute; top:calc(100% + 6px); left:0; right:0; background:#fff; border:1px solid var(--border); border-radius:12px; box-shadow:0 10px 24px rgba(0,0,0,.14); padding:6px; min-width:140px; z-index:30;}
+.filter-dropdown.open{display:block;}
+.filter-option{display:block; width:100%; text-align:left; padding:8px 10px; border-radius:8px; border:none; background:none; font-size:11px; font-weight:700; color:var(--ink); cursor:pointer; font-family:inherit; white-space:nowrap;}
+.filter-option:hover{background:var(--neutral-bg);}
+.filter-option.active{color:var(--green); background:var(--success-bg);}
 
 .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:6px;}
 .stats-grid.cols-3{grid-template-columns:repeat(3,1fr);}
@@ -144,6 +165,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .badge-danger{background:var(--danger-bg); color:var(--danger);}
 .badge-info{background:var(--info-bg); color:var(--info);}
 .badge-neutral{background:var(--neutral-bg); color:var(--neutral);}
+.badge-purple{background:var(--purple-bg); color:var(--purple);}
 .badge-gold{background:#fbf1dc; color:#9a7b1f;}
 
 .btn{display:flex; align-items:center; justify-content:center; gap:7px; padding:13px 16px; border-radius:11px; font-size:13.5px; font-weight:800; text-decoration:none; border:none; cursor:pointer; width:100%; font-family:inherit;}
@@ -314,171 +336,462 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 
     <div class="screen-title">Penugasan</div>
 
-    <div class="tabs">
-      <button type="button" class="tab active" data-tabgroup="rk" onclick="showTab('rk','penugasan',this);">Penugasan</button>
-      <button type="button" class="tab" data-tabgroup="rk" onclick="showTab('rk','laporan',this);">Laporan</button>
-    </div>
-
     <div id="rk-penugasan" data-panel-group="rk" style="display:block;">
 
-      <div class="section-title" style="margin-top:0;">Daftar Kegiatan Reses</div>
+      <div class="hint" style="margin:0 0 10px;">Ketuk kartu untuk membuka detail lengkap.</div>
 
-      <div class="rk-card bl-warn">
-        <div class="rk-row">
-          <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-          <div class="content">
-            <div class="title">Reses Masa Persidangan III Tahun 2025</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00013</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-neutral">Draft</span></span></div>
+      <div class="filter-row">
+        <div class="filter-wrap">
+          <button type="button" class="filter-btn" id="rkFilterJenisBtn" onclick="toggleRkFilterDropdown(event,this)">
+            <span class="filter-label" id="rkFilterJenisLabel">Jenis</span>
+            <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="filter-dropdown" id="rkFilterJenisDropdown">
+            <button type="button" class="filter-option active" data-value="" onclick="selectRkFilter(this,'jenis','Jenis')">Semua Jenis</button>
+            <button type="button" class="filter-option" data-value="Reses" onclick="selectRkFilter(this,'jenis','Jenis')">Reses</button>
+            <button type="button" class="filter-option" data-value="Kunjungan Dapil" onclick="selectRkFilter(this,'jenis','Jenis')">Kunjungan Dapil</button>
+            <button type="button" class="filter-option" data-value="Kunjungan Kerja" onclick="selectRkFilter(this,'jenis','Jenis')">Kunjungan Kerja</button>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline btn-sm" href="reses-penugasan.html?jenis=reses&amp;id=4&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
-          <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusKegiatan(this,'Reses Masa Persidangan III Tahun 2025')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
-        </div>
-      </div>
-
-      <div class="rk-card bl-danger">
-        <div class="rk-row">
-          <div class="icon-box" style="background:var(--danger-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-          <div class="content">
-            <div class="title">Reses Masa Persidangan II Tahun 2025</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00009</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-success">Selesai</span></span></div>
+        <div class="filter-wrap">
+          <button type="button" class="filter-btn" id="rkFilterDapilBtn" onclick="toggleRkFilterDropdown(event,this)">
+            <span class="filter-label" id="rkFilterDapilLabel">Dapil</span>
+            <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="filter-dropdown" id="rkFilterDapilDropdown">
+            <button type="button" class="filter-option active" data-value="" onclick="selectRkFilter(this,'dapil','Dapil')">Semua Dapil</button>
+            <button type="button" class="filter-option" data-value="Dapil 1" onclick="selectRkFilter(this,'dapil','Dapil')">Dapil 1</button>
+            <button type="button" class="filter-option" data-value="Dapil 2" onclick="selectRkFilter(this,'dapil','Dapil')">Dapil 2</button>
+            <button type="button" class="filter-option" data-value="Dapil 3" onclick="selectRkFilter(this,'dapil','Dapil')">Dapil 3</button>
+            <button type="button" class="filter-option" data-value="Gabungan" onclick="selectRkFilter(this,'dapil','Dapil')">Gabungan</button>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline" href="reses-detail.html?id=1"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
-        </div>
-      </div>
-
-      <div class="rk-card">
-        <div class="rk-row">
-          <div class="icon-box"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-          <div class="content">
-            <div class="title">Reses Masa Persidangan I Tahun 2025</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00006</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-success">Selesai</span></span></div>
+        <div class="filter-wrap">
+          <button type="button" class="filter-btn" id="rkFilterStatusBtn" onclick="toggleRkFilterDropdown(event,this)">
+            <span class="filter-label" id="rkFilterStatusLabel">Status</span>
+            <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="filter-dropdown" id="rkFilterStatusDropdown">
+            <button type="button" class="filter-option active" data-value="" onclick="selectRkFilter(this,'status','Status')">Semua Status</button>
+            <button type="button" class="filter-option" data-value="Disetujui" onclick="selectRkFilter(this,'status','Status')">Disetujui</button>
+            <button type="button" class="filter-option" data-value="Draft" onclick="selectRkFilter(this,'status','Status')">Draft</button>
+            <button type="button" class="filter-option" data-value="Menunggu Approval" onclick="selectRkFilter(this,'status','Status')">Menunggu Approval</button>
+            <button type="button" class="filter-option" data-value="Ditolak" onclick="selectRkFilter(this,'status','Status')">Ditolak</button>
+            <button type="button" class="filter-option" data-value="Selesai" onclick="selectRkFilter(this,'status','Status')">Selesai</button>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline" href="reses-detail.html?id=2"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
-        </div>
       </div>
 
-      <div class="rk-card">
-        <div class="rk-row">
-          <div class="icon-box"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+      <div class="empty" id="rkFilterEmpty" style="display:none;">
+        <span class="ic">🔍</span>
+        Tidak ada kegiatan yang cocok dengan filter ini.
+      </div>
+
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 3" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
           <div class="content">
-            <div class="title">Reses Masa Sidang III Tahun 2024</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00002</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-success">Selesai</span></span></div>
+            <div class="title">Dialog Masyarakat Jurangombo Utara</div>
+            <div class="meta">PGS-2026-007 &middot; 13 Jan 2027</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Jurangombo Utara</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">13 Januari 2027 &middot; 09:00&ndash;11:30</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=7"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline" href="reses-detail.html?id=3"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
-        </div>
       </div>
 
-      <div class="divider"></div>
-
-      <div class="section-title" style="margin-top:0;">Daftar Kunjungan Dapil</div>
-
-      <div class="rk-card bl-warn">
-        <div class="rk-row">
-          <div class="icon-box" style="background:var(--warn-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
+      <div class="rk-card bl-success" data-jenis="Kunjungan Dapil" data-dapil="Dapil 2" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
           <div class="content">
-            <div class="title">Kunjungan Sosialisasi Perda Retribusi</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00014</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Dapil</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-neutral">Draft</span></span></div>
+            <div class="title">Kunjungan Lapangan Aula Kecamatan</div>
+            <div class="meta">PGS-2026-003 &middot; 15 Des 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Dapil</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Magelang</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">15 Desember 2026 &middot; 10:00&ndash;12:30</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=3"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline btn-sm" href="reses-penugasan.html?jenis=kunjungan&amp;id=4&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
-          <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusKegiatan(this,'Kunjungan Sosialisasi Perda Retribusi')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
-        </div>
       </div>
 
-      <div class="rk-card bl-info">
-        <div class="rk-row">
-          <div class="icon-box" style="background:var(--info-bg);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
+      <div class="rk-card bl-neutral" data-jenis="Reses" data-dapil="Gabungan" data-status="Draft">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--neutral-bg);color:var(--neutral);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
           <div class="content">
-            <div class="title">Kunjungan Fasilitas Kesehatan Puskesmas Magelang Utara</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00011</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Dapil</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-success">Selesai</span></span></div>
+            <div class="title">Kunjungan Kerja Luar Negeri - Studi Tata Kelola Pemerintahan</div>
+            <div class="meta">PGS-2026-017 &middot; 8 Des 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-neutral">Draft</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Luar Negeri</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Singapura</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">8 Desember 2026 &ndash; 11 Desember 2026</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline btn-sm" href="reses-penugasan.html?jenis=reses&amp;id=25&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+            <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusKegiatan(this,'Kunjungan Kerja Luar Negeri - Studi Tata Kelola Pemerintahan')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline" href="reses-detail.html?id=5"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
-        </div>
       </div>
 
-      <div class="rk-card">
-        <div class="rk-row">
-          <div class="icon-box"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 2" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
           <div class="content">
-            <div class="title">Kunjungan Lapangan Proyek Drainase Kel. Wates</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00008</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Dapil</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-success">Selesai</span></span></div>
+            <div class="title">Rapat Konsolidasi Fraksi Demokrat</div>
+            <div class="meta">PGS-2026-018 &middot; 28 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Magelang</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">28 November 2026 &middot; 09:00&ndash;11:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=26"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline" href="reses-detail.html?id=6"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
-        </div>
       </div>
 
-      <div class="rk-card">
-        <div class="rk-row">
-          <div class="icon-box"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
+      <div class="rk-card bl-success" data-jenis="Kunjungan Kerja" data-dapil="Gabungan" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
           <div class="content">
-            <div class="title">Kunjungan Fasilitas Publik Pasar Rejowinangun</div>
-            <div class="kv-row"><span class="k">No. Penugasan</span><span class="v">P-00005</span></div>
-            <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Dapil</span></div>
-            <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
-            <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-success">Selesai</span></span></div>
+            <div class="title">Studi Banding Pengelolaan Pasar Rakyat (Multi Hari)</div>
+            <div class="meta">PGS-2026-016 &middot; 23 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Kerja</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Luar Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kota Surakarta, Jawa Tengah</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">23 November 2026 &ndash; 25 November 2026</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=24"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
           </div>
         </div>
-        <div class="rk-actions">
-          <a class="btn btn-outline" href="reses-detail.html?id=7"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+      </div>
+
+      <div class="rk-card bl-neutral" data-jenis="Reses" data-dapil="Dapil 2" data-status="Draft">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--neutral-bg);color:var(--neutral);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Penyerapan Aspirasi Rejowinangun Utara</div>
+            <div class="meta">PGS-2026-008 &middot; 20 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-neutral">Draft</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Rejowinangun Selatan</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">20 November 2026 &middot; 10:00&ndash;12:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline btn-sm" href="reses-penugasan.html?jenis=reses&amp;id=8&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+            <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusKegiatan(this,'Penyerapan Aspirasi Rejowinangun Utara')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
+          </div>
         </div>
       </div>
 
-    </div>
-
-    <div id="rk-laporan" data-panel-group="rk" style="display:none;">
-
-      <div class="card">
-        <h3 class="ctitle">Ringkasan Tahun 2025</h3>
-        <div class="stats-grid cols-2">
-          <div class="stat"><div class="stat-ic" style="background:var(--warn-bg);color:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div><div class="num">6</div><div class="lbl">Kegiatan</div></div>
-          <div class="stat"><div class="stat-ic" style="background:var(--info-bg);color:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div><div class="num">128</div><div class="lbl">Aspirasi</div></div>
+      <div class="rk-card bl-neutral" data-jenis="Kunjungan Kerja" data-dapil="Gabungan" data-status="Draft">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--neutral-bg);color:var(--neutral);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
+          <div class="content">
+            <div class="title">Studi Banding Pengelolaan Pasar Rakyat</div>
+            <div class="meta">PGS-2026-005 &middot; 18 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-neutral">Draft</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Kerja</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Luar Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kota Surakarta, Jawa Tengah</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">18 November 2026 &middot; 08:00&ndash;16:00</span></div>
+          <div class="kv-row"><span class="k">Catatan</span><span class="v">Tindak lanjut aspirasi penataan lapak PKL</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline btn-sm" href="reses-penugasan.html?jenis=kunjungan&amp;id=5&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+            <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusKegiatan(this,'Studi Banding Pengelolaan Pasar Rakyat')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <h3 class="ctitle">Kategori Aspirasi Terbanyak</h3>
-        <div class="bar-row"><div class="bar-label"><span>Infrastruktur</span><span>52 (41%)</span></div><div class="bar-track"><div class="bar-fill" style="width:82%;"></div></div></div>
-        <div class="bar-row"><div class="bar-label"><span>Pendidikan</span><span>25 (20%)</span></div><div class="bar-track"><div class="bar-fill" style="width:40%;"></div></div></div>
-        <div class="bar-row"><div class="bar-label"><span>Kesehatan</span><span>18 (14%)</span></div><div class="bar-track"><div class="bar-fill" style="width:28%;"></div></div></div>
-        <div class="bar-row"><div class="bar-label"><span>Ekonomi &amp; UMKM</span><span>15 (12%)</span></div><div class="bar-track"><div class="bar-fill" style="width:24%;"></div></div></div>
-        <div class="bar-row"><div class="bar-label"><span>Lainnya</span><span>18 (14%)</span></div><div class="bar-track"><div class="bar-fill" style="width:22%;"></div></div></div>
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 2" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Dialog Masyarakat Kelurahan Panjang</div>
+            <div class="meta">PGS-2026-021 &middot; 16 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Panjang</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">16 November 2026 &middot; 09:00&ndash;11:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=32"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
       </div>
 
-      <div class="hint" style="text-align:center; margin-top:6px;">Data diperbarui terakhir pada 24 Mei 2025, 08.30 WIB &middot; Sumber: Sekretariat DPRD Kota Magelang</div>
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 2" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Dialog Masyarakat Kelurahan Cacaban</div>
+            <div class="meta">PGS-2026-020 &middot; 15 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Cacaban</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">15 November 2026 &middot; 09:00&ndash;11:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=30"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 3" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Reses Gabungan Dapil 3 - Wilayah Selatan</div>
+            <div class="meta">PGS-2026-015 &middot; 12 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Tidar Selatan</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">12 November 2026 &middot; 09:00&ndash;12:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=19"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 1" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Reses Gabungan Dapil 1 - Wilayah Utara</div>
+            <div class="meta">PGS-2026-014 &middot; 10 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Kedungsari</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">10 November 2026 &middot; 09:00&ndash;12:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=14"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 1" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Dialog Masyarakat Kelurahan Wates</div>
+            <div class="meta">PGS-2026-002 &middot; 5 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Wates</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">5 November 2026 &middot; 09:30&ndash;12:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=2"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 1" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Pertemuan Masyarakat Dapil 1</div>
+            <div class="meta">PGS-2026-001 &middot; 3 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Kedungsari</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">3 November 2026 &middot; 09:00&ndash;11:30</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=1"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-purple" data-jenis="Kunjungan Dapil" data-dapil="Dapil 1" data-status="Menunggu Approval">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--purple-bg);color:var(--purple);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
+          <div class="content">
+            <div class="title">Kunjungan Fasilitas Kesehatan</div>
+            <div class="meta">PGS-2026-006 &middot; 1 Nov 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-purple">Menunggu Approval</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Dapil</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Kramat Utara</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">1 November 2026 &middot; 09:00&ndash;11:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=6"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-purple" data-jenis="Kunjungan Kerja" data-dapil="Dapil 2" data-status="Menunggu Approval">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--purple-bg);color:var(--purple);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg></div>
+          <div class="content">
+            <div class="title">Kunjungan Kerja Posyandu Gelangan</div>
+            <div class="meta">PGS-2026-011 &middot; 29 Okt 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-purple">Menunggu Approval</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Kunjungan Kerja</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Gelangan</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">29 Oktober 2026 &middot; 09:00&ndash;11:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=11"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-success" data-jenis="Reses" data-dapil="Dapil 3" data-status="Disetujui">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Pertemuan Masyarakat Tidar Selatan</div>
+            <div class="meta">PGS-2026-004 &middot; 25 Okt 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-success">Disetujui</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Tidar Selatan</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">25 Oktober 2026 &middot; 08:30&ndash;11:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=4"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-purple" data-jenis="Reses" data-dapil="Dapil 3" data-status="Menunggu Approval">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--purple-bg);color:var(--purple);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Pertemuan Masyarakat Jurangombo Selatan</div>
+            <div class="meta">PGS-2026-009 &middot; 24 Okt 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-purple">Menunggu Approval</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Jurangombo Selatan</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">24 Oktober 2026 &middot; 08:00&ndash;10:30</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=9"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-danger" data-jenis="Reses" data-dapil="Dapil 1" data-status="Ditolak">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--danger-bg);color:var(--danger);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Dialog Masyarakat Kramat Selatan</div>
+            <div class="meta">PGS-2026-012 &middot; 5 Okt 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-danger">Ditolak</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Kramat Selatan</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">5 Oktober 2026 &middot; 09:00&ndash;11:00</span></div>
+          <div class="kv-row"><span class="k">Alasan Penolakan</span><span class="v">Bertepatan dengan agenda Rapat Paripurna, mohon diajukan ulang di tanggal lain.</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=12"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-info" data-jenis="Reses" data-dapil="Dapil 1" data-status="Selesai">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--info-bg);color:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Reses Dapil 1 - Evaluasi Pembangunan Jalan</div>
+            <div class="meta">PGS-2026-019 &middot; 20 Sep 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-info">Selesai</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Dalam Kota</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Kel. Wates</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">20 September 2026 &middot; 09:00&ndash;11:30</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline" href="reses-detail.html?id=28"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Lihat Detail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rk-card bl-neutral" data-jenis="Reses" data-dapil="Gabungan" data-status="Draft">
+        <div class="rk-row" onclick="toggleRk(this)" style="cursor:pointer;">
+          <div class="icon-box" style="background:var(--neutral-bg);color:var(--neutral);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+          <div class="content">
+            <div class="title">Sosialisasi Program Kerja DPRD</div>
+            <div class="meta">PGS-2026-013 &middot; 2 Sep 2026</div>
+          </div>
+          <div class="side"><span class="badge badge-neutral">Draft</span><svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;margin-top:6px;transition:transform .2s;"><path d="M6 9l6 6 6-6"/></svg></div>
+        </div>
+        <div class="rk-expand" style="display:none;">
+          <div class="kv-row"><span class="k">Jenis Penugasan</span><span class="v">Reses</span></div>
+          <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v">Luar Negeri</span></div>
+          <div class="kv-row"><span class="k">Lokasi Penugasan</span><span class="v">Singapura</span></div>
+          <div class="kv-row"><span class="k">Tanggal/Jam</span><span class="v">2 September 2026 &middot; 08:00&ndash;17:00</span></div>
+          <div class="rk-actions">
+            <a class="btn btn-outline btn-sm" href="reses-penugasan.html?jenis=reses&amp;id=13&amp;mode=edit"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Edit</a>
+            <button type="button" class="btn btn-danger-outline btn-sm" onclick="hapusKegiatan(this,'Sosialisasi Program Kerja DPRD')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg> Hapus</button>
+          </div>
+        </div>
+      </div>
 
     </div>
 
@@ -489,12 +802,60 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 <div class="toast" id="toast"></div>
 <script>
 
-function showTab(group, name, btn){
-  document.querySelectorAll('[data-panel-group="' + group + '"]').forEach(function(p){ p.style.display = 'none'; });
-  var target = document.getElementById(group + '-' + name);
-  if(target){ target.style.display = 'block'; }
-  document.querySelectorAll('[data-tabgroup="' + group + '"]').forEach(function(t){ t.classList.remove('active'); });
-  if(btn){ btn.classList.add('active'); }
+var rkFilters = { jenis: '', dapil: '', status: '' };
+
+function closeAllRkFilterDropdowns(){
+  document.querySelectorAll('.filter-dropdown').forEach(function(d){ d.classList.remove('open'); });
+  document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('open'); });
+}
+document.addEventListener('click', closeAllRkFilterDropdowns);
+
+function toggleRkFilterDropdown(e, btn){
+  e.stopPropagation();
+  var wrap = btn.closest('.filter-wrap');
+  var dd = wrap.querySelector('.filter-dropdown');
+  var isOpen = dd.classList.contains('open');
+  closeAllRkFilterDropdowns();
+  if(!isOpen){ dd.classList.add('open'); btn.classList.add('open'); }
+}
+
+function selectRkFilter(optBtn, key, defaultLabel){
+  var dd = optBtn.closest('.filter-dropdown');
+  dd.querySelectorAll('.filter-option').forEach(function(o){ o.classList.remove('active'); });
+  optBtn.classList.add('active');
+  var value = optBtn.getAttribute('data-value');
+  rkFilters[key] = value;
+  var wrap = optBtn.closest('.filter-wrap');
+  var label = wrap.querySelector('.filter-label');
+  var btn = wrap.querySelector('.filter-btn');
+  label.textContent = value || defaultLabel;
+  btn.classList.toggle('has-value', !!value);
+  applyRkFilters();
+}
+
+function applyRkFilters(){
+  var cards = document.querySelectorAll('#rk-penugasan .rk-card');
+  var visibleCount = 0;
+  cards.forEach(function(card){
+    var matchJenis = !rkFilters.jenis || card.getAttribute('data-jenis') === rkFilters.jenis;
+    var matchDapil = !rkFilters.dapil || card.getAttribute('data-dapil') === rkFilters.dapil;
+    var matchStatus = !rkFilters.status || card.getAttribute('data-status') === rkFilters.status;
+    var show = matchJenis && matchDapil && matchStatus;
+    card.style.display = show ? '' : 'none';
+    if(show) visibleCount++;
+  });
+  var emptyEl = document.getElementById('rkFilterEmpty');
+  if(emptyEl) emptyEl.style.display = visibleCount === 0 ? 'block' : 'none';
+}
+
+function toggleRk(headerEl){
+  var card = headerEl.closest('.rk-card');
+  if(!card) return;
+  var expand = card.querySelector('.rk-expand');
+  var chev = card.querySelector('.chev-ic');
+  var isOpen = expand && expand.style.display !== 'none';
+  if(expand){ expand.style.display = isOpen ? 'none' : 'block'; }
+  if(chev){ chev.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)'; }
 }
 function toast(msg){
   var el = document.getElementById('toast');
