@@ -252,26 +252,41 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     </div>
 
     <div class="card">
-      <h3 class="ctitle">Peserta <span class="hint" id="pesertaCount">(4 orang)</span></h3>
-      <div class="rd-item" style="background:var(--success-bg); border-color:#bfe3cc;">
+      <div class="kv-row"><span class="k">Status Anggota</span><span class="v"><span class="badge badge-success" id="statusAnggotaBadge">Disetujui</span></span></div>
+      <h3 class="ctitle" style="margin-top:10px;">Peserta <span class="hint" id="pesertaCount">(4 orang)</span></h3>
+      <div id="pesertaListEl">
+      <div class="rd-item" data-status="Disetujui" style="background:var(--success-bg); border-color:#bfe3cc;">
         <div class="ri-ic" style="background:var(--green);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
         <div class="ri-body"><div class="ri-title">Ir. Budi Santoso, M.T. <span class="hint">(Saya)</span></div><div class="ri-meta">Anggota DPRD</div></div>
-        <span class="badge badge-success">Hadir</span>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+          <span class="badge badge-success">Hadir</span>
+          <span class="badge badge-success">Disetujui</span>
+        </div>
       </div>
-      <div class="rd-item">
+      <div class="rd-item" data-status="Disetujui">
         <div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
         <div class="ri-body"><div class="ri-title">Budi Hartono</div><div class="ri-meta">Kepala Desa</div></div>
-        <span class="badge badge-success">Hadir</span>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+          <span class="badge badge-success">Hadir</span>
+          <span class="badge badge-success">Disetujui</span>
+        </div>
       </div>
-      <div class="rd-item">
+      <div class="rd-item" data-status="Disetujui">
         <div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
         <div class="ri-body"><div class="ri-title">Siti Aminah</div><div class="ri-meta">Tokoh Masyarakat</div></div>
-        <span class="badge badge-success">Hadir</span>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+          <span class="badge badge-success">Hadir</span>
+          <span class="badge badge-success">Disetujui</span>
+        </div>
       </div>
-      <div class="rd-item">
+      <div class="rd-item" data-status="Pending">
         <div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div>
         <div class="ri-body"><div class="ri-title">Agus Salim</div><div class="ri-meta">RT/RW</div></div>
-        <span class="badge badge-warn">Belum Hadir</span>
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+          <span class="badge badge-warn">Belum Hadir</span>
+          <span class="badge badge-neutral">Pending</span>
+        </div>
+      </div>
       </div>
     </div>
 
@@ -308,11 +323,11 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       <div id="dokListEl">
         <div class="rd-item">
           <div class="ri-ic" style="background:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="ri-body"><div class="ri-title">Foto Kegiatan</div><div class="ri-meta">IMG_reses_01.jpg</div></div>
+          <div class="ri-body"><div class="ri-title">IMG_reses_01.jpg</div></div>
         </div>
         <div class="rd-item">
           <div class="ri-ic" style="background:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="ri-body"><div class="ri-title">Daftar Hadir</div><div class="ri-meta">daftar_hadir_kedungsari.pdf</div></div>
+          <div class="ri-body"><div class="ri-title">daftar_hadir_kedungsari.pdf</div></div>
         </div>
       </div>
     </div>
@@ -348,6 +363,25 @@ function toast(msg){
   el.style.display = 'block';
   setTimeout(function(){ el.style.display = 'none'; }, 2200);
 }
+
+function computeStatusAnggota(statuses){
+  if(statuses.length && statuses.every(function(s){ return s === 'Disetujui'; })) return 'Disetujui';
+  if(statuses.length && statuses.every(function(s){ return s === 'Ditolak'; })) return 'Ditolak';
+  if(statuses.some(function(s){ return s === 'Disetujui'; })) return 'Sebagian Disetujui';
+  return 'Pending';
+}
+
+(function(){
+  var statusEls = document.querySelectorAll('#pesertaListEl [data-status]');
+  var statuses = Array.prototype.map.call(statusEls, function(el){ return el.getAttribute('data-status'); });
+  var statusAnggotaClass = { 'Disetujui':'badge-success', 'Pending':'badge-neutral', 'Sebagian Disetujui':'badge-warn', 'Ditolak':'badge-danger' };
+  var result = computeStatusAnggota(statuses);
+  var badge = document.getElementById('statusAnggotaBadge');
+  if(badge){
+    badge.className = 'badge ' + (statusAnggotaClass[result] || 'badge-neutral');
+    badge.textContent = result;
+  }
+})();
 
 var evidenceTitle = '';
 var evidenceCount = 0;

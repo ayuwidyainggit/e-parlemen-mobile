@@ -131,6 +131,50 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .rd-item .ri-meta{font-size:10.3px; color:var(--muted); margin-top:2px; line-height:1.4;}
 .rd-item .ri-tags{display:flex; gap:5px; margin-top:6px; flex-wrap:wrap;}
 
+.list-item{display:flex; gap:9px; background:#fff; border-radius:16px; padding:14px 13px 14px 15px; border:1px solid var(--border); margin-bottom:11px; border-left:4px solid var(--green); box-shadow:0 1px 3px rgba(20,30,20,.04);}
+.list-item:last-child{margin-bottom:0;}
+.list-item.bl-gold{border-left-color:var(--gold);}
+.list-item.bl-danger{border-left-color:var(--danger);}
+.list-item.bl-info{border-left-color:var(--info);}
+.list-item.bl-warn{border-left-color:var(--warn);}
+.list-item.bl-success{border-left-color:var(--success);}
+.list-item.bl-purple{border-left-color:var(--purple);}
+.list-item.bl-neutral{border-left-color:var(--neutral);}
+.list-item .content{flex:1; min-width:0;}
+.asp-head{display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px;}
+.asp-head .title{font-weight:800; font-size:13.2px; color:var(--ink); line-height:1.35;}
+.asp-head .badge{flex-shrink:0; margin-top:1px;}
+.asp-desc{font-size:11.5px; color:var(--ink); opacity:.82; line-height:1.5; margin-bottom:10px;}
+.asp-proposer{display:flex; align-items:center; gap:7px; font-size:11px; font-weight:700; color:var(--ink); margin-bottom:9px;}
+.asp-avatar{width:22px; height:22px; border-radius:50%; background:linear-gradient(145deg,var(--green-light),var(--green-dark)); color:var(--gold-light); font-size:8.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.asp-tags{display:flex; flex-wrap:wrap; gap:6px;}
+.asp-tag{display:inline-flex; align-items:center; gap:4px; font-size:9.8px; font-weight:700; color:var(--muted); background:var(--neutral-bg); padding:4px 9px; border-radius:20px; white-space:nowrap; cursor:default;}
+.asp-tag .ic-svg{width:10px; height:10px;}
+.asp-tag-evidence{background:#fbf1dc; color:#9a7b1f; cursor:pointer; border:none; font-family:inherit;}
+.asp-lokasi{display:flex; align-items:flex-start; gap:7px; margin-bottom:9px;}
+.asp-lokasi .ic-svg{width:13px; height:13px; margin-top:2px; flex-shrink:0; color:var(--muted);}
+.asp-lokasi-text{min-width:0;}
+.asp-lokasi-alamat{font-size:11px; font-weight:700; color:var(--ink); line-height:1.4;}
+.asp-lokasi-wilayah{font-size:10px; color:var(--muted); margin-top:1px;}
+
+.modal-backdrop{position:absolute; inset:0; background:rgba(15,35,24,.72); z-index:40; display:none; align-items:center; justify-content:center; padding:20px;}
+.modal-backdrop.open{display:flex;}
+.evidence-modal{width:100%; max-width:320px; background:#15241c; border-radius:18px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.45);}
+.evidence-modal-head{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:12px 14px;}
+.evidence-modal-title{font-weight:800; font-size:12.5px; color:#fff; min-width:0;}
+.evidence-close{width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.14); border:none; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; padding:0;}
+.evidence-close .ic-svg{width:13px; height:13px;}
+.evidence-stage{position:relative; display:flex; align-items:center; justify-content:center; background:linear-gradient(160deg,#0b1a12,#16301f 60%,#0b1a12); aspect-ratio:1;}
+.evidence-photo{display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(255,255,255,.55); font-size:12px; font-weight:700;}
+.evidence-photo .ic-svg{width:34px; height:34px;}
+.evidence-arrow{position:absolute; top:50%; transform:translateY(-50%); width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,.16); border:none; color:#fff; font-size:19px; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0;}
+.evidence-arrow.left{left:10px;}
+.evidence-arrow.right{right:10px;}
+.evidence-foot{display:flex; align-items:center; justify-content:space-between; padding:10px 14px; color:rgba(255,255,255,.7); font-size:10.5px;}
+.evidence-dots{display:flex; gap:5px;}
+.evidence-dots .dot{width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.3);}
+.evidence-dots .dot.active{background:var(--gold-light);}
+
 .btn{display:flex; align-items:center; justify-content:center; gap:7px; padding:13px 16px; border-radius:11px; font-size:13.5px; font-weight:800; text-decoration:none; border:none; cursor:pointer; width:100%; font-family:inherit;}
 .btn-outline{background:#fff; color:var(--green); border:1.5px solid var(--green);}
 
@@ -180,11 +224,21 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       <div class="kv-row"><span class="k">Jenis Kegiatan</span><span class="v" id="jenisKegiatanText">Pertemuan Masyarakat</span></div>
       <div class="kv-row"><span class="k">Dapil</span><span class="v" id="dapilText">Dapil 1</span></div>
       <a class="btn btn-outline" id="btnLihatPdf" href="#" target="_blank" style="margin-top:12px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Lihat File PDF</a>
+      <a class="btn btn-outline" id="btnLihatFileApproval" href="#" target="_blank" style="margin-top:8px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Lihat File Penugasan</a>
+    </div>
+
+    <div class="card" id="penugasanCard" style="display:none;">
+      <h3 class="ctitle">Approval Penugasan</h3>
+      <div class="kv-row"><span class="k">Status</span><span class="v"><span class="badge badge-success" id="penugasanStatusBadge">Disetujui</span></span></div>
+      <div class="kv-row"><span class="k">Jabatan Pemberi Penugasan</span><span class="v" id="penugasanJabatanText">&nbsp;</span></div>
+      <div class="divider"></div>
+      <div class="hint" style="margin-bottom:8px;">Approver Terpilih <span style="font-weight:700;">(approval tidak berjenjang &mdash; cukup salah satu yang menyetujui lebih dulu)</span></div>
+      <div id="penugasanApproverListEl"></div>
     </div>
 
     <div class="card">
       <h3 class="ctitle">Lokasi</h3>
-      <div class="kv-row"><span class="k">Nama Tempat</span><span class="v" id="lokasiNamaText">Balai Desa Sukamaju</span></div>
+      <div class="kv-row"><span class="k">Jenis Lokasi Penugasan</span><span class="v" id="lokasiJenisText">Dalam Kota</span></div>
       <div class="kv-row"><span class="k">Kecamatan</span><span class="v" id="lokasiKecText">Magelang Utara</span></div>
       <div class="kv-row"><span class="k">Desa/Kelurahan</span><span class="v" id="lokasiDesaText">Kedungsari</span></div>
       <div class="kv-row"><span class="k">Alamat</span><span class="v" id="lokasiAlamatText">Jl. Raya Sukamaju No. 10</span></div>
@@ -202,14 +256,30 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     </div>
 
     <div class="card">
-      <h3 class="ctitle">Laporan Aspirasi</h3>
-      <div class="hint" style="margin-bottom:10px;">Aspirasi yang telah dikonversi menjadi usulan Pokok Pikiran (Pokir).</div>
-      <div id="pokirListEl"></div>
-      <a class="btn btn-outline" href="pokir.html" style="margin-top:10px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg> Lihat Semua Aspirasi</a>
+      <h3 class="ctitle">Daftar Aspirasi <span id="aspirasiCount" class="hint">(0)</span></h3>
+      <div class="hint" style="margin-bottom:10px;">Aspirasi warga yang disampaikan pada kegiatan ini.</div>
+      <div id="aspirasiListEl"></div>
     </div>
 
   </div>
 <div class="bottomnav"><a class="navitem" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem active" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
+  <div class="modal-backdrop" id="evidenceModalBackdrop" onclick="if(event.target===this){ closeEvidenceModal(); }">
+    <div class="evidence-modal">
+      <div class="evidence-modal-head">
+        <div class="evidence-modal-title" id="evidenceModalTitle">Evidence</div>
+        <button type="button" class="evidence-close" onclick="closeEvidenceModal()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>
+      </div>
+      <div class="evidence-stage">
+        <button type="button" class="evidence-arrow left" onclick="evidenceNav(-1)">&#8249;</button>
+        <div class="evidence-photo" id="evidenceSlideImg"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span id="evidenceSlideLabel">Foto 1</span></div>
+        <button type="button" class="evidence-arrow right" onclick="evidenceNav(1)">&#8250;</button>
+      </div>
+      <div class="evidence-foot">
+        <span id="evidenceCounter">1 / 1</span>
+        <div class="evidence-dots" id="evidenceDots"></div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
@@ -226,17 +296,17 @@ var resesDetailData = {
   '1': {
     jenis: 'RESES', judul: 'Reses Masa Persidangan II Tahun 2025', nomor: 'RES-2025-002',
     tanggal: '10&ndash;17 Mei 2025', waktu: '09.00 &ndash; 12.00 WIB', jenisKegiatan: 'Pertemuan Masyarakat', dapil: 'Dapil 1',
-    lokasiNama: 'Balai Desa Sukamaju', lokasiKec: 'Magelang Utara', lokasiDesa: 'Kedungsari', lokasiAlamat: 'Jl. Raya Sukamaju No. 10',
-    laporanPdf: 'files/laporan_RES-2025-002.pdf', statusAnggota: 'Disetujui',
+    lokasiJenis: 'Dalam Kota', lokasiKec: 'Magelang Utara', lokasiDesa: 'Kedungsari', lokasiAlamat: 'Jl. Raya Sukamaju No. 10',
+    laporanPdf: 'files/laporan_RES-2025-002.pdf',
     peserta: [
       {nama:'Budi Hartono', jenis:'Kepala Desa', hadir:'Hadir'},
       {nama:'Siti Aminah', jenis:'Tokoh Masyarakat', hadir:'Hadir'},
       {nama:'Agus Salim', jenis:'RT/RW', hadir:'Hadir'}
     ],
     aspirasi: [
-      {judul:'Perbaikan Jalan Desa Kedungsari', kategori:'Infrastruktur', prioritas:'Tinggi'},
-      {judul:'Bantuan Alat Pertanian', kategori:'Ekonomi', prioritas:'Sedang'},
-      {judul:'Renovasi Posyandu', kategori:'Kesehatan', prioritas:'Sedang'}
+      {judul:'Perbaikan Jalan Desa Kedungsari', kategori:'Infrastruktur', prioritas:'Tinggi', pengusul:'Budi Hartono', pengusulInisial:'BH', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'},
+      {judul:'Bantuan Alat Pertanian', kategori:'Ekonomi', prioritas:'Sedang', pengusul:'Siti Aminah', pengusulInisial:'SA', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'},
+      {judul:'Renovasi Posyandu', kategori:'Kesehatan', prioritas:'Sedang', pengusul:'Agus Salim', pengusulInisial:'AS', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'}
     ],
     dokumentasi: [
       {jenis:'Foto Kegiatan', nama:'IMG_reses_01.jpg'},
@@ -250,15 +320,14 @@ var resesDetailData = {
   '2': {
     jenis: 'RESES', judul: 'Reses Masa Persidangan I Tahun 2025', nomor: 'RES-2025-001',
     tanggal: '10&ndash;18 Feb 2025', waktu: '09.00 &ndash; 12.00 WIB', jenisKegiatan: 'Dialog Masyarakat', dapil: 'Dapil 1',
-    lokasiNama: 'Balai Kelurahan Wates', lokasiKec: 'Magelang Utara', lokasiDesa: 'Wates', lokasiAlamat: 'Jl. Wates Raya No. 5',
-    statusAnggota: 'Disetujui',
+    lokasiJenis: 'Dalam Kota', lokasiKec: 'Magelang Utara', lokasiDesa: 'Wates', lokasiAlamat: 'Jl. Wates Raya No. 5',
     peserta: [
       {nama:'Slamet Riyadi', jenis:'Perangkat Desa', hadir:'Hadir'},
       {nama:'Dwi Lestari', jenis:'Tokoh Pemuda', hadir:'Hadir'}
     ],
     aspirasi: [
-      {judul:'Penerangan Jalan Umum', kategori:'Infrastruktur', prioritas:'Tinggi'},
-      {judul:'Pelatihan UMKM', kategori:'Ekonomi', prioritas:'Sedang'}
+      {judul:'Penerangan Jalan Umum', kategori:'Infrastruktur', prioritas:'Tinggi', pengusul:'Slamet Riyadi', pengusulInisial:'SR', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'},
+      {judul:'Pelatihan UMKM', kategori:'Ekonomi', prioritas:'Sedang', pengusul:'Dwi Lestari', pengusulInisial:'DL', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'}
     ],
     dokumentasi: [
       {jenis:'Berita Acara', nama:'ba_reses_wates.pdf'}
@@ -270,15 +339,14 @@ var resesDetailData = {
   '3': {
     jenis: 'RESES', judul: 'Reses Masa Sidang III Tahun 2024', nomor: 'RES-2024-003',
     tanggal: '15&ndash;22 Agu 2024', waktu: '09.00 &ndash; 12.00 WIB', jenisKegiatan: 'Sosialisasi', dapil: 'Dapil 1',
-    lokasiNama: 'Aula Kecamatan Magelang Selatan', lokasiKec: 'Magelang Selatan', lokasiDesa: 'Magersari', lokasiAlamat: 'Jl. Tidar No. 21',
-    statusAnggota: 'Sebagian Disetujui',
+    lokasiJenis: 'Dalam Kota', lokasiKec: 'Magelang Selatan', lokasiDesa: 'Magersari', lokasiAlamat: 'Jl. Tidar No. 21',
     peserta: [
       {nama:'Hari Wijaya', jenis:'Perwakilan OPD', hadir:'Hadir'},
-      {nama:'Nur Kholis', jenis:'Tokoh Agama', hadir:'Hadir'}
+      {nama:'Nur Kholis', jenis:'Tokoh Agama', hadir:'Tidak Hadir'}
     ],
     aspirasi: [
-      {judul:'Bantuan Renovasi Musala', kategori:'Sosial', prioritas:'Sedang'},
-      {judul:'Perbaikan Saluran Irigasi', kategori:'Infrastruktur', prioritas:'Tinggi'}
+      {judul:'Bantuan Renovasi Musala', kategori:'Sosial', prioritas:'Sedang', pengusul:'Hari Wijaya', pengusulInisial:'HW', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'},
+      {judul:'Perbaikan Saluran Irigasi', kategori:'Infrastruktur', prioritas:'Tinggi', pengusul:'Nur Kholis', pengusulInisial:'NK', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'}
     ],
     dokumentasi: [
       {jenis:'Foto Lokasi', nama:'IMG_lokasi_selatan.jpg'}
@@ -291,15 +359,14 @@ var resesDetailData = {
   '5': {
     jenis: 'KUNJUNGAN', judul: 'Kunjungan Fasilitas Kesehatan Puskesmas Magelang Utara', nomor: 'KJD-2025-003',
     tanggal: '20 Mei 2025', waktu: '09.00 &ndash; 11.00 WIB', jenisKegiatan: 'Kunjungan Fasilitas Publik', dapil: 'Dapil 1',
-    lokasiNama: 'Puskesmas Magelang Utara', lokasiKec: 'Magelang Utara', lokasiDesa: 'Kramat Utara', lokasiAlamat: 'Jl. Sudirman No. 2',
-    statusAnggota: 'Disetujui',
+    lokasiJenis: 'Dalam Kota', lokasiKec: 'Magelang Utara', lokasiDesa: 'Kramat Utara', lokasiAlamat: 'Jl. Sudirman No. 2',
     peserta: [
       {nama:'dr. Rina Kusuma', jenis:'Perwakilan OPD', hadir:'Hadir'},
       {nama:'Bambang Sutrisno', jenis:'Kepala Desa', hadir:'Hadir'}
     ],
     aspirasi: [
-      {judul:'Penambahan Tenaga Medis', kategori:'Kesehatan', prioritas:'Tinggi'},
-      {judul:'Perbaikan Ruang Tunggu', kategori:'Kesehatan', prioritas:'Sedang'}
+      {judul:'Penambahan Tenaga Medis', kategori:'Kesehatan', prioritas:'Tinggi', pengusul:'dr. Rina Kusuma', pengusulInisial:'RK', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'},
+      {judul:'Perbaikan Ruang Tunggu', kategori:'Kesehatan', prioritas:'Sedang', pengusul:'Bambang Sutrisno', pengusulInisial:'BSu', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'}
     ],
     dokumentasi: [
       {jenis:'Foto Kegiatan', nama:'IMG_puskesmas_01.jpg'},
@@ -312,13 +379,12 @@ var resesDetailData = {
   '6': {
     jenis: 'KUNJUNGAN', judul: 'Kunjungan Lapangan Proyek Drainase Kel. Wates', nomor: 'KJD-2025-002',
     tanggal: '12 Mei 2025', waktu: '08.30 &ndash; 10.30 WIB', jenisKegiatan: 'Kunjungan Lapangan', dapil: 'Dapil 1',
-    lokasiNama: 'Proyek Drainase Kel. Wates', lokasiKec: 'Magelang Utara', lokasiDesa: 'Wates', lokasiAlamat: 'Jl. Wates Timur',
-    statusAnggota: 'Pending',
+    lokasiJenis: 'Dalam Kota', lokasiKec: 'Magelang Utara', lokasiDesa: 'Wates', lokasiAlamat: 'Jl. Wates Timur',
     peserta: [
-      {nama:'Slamet Riyadi', jenis:'Perangkat Desa', hadir:'Hadir'}
+      {nama:'Slamet Riyadi', jenis:'Perangkat Desa', hadir:'Pending'}
     ],
     aspirasi: [
-      {judul:'Percepatan Penyelesaian Drainase', kategori:'Infrastruktur', prioritas:'Tinggi'}
+      {judul:'Percepatan Penyelesaian Drainase', kategori:'Infrastruktur', prioritas:'Tinggi', pengusul:'Slamet Riyadi', pengusulInisial:'SR', pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS'}
     ],
     dokumentasi: [
       {jenis:'Foto Lokasi', nama:'IMG_drainase_01.jpg'}
@@ -330,15 +396,47 @@ var resesDetailData = {
   '7': {
     jenis: 'KUNJUNGAN', judul: 'Kunjungan Fasilitas Publik Pasar Rejowinangun', nomor: 'KJD-2025-001',
     tanggal: '28 Apr 2025', waktu: '09.00 &ndash; 11.00 WIB', jenisKegiatan: 'Kunjungan Fasilitas Publik', dapil: 'Dapil 1',
-    lokasiNama: 'Pasar Rejowinangun', lokasiKec: 'Magelang Tengah', lokasiDesa: 'Rejowinangun Utara', lokasiAlamat: 'Jl. Pasar Rejowinangun',
-    statusAnggota: 'Disetujui',
+    lokasiJenis: 'Dalam Kota', lokasiKec: 'Magelang Tengah', lokasiDesa: 'Rejowinangun Utara', lokasiAlamat: 'Jl. Pasar Rejowinangun',
+    penugasan: {
+      noPenugasan: 'PGS-2026-007',
+      kegiatan: 'Dialog Masyarakat Jurangombo Utara',
+      jabatanPemberiPenugasan: 'Ketua DPRD Kota Magelang',
+      status: 'Disetujui',
+      approvers: [
+        { nama:'TITIEK UTAMI, S.Sos., M.M.', jabatan:'Ketua DPRD Kota Magelang', decision:'Menyetujui', waktu:'28 Apr 2025, 08:40 WIB' },
+        { nama:'Drs. Hartono, M.Si.', jabatan:'Sekretaris DPRD Kota Magelang' }
+      ],
+      fileApproval: 'files/approval_PGS-2026-007.pdf'
+    },
     peserta: [
       {nama:'Wahyu Nugroho', jenis:'Organisasi Masyarakat', hadir:'Hadir'},
       {nama:'Yuni Astuti', jenis:'Tokoh Masyarakat', hadir:'Hadir'}
     ],
     aspirasi: [
-      {judul:'Perbaikan Atap Pasar', kategori:'Infrastruktur', prioritas:'Sedang'},
-      {judul:'Penataan Lapak PKL', kategori:'Ekonomi', prioritas:'Tinggi'}
+      {
+        judul:'Pembangunan Jalan Lingkungan', kategori:'Infrastruktur',
+        deskripsi:'Usulan pembangunan jalan lingkungan untuk memperlancar akses warga menuju fasilitas umum.',
+        pengusul:'Ir. Budi Santoso, M.T.', pengusulInisial:'BS',
+        pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS',
+        alamat:'Jl. Magersari RT 02/RW 03, Kel. Magersari', wilayah:'Kota Magelang, Jawa Tengah',
+        dapil:'Dapil 1', evidence:2
+      },
+      {
+        judul:'Perbaikan Atap Pasar', kategori:'Infrastruktur',
+        deskripsi:'Usulan perbaikan atap pasar yang bocor agar aktivitas jual beli pedagang dan pengunjung tetap nyaman saat musim hujan.',
+        pengusul:'Wahyu Nugroho', pengusulInisial:'WN',
+        pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS',
+        alamat:'Pasar Rejowinangun, Kel. Rejowinangun Utara', wilayah:'Kota Magelang, Jawa Tengah',
+        dapil:'Dapil 1', evidence:1
+      },
+      {
+        judul:'Penataan Lapak PKL', kategori:'Ekonomi',
+        deskripsi:'Usulan penataan lapak pedagang kaki lima di area pasar agar lebih tertib, aman, dan tidak mengganggu akses pengunjung.',
+        pengusul:'Yuni Astuti', pengusulInisial:'YA',
+        pembuat:'Ir. Budi Santoso, M.T.', pembuatInisial:'BS',
+        alamat:'Pasar Rejowinangun, Kel. Rejowinangun Utara', wilayah:'Kota Magelang, Jawa Tengah',
+        dapil:'Dapil 1', evidence:1
+      }
     ],
     dokumentasi: [
       {jenis:'Foto Kegiatan', nama:'IMG_pasar_01.jpg'}
@@ -350,6 +448,20 @@ var resesDetailData = {
   }
 };
 
+
+function computeStatusAnggota(peserta){
+  if(!peserta || !peserta.length) return 'Pending';
+  var hadir = 0, tidakHadir = 0, pending = 0;
+  peserta.forEach(function(p){
+    if(p.hadir === 'Hadir') hadir++;
+    else if(p.hadir === 'Tidak Hadir') tidakHadir++;
+    else pending++;
+  });
+  if(pending > 0) return 'Pending';
+  if(hadir === peserta.length) return 'Disetujui';
+  if(tidakHadir === peserta.length) return 'Ditolak';
+  return 'Sebagian Disetujui';
+}
 
 function renderResesDetail(id){
   var data = resesDetailData[id] || resesDetailData['1'];
@@ -364,7 +476,7 @@ function renderResesDetail(id){
   document.getElementById('waktuText').innerHTML = data.waktu;
   document.getElementById('jenisKegiatanText').textContent = data.jenisKegiatan;
   document.getElementById('dapilText').textContent = data.dapil;
-  document.getElementById('lokasiNamaText').textContent = data.lokasiNama;
+  document.getElementById('lokasiJenisText').textContent = data.lokasiJenis || 'Dalam Kota';
   document.getElementById('lokasiKecText').textContent = data.lokasiKec;
   document.getElementById('lokasiDesaText').textContent = data.lokasiDesa;
   document.getElementById('lokasiAlamatText').textContent = data.lokasiAlamat;
@@ -373,23 +485,104 @@ function renderResesDetail(id){
   if(data.laporanPdf){ btnPdf.href = data.laporanPdf; btnPdf.style.display = 'flex'; }
   else { btnPdf.style.display = 'none'; }
 
+  var penugasanCard = document.getElementById('penugasanCard');
+  if(data.penugasan){
+    var pg = data.penugasan;
+    var pgStatusClass = { 'Disetujui':'badge-success', 'Menunggu Approval':'badge-purple', 'Ditolak':'badge-danger' };
+    var penugasanStatusBadge = document.getElementById('penugasanStatusBadge');
+    penugasanStatusBadge.className = 'badge ' + (pgStatusClass[pg.status] || 'badge-neutral');
+    penugasanStatusBadge.textContent = pg.status;
+    document.getElementById('penugasanJabatanText').textContent = pg.jabatanPemberiPenugasan;
+    var overallDecided = pg.status === 'Disetujui' || pg.status === 'Ditolak';
+    document.getElementById('penugasanApproverListEl').innerHTML = (pg.approvers || []).map(function(ap){
+      var icSvg = '<svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>';
+      var badge, icBg, rowStyle = '';
+      if(ap.decision === 'Menyetujui'){
+        badge = '<span class="badge badge-success">Menyetujui</span>';
+        icBg = 'var(--success)'; rowStyle = 'background:var(--success-bg); border-color:#bfe3cc;';
+      } else if(ap.decision === 'Menolak'){
+        badge = '<span class="badge badge-danger">Menolak</span>';
+        icBg = 'var(--danger)'; rowStyle = 'background:var(--danger-bg); border-color:#f3c9c9;';
+      } else if(overallDecided){
+        badge = '<span class="badge badge-neutral">Tidak Diproses</span>';
+        icBg = 'var(--neutral)'; rowStyle = 'opacity:.65;';
+      } else {
+        badge = '<span class="badge badge-purple">Menunggu</span>';
+        icBg = 'var(--purple)';
+      }
+      return '<div class="rd-item" style="' + rowStyle + '"><div class="ri-ic" style="background:' + icBg + ';">' + icSvg + '</div><div class="ri-body"><div class="ri-title">' + ap.nama + '</div><div class="ri-meta">' + ap.jabatan + (ap.waktu ? ' &middot; ' + ap.waktu : '') + '</div></div>' + badge + '</div>';
+    }).join('');
+    var btnFileApproval = document.getElementById('btnLihatFileApproval');
+    if(pg.fileApproval){ btnFileApproval.href = pg.fileApproval; btnFileApproval.style.display = 'flex'; }
+    else { btnFileApproval.style.display = 'none'; }
+    penugasanCard.style.display = 'block';
+  } else {
+    penugasanCard.style.display = 'none';
+  }
+
+  var statusAnggota = computeStatusAnggota(data.peserta);
   var statusAnggotaClass = { 'Disetujui':'badge-success', 'Pending':'badge-neutral', 'Sebagian Disetujui':'badge-warn', 'Ditolak':'badge-danger' };
   var statusAnggotaBadge = document.getElementById('statusAnggotaBadge');
-  statusAnggotaBadge.className = 'badge ' + (statusAnggotaClass[data.statusAnggota] || 'badge-neutral');
-  statusAnggotaBadge.textContent = data.statusAnggota || 'Pending';
+  statusAnggotaBadge.className = 'badge ' + (statusAnggotaClass[statusAnggota] || 'badge-neutral');
+  statusAnggotaBadge.textContent = statusAnggota;
 
   document.getElementById('pesertaCount').textContent = '(' + data.peserta.length + ' orang)';
+  var hadirBadgeClass = { 'Hadir':'badge-success', 'Tidak Hadir':'badge-danger' };
   document.getElementById('pesertaListEl').innerHTML = data.peserta.map(function(p){
-    return '<div class="rd-item"><div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div><div class="ri-body"><div class="ri-title">' + p.nama + '</div><div class="ri-meta">' + p.jenis + '</div></div><span class="badge badge-success">' + p.hadir + '</span></div>';
+    return '<div class="rd-item"><div class="ri-ic" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></div><div class="ri-body"><div class="ri-title">' + p.nama + '</div><div class="ri-meta">' + p.jenis + '</div></div><span class="badge ' + (hadirBadgeClass[p.hadir] || 'badge-neutral') + '">' + p.hadir + '</span></div>';
   }).join('');
 
   document.getElementById('dokCount').textContent = '(' + data.dokumentasi.length + ')';
   document.getElementById('dokListEl').innerHTML = data.dokumentasi.map(function(d){
-    return '<div class="rd-item"><div class="ri-ic" style="background:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="ri-body"><div class="ri-title">' + d.jenis + '</div><div class="ri-meta">' + d.nama + '</div></div></div>';
+    return '<div class="rd-item"><div class="ri-ic" style="background:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="ri-body"><div class="ri-title">' + d.nama + '</div></div></div>';
   }).join('');
 
-  document.getElementById('pokirListEl').innerHTML = data.pokir.map(function(p){
-    return '<div class="rd-item"><div class="ri-ic" style="background:var(--green);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.2 2.2h4.8c.1-.9.6-1.7 1.2-2.2A6 6 0 0 0 12 3z"/></svg></div><div class="ri-body"><div class="ri-title">' + p.judul + '</div></div></div>';
+  var aspirasiBadgeClass = { 'Infrastruktur':'info', 'Pendidikan':'purple', 'Kesehatan':'success', 'Olahraga':'warn', 'Ekonomi':'warn', 'Sosial':'neutral' };
+  document.getElementById('aspirasiCount').textContent = '(' + data.aspirasi.length + ')';
+  document.getElementById('aspirasiListEl').innerHTML = data.aspirasi.map(function(a){
+    var tone = aspirasiBadgeClass[a.kategori] || 'neutral';
+    var html = '<div class="list-item bl-' + tone + '"><div class="content">';
+    html += '<div class="asp-head"><div class="title">' + a.judul + '</div><span class="badge badge-' + tone + '">' + a.kategori + '</span></div>';
+    if(a.deskripsi){ html += '<div class="asp-desc">' + a.deskripsi + '</div>'; }
+    if(a.pengusul){ html += '<div class="asp-proposer"><span class="asp-avatar">' + a.pengusulInisial + '</span> Diajukan oleh ' + a.pengusul + '</div>'; }
+    if(a.pembuat){ html += '<div class="asp-proposer"><span class="asp-avatar">' + a.pembuatInisial + '</span> Dicatat oleh ' + a.pembuat + '</div>'; }
+    if(a.alamat){
+      html += '<div class="asp-lokasi"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.3" r="2.4"/></svg><div class="asp-lokasi-text"><div class="asp-lokasi-alamat">' + a.alamat + '</div><div class="asp-lokasi-wilayah">' + (a.wilayah || '') + '</div></div></div>';
+    }
+    html += '<div class="asp-tags"><span class="asp-tag">' + (a.dapil || data.dapil) + '</span>';
+    if(a.evidence){
+      html += '<button type="button" class="asp-tag asp-tag-evidence" onclick="openEvidenceModal(\'' + a.judul.replace(/'/g, "\\'") + '\', ' + a.evidence + ')"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> ' + a.evidence + ' Evidence</button>';
+    } else if(a.prioritas){
+      html += '<span class="asp-tag">Prioritas: ' + a.prioritas + '</span>';
+    }
+    html += '</div></div></div>';
+    return html;
+  }).join('');
+}
+
+var evidenceTitle = '';
+var evidenceCount = 0;
+var evidenceIndex = 0;
+function openEvidenceModal(title, count){
+  evidenceTitle = title;
+  evidenceCount = count;
+  evidenceIndex = 0;
+  document.getElementById('evidenceModalTitle').textContent = title;
+  renderEvidenceSlide();
+  document.getElementById('evidenceModalBackdrop').classList.add('open');
+}
+function closeEvidenceModal(){
+  document.getElementById('evidenceModalBackdrop').classList.remove('open');
+}
+function evidenceNav(dir){
+  evidenceIndex = (evidenceIndex + dir + evidenceCount) % evidenceCount;
+  renderEvidenceSlide();
+}
+function renderEvidenceSlide(){
+  document.getElementById('evidenceSlideLabel').textContent = 'Foto ' + (evidenceIndex + 1);
+  document.getElementById('evidenceCounter').textContent = (evidenceIndex + 1) + ' / ' + evidenceCount;
+  document.getElementById('evidenceDots').innerHTML = Array.apply(null, Array(evidenceCount)).map(function(_, i){
+    return '<span class="dot' + (i === evidenceIndex ? ' active' : '') + '"></span>';
   }).join('');
 }
 
