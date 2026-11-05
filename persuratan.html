@@ -156,6 +156,7 @@ a{color:inherit;}
 .doc-waktu .badge{font-size:7.3px; padding:2.5px 7px; white-space:nowrap; line-height:1.2;}
 .doc-kebab-col{grid-column:4; display:flex; align-items:flex-start; justify-content:flex-end;}
 .doc-kebab{background:none; border:none; color:var(--muted); font-size:13px; letter-spacing:1.2px; padding:0; cursor:pointer; font-family:inherit; line-height:1;}
+.doc-item.no-kebab{grid-template-columns:1fr 6fr 5fr;}
 
 .modal-backdrop{position:absolute; inset:0; background:rgba(15,35,24,.55); z-index:40; display:none; align-items:flex-end; justify-content:center;}
 .modal-backdrop.open{display:flex;}
@@ -382,148 +383,34 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     <div class="tabs">
       <button class="tab active" data-tabgroup="srt" onclick="showTab('srt','masuk',this)">Masuk</button>
       <button class="tab" data-tabgroup="srt" onclick="showTab('srt','keluar',this)">Keluar</button>
-      <button class="tab" data-tabgroup="srt" onclick="showTab('srt','disposisi',this)">Disposisi</button>
     </div>
 
     <div id="srt-masuk" data-panel-group="srt" style="display:block;">
       <div class="search-row">
-        <div class="search-box"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-5-5"/></svg><input type="text" placeholder="Cari surat masuk..."></div>
+        <div class="search-box"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-5-5"/></svg><input type="text" placeholder="Cari no. surat / judul..." oninput="filterMasukSearch(this.value)"></div>
         <div class="filter-wrap">
-          <button class="filter-btn" id="filterBtn" onclick="toggleFilterDropdown(event)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/></svg> <span class="filter-label">Terbaru</span> <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg></button>
+          <button class="filter-btn" id="filterBtn" onclick="toggleFilterDropdown(event)"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/></svg> <span class="filter-label">Semua Status</span> <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg></button>
           <div class="filter-dropdown" id="filterDropdown">
-            <button type="button" class="filter-option active" onclick="selectFilter(this,'Terbaru')">Terbaru</button>
-            <button type="button" class="filter-option" onclick="selectFilter(this,'Terlama')">Terlama</button>
-            <button type="button" class="filter-option" onclick="selectFilter(this,'A-Z')">A-Z</button>
-            <button type="button" class="filter-option" onclick="selectFilter(this,'Z-A')">Z-A</button>
+            <button type="button" class="filter-option active" onclick="selectMasukStatusFilter(this,'','Semua Status')">Semua Status</button>
+            <button type="button" class="filter-option" onclick="selectMasukStatusFilter(this,'PENDING','Pending')">Pending</button>
+            <button type="button" class="filter-option" onclick="selectMasukStatusFilter(this,'TERIMA','Diterima')">Diterima</button>
+            <button type="button" class="filter-option" onclick="selectMasukStatusFilter(this,'DISPOSISI','Disposisi')">Disposisi</button>
           </div>
         </div>
       </div>
-      <div class="stats2-grid">
-        <div class="stat2"><div class="stat2-ic" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div><div class="stat2-lbl">Surat Masuk</div><div class="stat2-num" style="color:var(--success);">12</div><div class="stat2-cap">Surat belum dibaca</div></div>
-        <div class="stat2"><div class="stat2-ic" style="background:var(--danger-bg);color:var(--danger);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg></div><div class="stat2-lbl">Perlu Tindak Lanjut</div><div class="stat2-num" style="color:var(--danger);">5</div><div class="stat2-cap">Surat perlu diproses</div></div>
-        <div class="stat2"><div class="stat2-ic" style="background:var(--warn-bg);color:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div><div class="stat2-lbl">Dalam Proses</div><div class="stat2-num" style="color:var(--warn);">3</div><div class="stat2-cap">Surat sedang diproses</div></div>
-        <div class="stat2"><div class="stat2-ic" style="background:var(--success-bg);color:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></div><div class="stat2-lbl">Selesai</div><div class="stat2-num" style="color:var(--success);">8</div><div class="stat2-cap">Surat selesai diproses</div></div>
+
+      <div class="search-row" style="margin-top:-6px;">
+        <div class="filter-wrap" style="flex:1;">
+          <button class="filter-btn" id="periodeFilterBtn" onclick="togglePeriodeFilterDropdown(event)" style="width:100%; justify-content:flex-start;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/></svg> <span class="periode-filter-label">Periode 2024 - 2029</span> <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="margin-left:auto;"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="filter-dropdown" id="periodeFilterDropdown" style="left:0; right:auto; min-width:100%;">
+            <button type="button" class="filter-option" onclick="selectMasukPeriodeFilter(this,'','Semua Periode')">Semua Periode</button>
+            <button type="button" class="filter-option active" onclick="selectMasukPeriodeFilter(this,'prd-2024','Periode 2024 - 2029')">Periode 2024 - 2029</button>
+            <button type="button" class="filter-option" onclick="selectMasukPeriodeFilter(this,'prd-2019','Periode 2019 - 2024')">Periode 2019 - 2024</button>
+          </div>
+        </div>
       </div>
 
-      <a class="doc-item" href="surat-masuk-detail.html?id=6">
-        <div class="doc-icon" style="background:var(--green-light);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-        <div class="doc-body">
-          <div class="doc-title">Kunjungan Daerah Pilihan 1</div>
-          <div class="doc-meta">No. Penugasan: P-00012</div>
-          <div class="doc-meta">Dari: Sekretariat DPRD Kota Magelang</div>
-          <div class="doc-tags"><span class="doc-tag badge-purple">Batch Penugasan</span><span class="doc-tag badge-neutral">Tidak Dapat Didisposisi</span></div>
-        </div>
-        <div class="doc-waktu">
-          <div class="doc-datetime">
-            <div class="doc-date">20 Mei 2025</div>
-            <div class="doc-time">07.30 WIB</div>
-          </div>
-          <span class="badge badge-warn">Menunggu Konfirmasi</span>
-        </div>
-        <div class="doc-kebab-col">
-          <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-        </div>
-      </a>
-
-      <a class="doc-item" href="surat-masuk-detail.html?id=1">
-        <div class="doc-icon" style="background:var(--green);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div>
-        <div class="doc-body">
-          <div class="doc-title">Undangan Rapat Paripurna</div>
-          <div class="doc-meta">Nomor: 005/UND/DPRD/V/2025</div>
-          <div class="doc-meta">Dari: Sekretariat DPRD Kota Magelang</div>
-          <div class="doc-tags"><span class="doc-tag badge-success">Undangan</span><span class="doc-tag badge-neutral">Rapat Paripurna</span></div>
-        </div>
-        <div class="doc-waktu">
-          <div class="doc-datetime">
-            <div class="doc-date">19 Mei 2025</div>
-            <div class="doc-time">10.30 WIB</div>
-          </div>
-          <span class="badge badge-danger">Perlu Tindak Lanjut</span>
-        </div>
-        <div class="doc-kebab-col">
-          <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-        </div>
-      </a>
-
-      <a class="doc-item" href="surat-masuk-detail.html?id=2">
-        <div class="doc-icon" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5"/><path d="M9.5 16.5h5"/></svg></div>
-        <div class="doc-body">
-          <div class="doc-title">Nota Dinas Ketua DPRD</div>
-          <div class="doc-meta">Nomor: 800/ND/DPRD/V/2025</div>
-          <div class="doc-meta">Dari: Ketua DPRD Kota Magelang</div>
-          <div class="doc-tags"><span class="doc-tag badge-info">Nota Dinas</span><span class="doc-tag badge-neutral">Informasi</span></div>
-        </div>
-        <div class="doc-waktu">
-          <div class="doc-datetime">
-            <div class="doc-date">18 Mei 2025</div>
-            <div class="doc-time">15.45 WIB</div>
-          </div>
-          <span class="badge badge-warn">Dalam Proses</span>
-        </div>
-        <div class="doc-kebab-col">
-          <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-        </div>
-      </a>
-
-      <a class="doc-item" href="surat-masuk-detail.html?id=3">
-        <div class="doc-icon" style="background:var(--gold);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="4" width="12" height="17" rx="1.5"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 11h6"/><path d="M9 15h6"/></svg></div>
-        <div class="doc-body">
-          <div class="doc-title">Laporan Hasil Kunjungan Dapil</div>
-          <div class="doc-meta">Nomor: 120/KKD/DPRD/V/2025</div>
-          <div class="doc-meta">Dari: Komisi III DPRD Kota Magelang</div>
-          <div class="doc-tags"><span class="doc-tag badge-gold">Laporan</span><span class="doc-tag badge-neutral">Kunjungan Dapil</span></div>
-        </div>
-        <div class="doc-waktu">
-          <div class="doc-datetime">
-            <div class="doc-date">17 Mei 2025</div>
-            <div class="doc-time">09.20 WIB</div>
-          </div>
-          <span class="badge badge-success">Selesai</span>
-        </div>
-        <div class="doc-kebab-col">
-          <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-        </div>
-      </a>
-
-      <a class="doc-item" href="surat-masuk-detail.html?id=4">
-        <div class="doc-icon" style="background:var(--purple);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5"/><path d="M9.5 16.5h5"/></svg></div>
-        <div class="doc-body">
-          <div class="doc-title">Permohonan Data</div>
-          <div class="doc-meta">Nomor: 070/PD/DPRD/V/2025</div>
-          <div class="doc-meta">Dari: Dinas PUPR Kota Magelang</div>
-          <div class="doc-tags"><span class="doc-tag badge-purple">Permohonan</span><span class="doc-tag badge-neutral">Data</span></div>
-        </div>
-        <div class="doc-waktu">
-          <div class="doc-datetime">
-            <div class="doc-date">16 Mei 2025</div>
-            <div class="doc-time">14.10 WIB</div>
-          </div>
-          <span class="badge badge-danger">Perlu Tindak Lanjut</span>
-        </div>
-        <div class="doc-kebab-col">
-          <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-        </div>
-      </a>
-
-      <a class="doc-item" href="surat-masuk-detail.html?id=5">
-        <div class="doc-icon" style="background:var(--danger);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div>
-        <div class="doc-body">
-          <div class="doc-title">Undangan Sosialisasi Peraturan Daerah</div>
-          <div class="doc-meta">Nomor: 005/UND/DPRD/V/2025</div>
-          <div class="doc-meta">Dari: Bappeda Kota Magelang</div>
-          <div class="doc-tags"><span class="doc-tag badge-danger">Undangan</span><span class="doc-tag badge-neutral">Sosialisasi Perda</span></div>
-        </div>
-        <div class="doc-waktu">
-          <div class="doc-datetime">
-            <div class="doc-date">15 Mei 2025</div>
-            <div class="doc-time">11.05 WIB</div>
-          </div>
-          <span class="badge badge-success">Selesai</span>
-        </div>
-        <div class="doc-kebab-col">
-          <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-        </div>
-      </a>
+      <div id="masukList"></div>
     </div>
 
     <div id="srt-keluar" data-panel-group="srt" style="display:none;">
@@ -598,152 +485,8 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
       <a class="btn btn-primary" href="surat-keluar-buat.html" style="margin-top:6px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14"/><path d="M5 12h14"/></svg> Buat Permintaan Surat Keluar</a>
     </div>
 
-    <div id="srt-disposisi" data-panel-group="srt" style="display:none;">
-      <div class="hint" style="margin-bottom:12px;">Surat yang Anda disposisikan (teruskan) kepada pihak lain.</div>
-      <div id="disposisiList">
-        <a class="doc-item" href="disposisi.html?id=1">
-          <div class="doc-icon" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg></div>
-          <div class="doc-body">
-            <div class="doc-title">Laporan Hasil Kunjungan Dapil &rarr; Sekretariat Fraksi</div>
-            <div class="doc-meta">120/KKD/DPRD/V/2025 &middot; Sifat: Biasa</div>
-            <div class="doc-meta">Diteruskan oleh Anda &middot; 22 Mei 2025</div>
-          </div>
-          <div class="doc-waktu">
-            <span class="badge badge-info">Disposisi</span>
-          </div>
-          <div class="doc-kebab-col">
-            <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-          </div>
-        </a>
-        <a class="doc-item" href="disposisi.html?id=2">
-          <div class="doc-icon" style="background:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg></div>
-          <div class="doc-body">
-            <div class="doc-title">Permohonan Data &rarr; Tenaga Ahli Komisi I</div>
-            <div class="doc-meta">070/PD/DPRD/V/2025 &middot; Sifat: Segera</div>
-            <div class="doc-meta">Catatan: Mohon dikoordinasikan dengan Dinas PUPR.</div>
-          </div>
-          <div class="doc-waktu">
-            <span class="badge badge-warn">Di Proses</span>
-          </div>
-          <div class="doc-kebab-col">
-            <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-          </div>
-        </a>
-        <a class="doc-item" href="disposisi.html?id=3">
-          <div class="doc-icon" style="background:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg></div>
-          <div class="doc-body">
-            <div class="doc-title">Undangan Rapat Paripurna &rarr; Sekretariat Fraksi</div>
-            <div class="doc-meta">Diteruskan oleh Anda &middot; 19 Mei 2025</div>
-          </div>
-          <div class="doc-waktu">
-            <span class="badge badge-success">Selesai</span>
-          </div>
-          <div class="doc-kebab-col">
-            <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-          </div>
-        </a>
-      </div>
-    </div>
-
   </div>
-  <a class="fab" href="surat-keluar-buat.html" id="fabBtn" onclick="return handleFabClick(event);" aria-label="Buat Surat"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;stroke-width:2.5;"><path d="M12 5v14"/><path d="M5 12h14"/></svg></a>
-
-  <div class="modal-backdrop" id="disposisiModalBackdrop" onclick="if(event.target===this){ closeDisposisiModal(); }">
-    <div class="modal-sheet">
-      <div class="modal-sheet-head">
-        <h3>Buat Disposisi Baru</h3>
-        <button type="button" class="modal-close" onclick="closeDisposisiModal()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg></button>
-      </div>
-
-      <div class="field">
-        <label>Nomor Surat</label>
-        <div class="filter-wrap" style="width:100%;">
-          <button type="button" class="filter-btn" id="dispNomorBtn" onclick="toggleDispNomorDropdown(event)" style="width:100%; justify-content:space-between; border-radius:10px; padding:11px 12px;">
-            <span id="dispNomorLabel" style="font-weight:600; color:var(--muted);">Pilih nomor surat...</span>
-            <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <div class="filter-dropdown" id="dispNomorDropdown" style="left:0; right:0; width:100%; padding:8px;">
-            <div class="cc-search">
-              <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-5-5"/></svg>
-              <input type="text" id="dispNomorSearchInput" placeholder="Cari nomor / judul surat..." oninput="filterDispNomorOptions(this.value)" onclick="event.stopPropagation();">
-            </div>
-            <div class="cc-option-list" id="dispNomorOptionList">
-              <div class="cc-option" data-text="005/UND/DPRD/V/2025 &middot; Undangan Rapat Paripurna" onclick="selectDispNomor(this)">005/UND/DPRD/V/2025 &middot; Undangan Rapat Paripurna</div>
-              <div class="cc-option" data-text="800/ND/DPRD/V/2025 &middot; Nota Dinas Ketua DPRD" onclick="selectDispNomor(this)">800/ND/DPRD/V/2025 &middot; Nota Dinas Ketua DPRD</div>
-              <div class="cc-option" data-text="120/KKD/DPRD/V/2025 &middot; Laporan Hasil Kunjungan Dapil" onclick="selectDispNomor(this)">120/KKD/DPRD/V/2025 &middot; Laporan Hasil Kunjungan Dapil</div>
-              <div class="cc-option" data-text="070/PD/DPRD/V/2025 &middot; Permohonan Data" onclick="selectDispNomor(this)">070/PD/DPRD/V/2025 &middot; Permohonan Data</div>
-              <div class="cc-option" data-text="005/UND/DPRD/V/2025 &middot; Undangan Sosialisasi Peraturan Daerah" onclick="selectDispNomor(this)">005/UND/DPRD/V/2025 &middot; Undangan Sosialisasi Peraturan Daerah</div>
-            </div>
-            <div class="cc-option-empty" id="dispNomorEmpty" style="display:none;">Tidak ditemukan.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>CC <span class="opt">(bisa lebih dari satu)</span></label>
-        <div class="filter-wrap" style="width:100%;">
-          <button type="button" class="filter-btn" id="dispCcBtn" onclick="toggleDispCcDropdown(event)" style="width:100%; justify-content:space-between; border-radius:10px; padding:11px 12px;">
-            <span>Pilih dari daftar anggota / instansi</span>
-            <svg class="ic-svg chev-ic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>
-          </button>
-          <div class="filter-dropdown" id="dispCcDropdown" style="left:0; right:0; width:100%; padding:8px;">
-            <div class="cc-search">
-              <svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="10.5" cy="10.5" r="7"/><path d="M20 20l-5-5"/></svg>
-              <input type="text" id="dispCcSearchInput" placeholder="Cari nama anggota / instansi..." oninput="filterDispCcOptions(this.value)" onclick="event.stopPropagation();">
-            </div>
-            <div class="cc-option-list" id="dispCcOptionList">
-              <label class="cc-option"><input type="checkbox" data-name="Ketua DPRD Kota Magelang" onchange="toggleDispCcPerson(this)"> Ketua DPRD Kota Magelang</label>
-              <label class="cc-option"><input type="checkbox" data-name="Sekretariat DPRD Kota Magelang" onchange="toggleDispCcPerson(this)"> Sekretariat DPRD Kota Magelang</label>
-              <label class="cc-option"><input type="checkbox" data-name="Hj. Siti Nurhaliza, S.H." onchange="toggleDispCcPerson(this)"> Hj. Siti Nurhaliza, S.H.</label>
-              <label class="cc-option"><input type="checkbox" data-name="Drs. Ahmad Fauzi, M.Si." onchange="toggleDispCcPerson(this)"> Drs. Ahmad Fauzi, M.Si.</label>
-              <label class="cc-option"><input type="checkbox" data-name="Rina Kartika, S.E." onchange="toggleDispCcPerson(this)"> Rina Kartika, S.E.</label>
-              <label class="cc-option"><input type="checkbox" data-name="H. Slamet Riyadi" onchange="toggleDispCcPerson(this)"> H. Slamet Riyadi</label>
-              <label class="cc-option"><input type="checkbox" data-name="Sekretariat Fraksi" onchange="toggleDispCcPerson(this)"> Sekretariat Fraksi</label>
-              <label class="cc-option"><input type="checkbox" data-name="Arsip" onchange="toggleDispCcPerson(this)"> Arsip</label>
-            </div>
-            <div class="cc-option-empty" id="dispCcOptionEmpty" style="display:none;">Tidak ditemukan.</div>
-          </div>
-        </div>
-        <div style="display:flex; gap:8px; margin-top:8px;">
-          <input type="text" id="dispCcManualInput" placeholder="Tambah nama / instansi lain...">
-          <button type="button" class="btn btn-outline btn-sm" onclick="addDispManualCc()">Tambah</button>
-        </div>
-        <div class="chip-row" id="dispCcChipList" style="margin-top:8px;">
-          <span class="hint" id="dispCcEmptyHint">Belum ada penerima CC dipilih.</span>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Sifat</label>
-        <select id="dispSifat">
-          <option>Biasa</option>
-          <option>Penting</option>
-          <option>Segera</option>
-          <option>Rahasia</option>
-        </select>
-      </div>
-
-      <div class="field" style="margin-bottom:18px;">
-        <label>Catatan Disposisi</label>
-        <textarea id="dispCatatan" placeholder="Contoh: Mohon ditindaklanjuti dan dikoordinasikan dengan pihak terkait."></textarea>
-      </div>
-
-      <div class="section-title" style="margin-top:0;">Riwayat Disposisi</div>
-      <div class="card" style="padding:0;">
-        <div class="riwayat-item">
-          <div class="r-title">Permohonan Data &rarr; Anda</div>
-          <div class="r-meta">Dari: Sekretariat DPRD &middot; 17 Mei 2025, 08.15 WIB</div>
-          <div class="r-meta">Catatan: Mohon ditindaklanjuti dan dikoordinasikan dengan Dinas PUPR.</div>
-        </div>
-        <div class="riwayat-item">
-          <div class="r-title">Undangan Rapat Paripurna &rarr; Sekretariat Fraksi</div>
-          <div class="r-meta">Diteruskan oleh Anda &middot; 19 Mei 2025</div>
-        </div>
-      </div>
-
-      <a class="btn btn-primary" href="#" onclick="submitDisposisi(); return false;" style="margin-top:16px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg> Kirim Disposisi</a>
-    </div>
-  </div>
+  <a class="fab" href="surat-keluar-buat.html" id="fabBtn" aria-label="Buat Surat"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;stroke-width:2.5;"><path d="M12 5v14"/><path d="M5 12h14"/></svg></a>
 <div class="bottomnav"><a class="navitem active" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -764,6 +507,137 @@ function toast(msg){
   setTimeout(function(){ el.style.display = 'none'; }, 2200);
 }
 
+/* Surat Masuk — field dan status mengikuti kontrak GET /api/v1/mobile/incoming-letters
+   (Surat_Masuk_Spesifikasi_TRD_API_Contract_v0.3.md §19.1): satu item = satu penugasan
+   (disposition_id), status PENDING|TERIMA|DISPOSISI, can_act dihitung dari action_deadline.
+   "NOW_MASUK" mensimulasikan waktu saat ini. */
+var NOW_MASUK = new Date('2025-05-20T16:00:00');
+var masukData = [
+  {
+    dispositionId: 'd1', status: 'PENDING', isRead: true, periodId: 'prd-2024',
+    letter: { letterNumber: '005/UND/DPRD/V/2025', title: 'Undangan Rapat Paripurna', letterDate: '18 Mei 2025', startTime: '10.00', endTime: '12.00', place: 'Ruang Paripurna' },
+    actionDeadlineISO: '2025-05-18T12:00:00',
+    assignerName: 'Sekretariat DPRD Kota Magelang', disposedByName: null
+  },
+  {
+    dispositionId: 'd2', status: 'PENDING', isRead: false, periodId: 'prd-2024',
+    letter: { letterNumber: '800/ND/DPRD/V/2025', title: 'Nota Dinas Ketua DPRD', letterDate: '25 Mei 2025', startTime: '09.00', endTime: null, place: null },
+    actionDeadlineISO: '2025-05-25T23:59:59',
+    assignerName: 'Sekretariat DPRD Kota Magelang', disposedByName: 'Drs. Ahmad Fauzi, M.Si.'
+  },
+  {
+    dispositionId: 'd3', status: 'TERIMA', isRead: true, periodId: 'prd-2024',
+    letter: { letterNumber: '120/KKD/DPRD/V/2025', title: 'Laporan Hasil Kunjungan Dapil', letterDate: '18 Mei 2025', startTime: '13.00', endTime: '17.00', place: 'Ruang Komisi III' },
+    actionDeadlineISO: '2025-05-18T17:00:00',
+    assignerName: 'Sekretariat DPRD Kota Magelang', disposedByName: 'Rina Kartika, S.E.'
+  },
+  {
+    dispositionId: 'd4', status: 'PENDING', isRead: false, periodId: 'prd-2024',
+    letter: { letterNumber: '070/PD/DPRD/V/2025', title: 'Permohonan Data', letterDate: '23 Mei 2025', startTime: '14.10', endTime: null, place: null },
+    actionDeadlineISO: '2025-05-23T23:59:59',
+    assignerName: 'Sekretariat DPRD Kota Magelang', disposedByName: null
+  },
+  {
+    dispositionId: 'd5', status: 'DISPOSISI', isRead: true, periodId: 'prd-2024',
+    letter: { letterNumber: '012/UND/DPRD/V/2025', title: 'Undangan Sosialisasi Peraturan Daerah', letterDate: '21 Mei 2025', startTime: '11.05', endTime: null, place: null },
+    actionDeadlineISO: '2025-05-21T23:59:59',
+    assignerName: 'Sekretariat DPRD Kota Magelang', disposedByName: null
+  }
+];
+function masukCanAct(item){
+  if(item.status !== 'PENDING'){ return false; }
+  return NOW_MASUK <= new Date(item.actionDeadlineISO);
+}
+function masukStatusMeta(status){
+  if(status === 'TERIMA'){ return {cls:'badge-success', label:'Diterima'}; }
+  if(status === 'DISPOSISI'){ return {cls:'badge-info', label:'Disposisi'}; }
+  return {cls:'badge-warn', label:'Pending'};
+}
+// Periode mengikuti §2.2 & §20.8 Surat_Masuk_Spesifikasi_TRD_API_Contract_v0.3.md (v0.5):
+// period_id snapshot pada surat, filter default periode aktif. ID & nama disamakan dengan
+// periode-data.js (WEB) - 'prd-2024' = periode aktif.
+var MASUK_PERIODS = {
+  'prd-2024': 'Periode 2024 - 2029',
+  'prd-2019': 'Periode 2019 - 2024'
+};
+var currentMasukStatusFilter = '';
+var currentMasukPeriodeFilter = 'prd-2024';
+var currentMasukSearch = '';
+function renderMasukList(){
+  var wrap = document.getElementById('masukList');
+  if(!wrap) return;
+  var filtered = masukData.filter(function(item){
+    if(currentMasukStatusFilter && item.status !== currentMasukStatusFilter){ return false; }
+    if(currentMasukPeriodeFilter && item.periodId !== currentMasukPeriodeFilter){ return false; }
+    if(currentMasukSearch){
+      var q = currentMasukSearch.trim().toLowerCase();
+      var hay = (item.letter.letterNumber + ' ' + item.letter.title).toLowerCase();
+      if(hay.indexOf(q) === -1){ return false; }
+    }
+    return true;
+  });
+  if(!filtered.length){
+    wrap.innerHTML = '<div class="empty"><span class="ic">&#128231;</span>Tidak ada surat masuk.</div>';
+    return;
+  }
+  wrap.innerHTML = filtered.map(function(item){
+    var meta = masukStatusMeta(item.status);
+    var canAct = masukCanAct(item);
+    var unreadDot = item.isRead ? '' : '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--danger);margin-right:5px;vertical-align:middle;"></span>';
+    var iconBg = item.status === 'TERIMA' ? 'var(--success)' : (item.status === 'DISPOSISI' ? 'var(--info)' : 'var(--warn)');
+    var waktu = '';
+    if(item.letter.startTime && item.letter.endTime){ waktu = ' &middot; ' + item.letter.startTime + '&ndash;' + item.letter.endTime + ' WIB'; }
+    else if(item.letter.startTime){ waktu = ' &middot; ' + item.letter.startTime + ' WIB'; }
+    var tempatLine = item.letter.place ? '<div class="doc-meta">Tempat: ' + item.letter.place + '</div>' : '';
+    var disposedLine = item.disposedByName ? '<div class="doc-meta">Disposisi oleh: ' + item.disposedByName + '</div>' : '';
+    var expiredNote = (item.status === 'PENDING' && !canAct) ? '<div class="doc-meta" style="color:var(--danger); font-weight:700;">Lewat batas aksi</div>' : '';
+    return ''
+      + '<a class="doc-item no-kebab" href="surat-masuk-detail.html?id=' + item.dispositionId + '">'
+      +   '<div class="doc-icon" style="background:' + iconBg + ';"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/></svg></div>'
+      +   '<div class="doc-body">'
+      +     '<div class="doc-title">' + unreadDot + item.letter.title + '</div>'
+      +     '<div class="doc-meta">Nomor: ' + item.letter.letterNumber + '</div>'
+      +     '<div class="doc-meta">' + (MASUK_PERIODS[item.periodId] || '-') + '</div>'
+      +     '<div class="doc-meta">Tanggal: ' + item.letter.letterDate + waktu + '</div>'
+      +     tempatLine
+      +     '<div class="doc-meta">Dari Sekretariat: ' + item.assignerName + '</div>'
+      +     disposedLine
+      +     expiredNote
+      +   '</div>'
+      +   '<div class="doc-waktu"><span class="badge ' + meta.cls + '">' + meta.label + '</span></div>'
+      + '</a>';
+  }).join('');
+}
+function filterMasukSearch(value){
+  currentMasukSearch = value;
+  renderMasukList();
+}
+function selectMasukStatusFilter(optBtn, statusValue, label){
+  document.querySelectorAll('#filterDropdown .filter-option').forEach(function(o){ o.classList.remove('active'); });
+  optBtn.classList.add('active');
+  currentMasukStatusFilter = statusValue;
+  var lbl = document.querySelector('.filter-label');
+  if(lbl){ lbl.textContent = label; }
+  var dd = document.getElementById('filterDropdown');
+  var btn = document.getElementById('filterBtn');
+  if(dd){ dd.classList.remove('open'); }
+  if(btn){ btn.classList.remove('open'); }
+  renderMasukList();
+}
+function selectMasukPeriodeFilter(optBtn, periodeValue, label){
+  document.querySelectorAll('#periodeFilterDropdown .filter-option').forEach(function(o){ o.classList.remove('active'); });
+  optBtn.classList.add('active');
+  currentMasukPeriodeFilter = periodeValue;
+  var lbl = document.querySelector('.periode-filter-label');
+  if(lbl){ lbl.textContent = label; }
+  var dd = document.getElementById('periodeFilterDropdown');
+  var btn = document.getElementById('periodeFilterBtn');
+  if(dd){ dd.classList.remove('open'); }
+  if(btn){ btn.classList.remove('open'); }
+  renderMasukList();
+}
+renderMasukList();
+
 function toggleFilterDropdown(e){
   e.preventDefault();
   e.stopPropagation();
@@ -773,242 +647,25 @@ function toggleFilterDropdown(e){
   dd.classList.toggle('open');
   if(btn){ btn.classList.toggle('open', dd.classList.contains('open')); }
 }
-function selectFilter(optBtn, label){
-  document.querySelectorAll('.filter-option').forEach(function(o){ o.classList.remove('active'); });
-  optBtn.classList.add('active');
-  var lbl = document.querySelector('.filter-label');
-  if(lbl){ lbl.textContent = label; }
-  var dd = document.getElementById('filterDropdown');
-  var btn = document.getElementById('filterBtn');
-  if(dd){ dd.classList.remove('open'); }
-  if(btn){ btn.classList.remove('open'); }
+function togglePeriodeFilterDropdown(e){
+  e.preventDefault();
+  e.stopPropagation();
+  var dd = document.getElementById('periodeFilterDropdown');
+  var btn = document.getElementById('periodeFilterBtn');
+  if(!dd) return;
+  dd.classList.toggle('open');
+  if(btn){ btn.classList.toggle('open', dd.classList.contains('open')); }
 }
 document.addEventListener('click', function(){
   var dd = document.getElementById('filterDropdown');
   var btn = document.getElementById('filterBtn');
   if(dd){ dd.classList.remove('open'); }
   if(btn){ btn.classList.remove('open'); }
-  closeDispDropdowns();
+  var pdd = document.getElementById('periodeFilterDropdown');
+  var pbtn = document.getElementById('periodeFilterBtn');
+  if(pdd){ pdd.classList.remove('open'); }
+  if(pbtn){ pbtn.classList.remove('open'); }
 });
-
-function handleFabClick(e){
-  var disposisiPanel = document.getElementById('srt-disposisi');
-  if(disposisiPanel && disposisiPanel.style.display === 'block'){
-    e.preventDefault();
-    openDisposisiModal();
-    return false;
-  }
-  return true;
-}
-function openDisposisiModal(){
-  var bd = document.getElementById('disposisiModalBackdrop');
-  if(bd){ bd.classList.add('open'); }
-}
-function closeDisposisiModal(){
-  var bd = document.getElementById('disposisiModalBackdrop');
-  if(bd){ bd.classList.remove('open'); }
-  closeDispDropdowns();
-}
-function closeDispDropdowns(){
-  ['dispNomorDropdown','dispCcDropdown'].forEach(function(id){
-    var dd = document.getElementById(id);
-    if(dd){ dd.classList.remove('open'); }
-  });
-  ['dispNomorBtn','dispCcBtn'].forEach(function(id){
-    var btn = document.getElementById(id);
-    if(btn){ btn.classList.remove('open'); }
-  });
-}
-
-function toggleDispNomorDropdown(e){
-  e.preventDefault();
-  e.stopPropagation();
-  var dd = document.getElementById('dispNomorDropdown');
-  var btn = document.getElementById('dispNomorBtn');
-  if(!dd) return;
-  var ccDd = document.getElementById('dispCcDropdown');
-  var ccBtn = document.getElementById('dispCcBtn');
-  if(ccDd){ ccDd.classList.remove('open'); }
-  if(ccBtn){ ccBtn.classList.remove('open'); }
-  dd.classList.toggle('open');
-  var isOpen = dd.classList.contains('open');
-  if(btn){ btn.classList.toggle('open', isOpen); }
-  if(isOpen){
-    var search = document.getElementById('dispNomorSearchInput');
-    if(search){ search.value = ''; filterDispNomorOptions(''); setTimeout(function(){ search.focus(); }, 0); }
-  }
-}
-function filterDispNomorOptions(query){
-  var q = query.trim().toLowerCase();
-  var options = document.querySelectorAll('#dispNomorOptionList .cc-option');
-  var visibleCount = 0;
-  options.forEach(function(opt){
-    var text = opt.dataset.text.toLowerCase();
-    var match = text.indexOf(q) !== -1;
-    opt.classList.toggle('cc-hidden', !match);
-    if(match){ visibleCount++; }
-  });
-  var empty = document.getElementById('dispNomorEmpty');
-  if(empty){ empty.style.display = visibleCount === 0 ? 'block' : 'none'; }
-}
-function selectDispNomor(el){
-  if(el.classList.contains('cc-disabled')) return;
-  var label = document.getElementById('dispNomorLabel');
-  if(label){ label.textContent = el.dataset.text; label.style.color = 'var(--ink)'; label.style.fontWeight = '800'; }
-  var dd = document.getElementById('dispNomorDropdown');
-  var btn = document.getElementById('dispNomorBtn');
-  if(dd){ dd.classList.remove('open'); }
-  if(btn){ btn.classList.remove('open'); }
-}
-
-var disposedNomorTexts = [
-  '005/UND/DPRD/V/2025 · Undangan Rapat Paripurna',
-  '120/KKD/DPRD/V/2025 · Laporan Hasil Kunjungan Dapil',
-  '070/PD/DPRD/V/2025 · Permohonan Data'
-];
-function markDisposedOptions(){
-  document.querySelectorAll('#dispNomorOptionList .cc-option').forEach(function(opt){
-    var isDisposed = disposedNomorTexts.indexOf(opt.dataset.text) !== -1;
-    opt.classList.toggle('cc-disabled', isDisposed);
-    var existingTag = opt.querySelector('.cc-tag-done');
-    if(isDisposed && !existingTag){
-      var tag = document.createElement('span');
-      tag.className = 'cc-tag-done';
-      tag.textContent = 'Sudah Disposisi';
-      opt.appendChild(tag);
-    } else if(!isDisposed && existingTag){
-      existingTag.remove();
-    }
-  });
-}
-markDisposedOptions();
-
-function toggleDispCcDropdown(e){
-  e.preventDefault();
-  e.stopPropagation();
-  var dd = document.getElementById('dispCcDropdown');
-  var btn = document.getElementById('dispCcBtn');
-  if(!dd) return;
-  var nomorDd = document.getElementById('dispNomorDropdown');
-  var nomorBtn = document.getElementById('dispNomorBtn');
-  if(nomorDd){ nomorDd.classList.remove('open'); }
-  if(nomorBtn){ nomorBtn.classList.remove('open'); }
-  dd.classList.toggle('open');
-  var isOpen = dd.classList.contains('open');
-  if(btn){ btn.classList.toggle('open', isOpen); }
-  if(isOpen){
-    var search = document.getElementById('dispCcSearchInput');
-    if(search){ search.value = ''; filterDispCcOptions(''); setTimeout(function(){ search.focus(); }, 0); }
-  }
-}
-function filterDispCcOptions(query){
-  var q = query.trim().toLowerCase();
-  var options = document.querySelectorAll('#dispCcOptionList .cc-option');
-  var visibleCount = 0;
-  options.forEach(function(opt){
-    var name = opt.querySelector('input').dataset.name.toLowerCase();
-    var match = name.indexOf(q) !== -1;
-    opt.classList.toggle('cc-hidden', !match);
-    if(match){ visibleCount++; }
-  });
-  var empty = document.getElementById('dispCcOptionEmpty');
-  if(empty){ empty.style.display = visibleCount === 0 ? 'block' : 'none'; }
-}
-function dispCcSlug(name){
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-}
-function toggleDispCcPerson(checkbox){
-  var name = checkbox.dataset.name;
-  if(checkbox.checked){ addDispCcChip(name); }
-  else { removeDispCcChip(name); }
-}
-function addDispManualCc(){
-  var input = document.getElementById('dispCcManualInput');
-  var name = input.value.trim();
-  if(!name) return;
-  addDispCcChip(name);
-  input.value = '';
-}
-function addDispCcChip(name){
-  if(document.getElementById('disp-cc-chip-' + dispCcSlug(name))) return;
-  var hint = document.getElementById('dispCcEmptyHint');
-  if(hint){ hint.style.display = 'none'; }
-  var list = document.getElementById('dispCcChipList');
-  var chip = document.createElement('span');
-  chip.className = 'cc-chip';
-  chip.id = 'disp-cc-chip-' + dispCcSlug(name);
-  var label = document.createElement('span');
-  label.textContent = name;
-  var x = document.createElement('span');
-  x.className = 'x';
-  x.textContent = '×';
-  x.onclick = function(){ removeDispCcChip(name); };
-  chip.appendChild(label);
-  chip.appendChild(x);
-  list.appendChild(chip);
-}
-function removeDispCcChip(name){
-  var el = document.getElementById('disp-cc-chip-' + dispCcSlug(name));
-  if(el){ el.remove(); }
-  document.querySelectorAll('#dispCcDropdown input[type="checkbox"]').forEach(function(cb){
-    if(cb.dataset.name === name){ cb.checked = false; }
-  });
-  var list = document.getElementById('dispCcChipList');
-  var hint = document.getElementById('dispCcEmptyHint');
-  if(list && hint && list.querySelectorAll('.cc-chip').length === 0){
-    hint.style.display = 'inline';
-  }
-}
-
-function submitDisposisi(){
-  var nomorLabel = document.getElementById('dispNomorLabel');
-  if(!nomorLabel || nomorLabel.style.fontWeight !== '800'){
-    toast('Pilih nomor surat terlebih dahulu');
-    return;
-  }
-  var nomorText = nomorLabel.textContent;
-  var judul = nomorText.split('·')[1] ? nomorText.split('·')[1].trim() : nomorText;
-  var catatan = document.getElementById('dispCatatan').value.trim();
-  var sifat = document.getElementById('dispSifat').value;
-  var ccChips = document.querySelectorAll('#dispCcChipList .cc-chip');
-  var ccNames = Array.prototype.map.call(ccChips, function(c){ return c.firstChild.textContent; });
-
-  var list = document.getElementById('disposisiList');
-  if(list){
-    var item = document.createElement('a');
-    item.className = 'doc-item';
-    item.href = 'disposisi.html';
-    var metaCatatan = catatan ? '<div class="doc-meta">Catatan: ' + catatan + '</div>' : '';
-    var metaCc = ccNames.length ? '<div class="doc-meta">CC: ' + ccNames.join(', ') + '</div>' : '';
-    item.innerHTML = ''
-      + '<div class="doc-icon" style="background:var(--info);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h13l-3-3"/><path d="M20 17H7l3 3"/></svg></div>'
-      + '<div class="doc-body">'
-      +   '<div class="doc-title">' + judul + ' &rarr; Ditindaklanjuti</div>'
-      +   '<div class="doc-meta">' + nomorText + ' &middot; Sifat: ' + sifat + '</div>'
-      +   metaCatatan
-      +   metaCc
-      + '</div>'
-      + '<div class="doc-waktu"><span class="badge badge-info">Disposisi</span></div>'
-      + '<div class="doc-kebab-col"><button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button></div>';
-    list.insertBefore(item, list.firstChild);
-  }
-
-  if(disposedNomorTexts.indexOf(nomorText) === -1){
-    disposedNomorTexts.push(nomorText);
-  }
-  markDisposedOptions();
-
-  toast('Disposisi berhasil dikirim');
-  closeDisposisiModal();
-
-  nomorLabel.textContent = 'Pilih nomor surat...';
-  nomorLabel.style.color = 'var(--muted)';
-  nomorLabel.style.fontWeight = '600';
-  document.getElementById('dispCatatan').value = '';
-  document.getElementById('dispSifat').selectedIndex = 0;
-  document.getElementById('dispCcChipList').innerHTML = '<span class="hint" id="dispCcEmptyHint">Belum ada penerima CC dipilih.</span>';
-  document.querySelectorAll('#dispCcDropdown input[type="checkbox"]').forEach(function(cb){ cb.checked = false; });
-}
 
 </script>
 </body>
