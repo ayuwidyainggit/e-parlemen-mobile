@@ -260,6 +260,20 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 .kv-row:last-child{border-bottom:none;}
 .kv-row .k{color:var(--muted); flex-shrink:0;}
 .kv-row .v{font-weight:700; text-align:right;}
+.kv-row.stack{flex-direction:column; align-items:flex-start;}
+.kv-row.stack .v{text-align:left; font-weight:600;}
+
+.addr-block{white-space:pre-line; font-size:12.5px; line-height:1.65; color:var(--ink);}
+.letter-body{font-size:12.5px; line-height:1.65; color:var(--ink);}
+.letter-body p{margin:0 0 10px;}
+.letter-body p:last-child{margin-bottom:0;}
+.letter-body ul{margin:0 0 10px; padding-left:18px;}
+.signer-item{display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px dashed var(--border);}
+.signer-item:last-child{border-bottom:none;}
+.signer-level{width:26px; height:26px; border-radius:50%; background:var(--neutral-bg); color:var(--ink); font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.signer-item .sname{font-weight:800; font-size:12.5px;}
+.signer-item .srole{font-size:10.8px; color:var(--muted); margin-top:1px;}
+.signer-item .snip{font-size:10.2px; color:var(--muted); margin-top:1px;}
 
 .divider{height:1px; background:var(--border); margin:14px 0;}
 .fab{
@@ -304,47 +318,22 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
 
     <div class="screen-title">Detail Surat Keluar</div>
 
-    <div class="card">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <span class="badge badge-info">SURAT KELUAR</span>
-        <span class="badge" id="statusBadge">Menunggu Persetujuan</span>
-      </div>
-      <h3 class="ctitle" style="margin-top:10px;" id="suratTitle">Surat Keterangan Kunjungan Kerja</h3>
-      <div class="hint" id="suratDiajukan">Diajukan oleh Ir. Budi Santoso, M.T. &middot; 23 Mei 2025</div>
-      <div class="divider"></div>
-      <div class="kv-row"><span class="k">Ditujukan Kepada</span><span class="v" id="kvTujuan">Camat Magelang Utara</span></div>
-      <div class="kv-row"><span class="k">Tembusan</span><span class="v" id="kvTembusan">Sekretariat DPRD</span></div>
-      <div class="kv-row"><span class="k">Diproses oleh</span><span class="v" id="kvDiproses">Admin Sekretariat &ndash; Sri Wahyuni</span></div>
-    </div>
+    <div id="suratDetailArea"></div>
 
     <div class="card">
       <h3 class="ctitle">Status Permintaan</h3>
       <div class="timeline" id="timelineContainer">
-        <div class="t-item done"><div class="t-title">Diajukan oleh Anda</div><div class="t-time">23 Mei 2025, 09.10 WIB</div></div>
-        <div class="t-item done"><div class="t-title">Diproses Admin Sekretariat</div><div class="t-time">23 Mei 2025, 11.40 WIB</div></div>
-        <div class="t-item done"><div class="t-title">Draf PDF Siap</div><div class="t-time">23 Mei 2025, 13.05 WIB</div></div>
-        <div class="t-item active"><div class="t-title">Menunggu Persetujuan Anda</div><div class="t-desc">Periksa draf PDF sebelum disetujui untuk dicetak dan dikirim.</div></div>
-        <div class="t-item pending"><div class="t-title">Dicetak &amp; Dikirim Admin</div></div>
+        <div class="t-item done"><div class="t-title">Surat Keluar Disubmit</div><div class="t-time">23 Mei 2025, 09.10 WIB</div></div>
+        <div class="t-item active"><div class="t-title">Surat Keluar Diklaim oleh Anggota Sekretariat</div><div class="t-desc">Sedang diproses oleh salah satu Admin SETWAN.</div></div>
+        <div class="t-item pending"><div class="t-title">Surat Keluar Diupload (Selesai)</div></div>
       </div>
     </div>
 
     <div id="documentArea">
-      <div class="card">
-        <h3 class="ctitle">Dokumen</h3>
-        <div class="list-item" style="margin-bottom:0;">
-          <div class="icon-box" style="background:var(--danger-bg); color:var(--danger);">PDF</div>
-          <div class="content"><div class="title" id="docName">Surat_Keterangan_Kunjungan_Kerja.pdf</div><div class="meta" id="docMeta">Draf oleh Admin Sekretariat</div></div>
-          <span class="chev"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>
-        </div>
-      </div>
+      <div class="warn-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg></span><span>Lampiran belum tersedia. Sedang diproses oleh Admin Sekretariat.</span></div>
     </div>
 
-    <div id="approveArea">
-      <div class="btn-row">
-        <button class="btn btn-danger-outline" onclick="mintaRevisi()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z"/><path d="M13 7l4 4"/></svg> Minta Revisi</button>
-        <button class="btn btn-primary" onclick="approveSurat()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg> Setujui</button>
-      </div>
-    </div>
+    <div id="approveArea"></div>
 
   </div>
 <div class="bottomnav"><a class="navitem active" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
@@ -370,59 +359,54 @@ function toast(msg){
 
 var suratKeluarData = {
   '1': {
-    status: 'menunggu',
-    title: 'Surat Keterangan Kunjungan Kerja',
-    diajukan: 'Diajukan oleh Ir. Budi Santoso, M.T. &middot; 23 Mei 2025',
-    tujuan: 'Camat Magelang Utara',
-    tembusan: 'Sekretariat DPRD',
-    diproses: 'Admin Sekretariat &ndash; Sri Wahyuni',
-    doc: {name:'Surat_Keterangan_Kunjungan_Kerja.pdf', meta:'Draf oleh Admin Sekretariat'},
+    status: 'submit',
+    lampiran: [],
     timeline: [
-      {state:'done', title:'Diajukan oleh Anda', time:'23 Mei 2025, 09.10 WIB'},
-      {state:'done', title:'Diproses Admin Sekretariat', time:'23 Mei 2025, 11.40 WIB'},
-      {state:'done', title:'Draf PDF Siap', time:'23 Mei 2025, 13.05 WIB'},
-      {state:'active', title:'Menunggu Persetujuan Anda', desc:'Periksa draf PDF sebelum disetujui untuk dicetak dan dikirim.'},
-      {state:'pending', title:'Dicetak &amp; Dikirim Admin'}
+      {state:'done', title:'Surat Keluar Disubmit', time:'23 Mei 2025, 09.10 WIB'},
+      {state:'active', title:'Surat Keluar Diklaim oleh Anggota Sekretariat', desc:'Permintaan sudah masuk ke daftar seluruh Admin Sekretariat (SETWAN), menunggu diklaim.'},
+      {state:'pending', title:'Surat Keluar Diupload (Selesai)'}
     ]
   },
   '2': {
     status: 'proses',
-    title: 'Surat Permohonan Data Anggaran',
-    diajukan: 'Diajukan oleh Ir. Budi Santoso, M.T. &middot; 21 Mei 2025',
-    tujuan: 'Badan Keuangan Daerah Kota Magelang',
-    tembusan: 'Sekretariat DPRD',
-    diproses: 'Admin Sekretariat &ndash; Sri Wahyuni',
-    doc: null,
+    lampiran: [],
     timeline: [
-      {state:'done', title:'Diajukan oleh Anda', time:'21 Mei 2025, 10.00 WIB'},
-      {state:'active', title:'Diproses Admin Sekretariat', desc:'Admin sedang menyusun draf surat.'},
-      {state:'pending', title:'Draf PDF Siap'},
-      {state:'pending', title:'Menunggu Persetujuan Anda'},
-      {state:'pending', title:'Dicetak &amp; Dikirim Admin'}
+      {state:'done', title:'Surat Keluar Disubmit', time:'21 Mei 2025, 10.00 WIB'},
+      {state:'done', title:'Surat Keluar Diedit', time:'21 Mei 2025, 10.20 WIB'},
+      {state:'done', title:'Surat Keluar Diklaim oleh Anggota Sekretariat', time:'21 Mei 2025, 11.15 WIB'},
+      {state:'active', title:'Surat Keluar Diupload (Selesai)', desc:'Admin sedang menyusun &amp; mengunggah file surat.'}
     ]
   },
   '3': {
     status: 'selesai',
-    title: 'Surat Undangan Rapat Dengar Pendapat',
-    diajukan: 'Diajukan oleh Ir. Budi Santoso, M.T. &middot; 14 Mei 2025',
-    tujuan: 'Seluruh Anggota DPRD &amp; Undangan',
-    tembusan: 'Sekretariat DPRD',
-    diproses: 'Admin Sekretariat &ndash; Sri Wahyuni',
-    doc: {name:'Surat_Undangan_RDP.pdf', meta:'Dokumen final'},
+    lampiran: [
+      {name:'Surat_Undangan_RDP.pdf', meta:'File surat final', size:'412 KB'},
+      {name:'Daftar_Topik_Pembahasan_RDP.pdf', meta:'Lampiran pendukung', size:'188 KB'}
+    ],
     timeline: [
-      {state:'done', title:'Diajukan oleh Anda', time:'14 Mei 2025, 09.30 WIB'},
-      {state:'done', title:'Diproses Admin Sekretariat', time:'14 Mei 2025, 13.00 WIB'},
-      {state:'done', title:'Draf PDF Siap', time:'14 Mei 2025, 15.20 WIB'},
-      {state:'done', title:'Disetujui oleh Anda', time:'15 Mei 2025, 08.10 WIB'},
-      {state:'done', title:'Dicetak &amp; Dikirim Admin', time:'15 Mei 2025, 10.45 WIB'}
-    ]
+      {state:'done', title:'Surat Keluar Disubmit', time:'14 Mei 2025, 09.30 WIB'},
+      {state:'done', title:'Surat Keluar Diklaim oleh Anggota Sekretariat', time:'14 Mei 2025, 13.00 WIB'},
+      {state:'done', title:'Surat Keluar Diupload (Selesai)', time:'14 Mei 2025, 15.20 WIB'}
+    ],
+    // Detail isi surat resmi yang disusun Admin Sekretariat (SETWAN) saat memproses permintaan -
+    // jabatanDituju bersumber dari pengguna pada unit_types berdomain SETWAN, deadline otomatis
+    // H-1 dari tanggal surat (14 Mei 2025 -> 13 Mei 2025).
+    suratDetail: {
+      jabatanDituju: 'Sekretaris DPRD &mdash; Sekretariat DPRD',
+      sifat: 'Biasa',
+      hal: 'Undangan Rapat Dengar Pendapat Pembahasan Raperda APBD Tahun Anggaran 2026',
+      deadlineLabel: '13 Mei 2025, 23.59 WIB',
+      stempel: true,
+      tujuanSurat: 'Yth. Seluruh Anggota DPRD Kota Magelang\nJabatan: Anggota DPRD\nAlamat: Gedung DPRD Kota Magelang, Jl. Jenderal Sudirman No. 1, Magelang',
+      isiSurat: '<p>Sehubungan dengan agenda Rapat Dengar Pendapat terkait pembahasan Raperda APBD Tahun Anggaran 2026, dengan ini kami mengundang Bapak/Ibu untuk hadir pada:</p>'
+        + '<ul><li>Hari/Tanggal: Rabu, 21 Mei 2025</li><li>Waktu: 09.00 WIB &ndash; selesai</li><li>Tempat: Ruang Rapat Paripurna DPRD Kota Magelang</li></ul>'
+        + '<p>Demikian surat undangan ini kami sampaikan. Atas perhatian dan kehadiran Bapak/Ibu, kami ucapkan terima kasih.</p>',
+      signers: [
+        {level:1, nama:'Sri Wahyuni', jabatan:'Admin Sekretariat', unitType:'Sekretariat DPRD', nip:'19850612 201001 2 003'},
+        {level:2, nama:'Indah Dwiantari, S.Sos.', jabatan:'Sekretaris DPRD', unitType:'Sekretariat DPRD', nip:'19780325 199903 2 001'}
+      ]
+    }
   }
-};
-
-var keluarStatusMeta = {
-  menunggu: {label:'Menunggu Persetujuan', badgeClass:'badge-warn'},
-  proses: {label:'Diproses Admin', badgeClass:'badge-info'},
-  selesai: {label:'Selesai', badgeClass:'badge-success'}
 };
 
 var currentKeluarId = '1';
@@ -430,16 +414,28 @@ var currentKeluarId = '1';
 function renderSuratKeluar(id){
   var data = suratKeluarData[id] || suratKeluarData['1'];
   currentKeluarId = suratKeluarData[id] ? id : '1';
-  var meta = keluarStatusMeta[data.status];
-
-  var badge = document.getElementById('statusBadge');
-  if(badge){ badge.className = 'badge ' + meta.badgeClass; badge.textContent = meta.label; }
-
-  document.getElementById('suratTitle').textContent = data.title;
-  document.getElementById('suratDiajukan').innerHTML = data.diajukan;
-  document.getElementById('kvTujuan').innerHTML = data.tujuan;
-  document.getElementById('kvTembusan').innerHTML = data.tembusan;
-  document.getElementById('kvDiproses').innerHTML = data.diproses;
+  var detailArea = document.getElementById('suratDetailArea');
+  if(detailArea){
+    if(data.suratDetail){
+      var d = data.suratDetail;
+      var signersHtml = d.signers.map(function(s){
+        return '<div class="signer-item"><div class="signer-level">' + s.level + '</div><div><div class="sname">' + s.nama + '</div><div class="srole">' + s.jabatan + ' &ndash; ' + s.unitType + '</div>' + (s.nip ? '<div class="snip">NIP. ' + s.nip + '</div>' : '') + '</div></div>';
+      }).join('');
+      detailArea.innerHTML = '<div class="card">'
+        + '<h3 class="ctitle">Detail Surat</h3>'
+        + '<div class="kv-row"><span class="k">Jabatan yang Dituju</span><span class="v">' + d.jabatanDituju + '</span></div>'
+        + '<div class="kv-row"><span class="k">Sifat</span><span class="v">' + d.sifat + '</span></div>'
+        + '<div class="kv-row"><span class="k">Hal</span><span class="v">' + d.hal + '</span></div>'
+        + '<div class="kv-row"><span class="k">Deadline</span><span class="v">' + d.deadlineLabel + '</span></div>'
+        + '<div class="kv-row"><span class="k">Stempel</span><span class="v"><span class="badge ' + (d.stempel ? 'badge-success' : 'badge-neutral') + '">' + (d.stempel ? 'Digunakan' : 'Tidak Digunakan') + '</span></span></div>'
+        + '</div>'
+        + '<div class="card"><h3 class="ctitle">Tujuan Surat</h3><div class="addr-block">' + d.tujuanSurat + '</div></div>'
+        + '<div class="card"><h3 class="ctitle">Isi Surat</h3><div class="letter-body">' + d.isiSurat + '</div></div>'
+        + '<div class="card"><h3 class="ctitle">Penandatanganan</h3>' + signersHtml + '</div>';
+    } else {
+      detailArea.innerHTML = '';
+    }
+  }
 
   var timelineEl = document.getElementById('timelineContainer');
   if(timelineEl){
@@ -451,69 +447,32 @@ function renderSuratKeluar(id){
 
   var docArea = document.getElementById('documentArea');
   if(docArea){
-    if(data.doc){
-      docArea.innerHTML = '<div class="card"><h3 class="ctitle">Dokumen</h3>'
-        + '<div class="list-item" style="margin-bottom:0;">'
-        + '<div class="icon-box" style="background:var(--danger-bg); color:var(--danger);">PDF</div>'
-        + '<div class="content"><div class="title">' + data.doc.name + '</div><div class="meta">' + data.doc.meta + '</div></div>'
-        + '<span class="chev"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>'
-        + '</div></div>';
+    if(data.lampiran && data.lampiran.length){
+      docArea.innerHTML = '<div class="card"><h3 class="ctitle">Lampiran</h3>'
+        + data.lampiran.map(function(f){
+          return '<div class="list-item">'
+            + '<div class="icon-box" style="background:var(--danger-bg); color:var(--danger);">PDF</div>'
+            + '<div class="content"><div class="title">' + f.name + '</div><div class="meta">' + f.meta + (f.size ? ' &middot; ' + f.size : '') + '</div></div>'
+            + '<span class="chev"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></span>'
+            + '</div>';
+        }).join('')
+        + '</div>';
     } else {
-      docArea.innerHTML = '<div class="warn-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg></span><span>Draf dokumen belum tersedia. Sedang disusun oleh Admin Sekretariat.</span></div>';
+      docArea.innerHTML = '<div class="warn-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg></span><span>Lampiran belum tersedia. ' + (data.status === 'submit' ? 'Menunggu diklaim oleh Admin Sekretariat.' : 'Sedang diproses oleh Admin Sekretariat.') + '</span></div>';
     }
   }
 
   var approveArea = document.getElementById('approveArea');
   if(approveArea){
-    if(data.status === 'menunggu'){
-      approveArea.style.display = '';
-      approveArea.innerHTML = '<div class="btn-row">'
-        + '<button class="btn btn-danger-outline" onclick="mintaRevisi()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z"/><path d="M13 7l4 4"/></svg> Minta Revisi</button>'
-        + '<button class="btn btn-primary" onclick="approveSurat()"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg> Setujui</button>'
-        + '</div>';
+    if(data.status === 'submit'){
+      approveArea.innerHTML = '<div class="info-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span><span>Permintaan sudah masuk ke daftar seluruh Admin Sekretariat (SETWAN). Anda akan menerima notifikasi saat diklaim.</span></div>';
     } else if(data.status === 'proses'){
-      approveArea.innerHTML = '<div class="info-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span><span>Sedang diproses oleh Admin Sekretariat. Anda akan menerima notifikasi saat draf PDF siap untuk disetujui.</span></div>';
+      approveArea.innerHTML = '<div class="info-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span><span>Sedang diproses oleh Admin Sekretariat. Anda akan menerima notifikasi saat surat selesai &mdash; tanpa perlu persetujuan balik dari Anda.</span></div>';
     } else {
-      approveArea.innerHTML = '<div class="success-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></span><span>Surat telah disetujui, dicetak, dan dikirim oleh Admin Sekretariat.</span></div>'
+      approveArea.innerHTML = '<div class="success-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></span><span>Surat telah selesai diproses oleh Admin Sekretariat.</span></div>'
         + '<a class="btn btn-outline" href="#" style="margin-top:10px;" onclick="toast(\'Mengunduh dokumen...\'); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg> Unduh Surat</a>';
     }
   }
-}
-
-function approveSurat(){
-  var data = suratKeluarData[currentKeluarId];
-  if(!data) return;
-  data.status = 'selesai';
-  data.doc = {name: data.doc ? data.doc.name : 'Surat_Final.pdf', meta:'Dokumen final'};
-  data.timeline.forEach(function(step){
-    if(step.state === 'active'){ step.state = 'done'; step.time = nowLabel(); delete step.desc; }
-  });
-  var lastStep = data.timeline[data.timeline.length - 1];
-  lastStep.state = 'done';
-  lastStep.time = nowLabel();
-  renderSuratKeluar(currentKeluarId);
-  toast('Surat disetujui, admin diberi notifikasi untuk mencetak & mengirim');
-}
-function mintaRevisi(){
-  var data = suratKeluarData[currentKeluarId];
-  if(!data) return;
-  data.status = 'proses';
-  data.doc = null;
-  data.timeline = [
-    {state:'done', title:'Diajukan oleh Anda', time: data.timeline[0].time},
-    {state:'active', title:'Direvisi Admin Sekretariat', desc:'Admin sedang menyusun ulang draf sesuai catatan revisi Anda.'},
-    {state:'pending', title:'Draf PDF Siap'},
-    {state:'pending', title:'Menunggu Persetujuan Anda'},
-    {state:'pending', title:'Dicetak &amp; Dikirim Admin'}
-  ];
-  renderSuratKeluar(currentKeluarId);
-  toast('Revisi diminta, Admin akan menyusun ulang draf');
-}
-function nowLabel(){
-  var d = new Date();
-  var hh = ('0' + d.getHours()).slice(-2);
-  var mm = ('0' + d.getMinutes()).slice(-2);
-  return 'Hari ini, ' + hh + '.' + mm + ' WIB';
 }
 
 var initialKeluarId = new URLSearchParams(window.location.search).get('id') || '1';

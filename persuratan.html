@@ -414,26 +414,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     </div>
 
     <div id="srt-keluar" data-panel-group="srt" style="display:none;">
-      <div class="hint" style="margin-bottom:12px;">Permintaan pembuatan surat dikirim ke Admin Sekretariat untuk dibuatkan dalam bentuk PDF, lalu menunggu persetujuan Anda sebelum dicetak.</div>
-      <a class="doc-item" href="surat-keluar-detail.html?id=4">
-        <div class="doc-icon" style="background:var(--purple);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></div>
-        <div class="doc-body">
-          <div class="doc-title">Kunjungan Daerah Pilihan 1</div>
-          <div class="doc-meta">No. Penugasan: P-00012</div>
-          <div class="doc-meta">Dikirim ke 8 Anggota DPRD</div>
-          <div class="doc-tags"><span class="doc-tag badge-purple">Batch Penugasan</span><span class="doc-tag badge-neutral">Multi Penerima</span></div>
-        </div>
-        <div class="doc-waktu">
-          <div class="doc-datetime">
-            <div class="doc-date">20 Mei 2025</div>
-            <div class="doc-time">07.30 WIB</div>
-          </div>
-          <span class="badge badge-info">5 Diterima &middot; 3 Menunggu</span>
-        </div>
-        <div class="doc-kebab-col">
-          <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
-        </div>
-      </a>
+      <div class="hint" style="margin-bottom:12px;">Permintaan pembuatan surat dikirim ke seluruh Admin Sekretariat (SETWAN); salah satu akan mengklaim, memproses, dan mengirimkan surat &mdash; tanpa perlu persetujuan balik dari Anda.</div>
       <a class="doc-item" href="surat-keluar-detail.html?id=1">
         <div class="doc-icon" style="background:var(--warn);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5"/><path d="M9.5 16.5h5"/></svg></div>
         <div class="doc-body">
@@ -444,7 +425,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
           <div class="doc-datetime">
             <div class="doc-date">23 Mei 2025</div>
           </div>
-          <span class="badge badge-warn">Menunggu Persetujuan</span>
+          <span class="badge badge-warn">SUBMIT</span>
         </div>
         <div class="doc-kebab-col">
           <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
@@ -460,7 +441,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
           <div class="doc-datetime">
             <div class="doc-date">21 Mei 2025</div>
           </div>
-          <span class="badge badge-info">Diproses Admin</span>
+          <span class="badge badge-info">Sedang Diproses</span>
         </div>
         <div class="doc-kebab-col">
           <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
@@ -470,7 +451,7 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
         <div class="doc-icon" style="background:var(--success);"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></div>
         <div class="doc-body">
           <div class="doc-title">Surat Undangan Rapat Dengar Pendapat</div>
-          <div class="doc-meta">Disetujui &amp; dicetak Admin</div>
+          <div class="doc-meta">Selesai diproses Admin Sekretariat</div>
         </div>
         <div class="doc-waktu">
           <div class="doc-datetime">
@@ -482,11 +463,10 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
           <button class="doc-kebab" type="button" onclick="event.preventDefault(); event.stopPropagation();">&#8942;</button>
         </div>
       </a>
-      <a class="btn btn-primary" href="surat-keluar-buat.html" style="margin-top:6px;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14"/><path d="M5 12h14"/></svg> Buat Permintaan Surat Keluar</a>
     </div>
 
   </div>
-  <a class="fab" href="surat-keluar-buat.html" id="fabBtn" aria-label="Buat Surat"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;stroke-width:2.5;"><path d="M12 5v14"/><path d="M5 12h14"/></svg></a>
+  <a class="fab" href="surat-keluar-buat.html" id="fabBtn" aria-label="Buat Surat" style="display:none;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;stroke-width:2.5;"><path d="M12 5v14"/><path d="M5 12h14"/></svg></a>
 <div class="bottomnav"><a class="navitem active" href="beranda.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>Beranda</a><a class="navitem" href="notifikasi.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span>Notifikasi</a><a class="navitem" href="scan-qr.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3" rx="0.6"/><rect x="18" y="14" width="3" height="3" rx="0.6"/><rect x="14" y="18" width="3" height="3" rx="0.6"/><rect x="18" y="18" width="3" height="3" rx="0.6"/></svg></span>Scan QR</a><a class="navitem" href="agenda-kegiatan.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><circle cx="8.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.2" fill="currentColor" stroke="none"/></svg></span>Agenda</a><a class="navitem" href="profil.html"><span class="ic"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>Profil</a></div>
 </div>
 <div class="toast" id="toast"></div>
@@ -498,6 +478,10 @@ function showTab(group, name, btn){
   if(target){ target.style.display = 'block'; }
   document.querySelectorAll('[data-tabgroup="' + group + '"]').forEach(function(t){ t.classList.remove('active'); });
   if(btn){ btn.classList.add('active'); }
+  if(group === 'srt'){
+    var fab = document.getElementById('fabBtn');
+    if(fab){ fab.style.display = (name === 'keluar') ? 'flex' : 'none'; }
+  }
 }
 function toast(msg){
   var el = document.getElementById('toast');
