@@ -365,7 +365,23 @@ var suratKeluarData = {
       {state:'done', title:'Surat Keluar Disubmit', time:'23 Mei 2025, 09.10 WIB'},
       {state:'active', title:'Surat Keluar Diklaim oleh Anggota Sekretariat', desc:'Permintaan sudah masuk ke daftar seluruh Admin Sekretariat (SETWAN), menunggu diklaim.'},
       {state:'pending', title:'Surat Keluar Diupload (Selesai)'}
-    ]
+    ],
+    // Data yang diisi Anggota saat Submit (sebelum diklaim SETWAN) - jabatanDituju bersumber
+    // dari pengguna pada unit_types berdomain SETWAN, deadline otomatis H-1 dari tanggal surat.
+    suratDetail: {
+      jabatanDituju: 'Kasubbag Persuratan &amp; Kearsipan &mdash; Sekretariat DPRD',
+      sifat: 'Biasa',
+      hal: 'Surat Keterangan Kunjungan Kerja ke Kecamatan Magelang Utara',
+      deadlineLabel: '24 Mei 2025, 23.59 WIB',
+      stempel: true,
+      tujuanSurat: 'Yth. Camat Magelang Utara\nJabatan: Camat\nAlamat: Jl. Jenderal Sudirman No. 10, Magelang Utara, Kota Magelang',
+      isiSurat: '<p>Sehubungan dengan pelaksanaan kunjungan kerja dalam rangka monitoring pembangunan di wilayah Kecamatan Magelang Utara, dengan ini kami sampaikan permohonan izin kunjungan sebagai berikut:</p>'
+        + '<ul><li>Hari/Tanggal: Selasa, 27 Mei 2025</li><li>Waktu: 09.00 WIB &ndash; selesai</li><li>Agenda: Peninjauan lokasi pembangunan &amp; dialog dengan warga</li></ul>'
+        + '<p>Demikian surat ini kami sampaikan, atas perhatian dan kerja sama yang baik kami ucapkan terima kasih.</p>',
+      signers: [
+        {level:1, nama:'Ir. Budi Santoso, M.T.', jabatan:'Anggota DPRD Kota Magelang', unitType:'Komisi I'}
+      ]
+    }
   },
   '2': {
     status: 'proses',
@@ -375,7 +391,22 @@ var suratKeluarData = {
       {state:'done', title:'Surat Keluar Diedit', time:'21 Mei 2025, 10.20 WIB'},
       {state:'done', title:'Surat Keluar Diklaim oleh Anggota Sekretariat', time:'21 Mei 2025, 11.15 WIB'},
       {state:'active', title:'Surat Keluar Diupload (Selesai)', desc:'Admin sedang menyusun &amp; mengunggah file surat.'}
-    ]
+    ],
+    suratDetail: {
+      jabatanDituju: 'Kasubbag Tata Usaha &amp; Kepegawaian &mdash; Sekretariat DPRD',
+      sifat: 'Penting',
+      hal: 'Permohonan Data Realisasi Anggaran Tahun 2025',
+      deadlineLabel: '23 Mei 2025, 23.59 WIB',
+      stempel: false,
+      tujuanSurat: 'Yth. Kepala Badan Keuangan Daerah Kota Magelang\nJabatan: Kepala Badan\nAlamat: Jl. Pangeran Diponegoro No. 5, Magelang',
+      isiSurat: '<p>Sehubungan dengan kebutuhan bahan pengawasan anggaran, dengan ini kami memohon kepada Bapak/Ibu untuk dapat menyediakan data realisasi anggaran tahun 2025 sebagai berikut:</p>'
+        + '<ul><li>Rekapitulasi realisasi belanja per triwulan</li><li>Rincian realisasi per organisasi perangkat daerah</li></ul>'
+        + '<p>Demikian surat permohonan ini kami sampaikan, atas perhatian dan kerja sama yang baik kami ucapkan terima kasih.</p>',
+      signers: [
+        {level:1, nama:'Hj. Siti Nurhaliza, S.H.', jabatan:'Anggota DPRD Kota Magelang', unitType:'Komisi II', nip:'19730910 200012 2 002'},
+        {level:2, nama:'Drs. Ahmad Fauzi, M.Si.', jabatan:'Ketua DPRD Kota Magelang', unitType:'Pimpinan', nip:'19650417 199103 1 005'}
+      ]
+    }
   },
   '3': {
     status: 'selesai',
@@ -467,7 +498,7 @@ function renderSuratKeluar(id){
     if(data.status === 'submit'){
       approveArea.innerHTML = '<div class="info-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span><span>Permintaan sudah masuk ke daftar seluruh Admin Sekretariat (SETWAN). Anda akan menerima notifikasi saat diklaim.</span></div>';
     } else if(data.status === 'proses'){
-      approveArea.innerHTML = '<div class="info-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v5h1"/></svg></span><span>Sedang diproses oleh Admin Sekretariat. Anda akan menerima notifikasi saat surat selesai &mdash; tanpa perlu persetujuan balik dari Anda.</span></div>';
+      approveArea.innerHTML = '';
     } else {
       approveArea.innerHTML = '<div class="success-box"><span><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-6"/></svg></span><span>Surat telah selesai diproses oleh Admin Sekretariat.</span></div>'
         + '<a class="btn btn-outline" href="#" style="margin-top:10px;" onclick="toast(\'Mengunduh dokumen...\'); return false;"><svg class="ic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg> Unduh Surat</a>';
