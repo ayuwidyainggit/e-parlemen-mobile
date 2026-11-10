@@ -331,6 +331,22 @@ h3.ctitle{font-size:14px; font-weight:800; margin:0 0 10px;}
     <div class="section-title" style="margin-top:0;">1. Data Administrasi Surat</div>
     <div class="card">
       <div class="field"><label>Nomor Surat</label><input type="text" value="Diisi otomatis oleh Admin Sekretariat" disabled></div>
+      <div class="field" id="f-jenis">
+        <label>Jenis Surat</label>
+        <select id="jenisSurat" onchange="handleJenisChange(this.value)">
+          <option value="">Pilih Jenis Surat...</option>
+          <option value="Surat Keterangan Tugas">Surat Keterangan Tugas</option>
+          <option value="Surat Pengantar Reses">Surat Pengantar Reses</option>
+          <option value="Surat Keterangan Domisili Fraksi">Surat Keterangan Domisili Fraksi</option>
+          <option value="Surat Kunjungan Dapil">Surat Kunjungan Dapil</option>
+          <option value="Surat Rekomendasi Reses">Surat Rekomendasi Reses</option>
+          <option value="__lainnya">Lainnya</option>
+        </select>
+      </div>
+      <div class="field" id="f-jenis-lain" style="display:none;">
+        <label>Nama Jenis Surat Lainnya</label>
+        <input type="text" id="jenisSuratLain" placeholder="Contoh: Surat Keterangan Aktif Berfraksi">
+      </div>
       <div class="field">
         <label>Jabatan yang Dituju</label>
         <select id="jabatanTujuanSetwan">
@@ -488,6 +504,10 @@ function removeSigner(btn){
   renumberSigners();
 }
 
+function handleJenisChange(value){
+  var lain = document.getElementById('f-jenis-lain');
+  if(lain){ lain.style.display = (value === '__lainnya') ? 'block' : 'none'; }
+}
 function autoFillDeadline(){
   var tglInput = document.getElementById('tglSurat');
   var deadlineInput = document.getElementById('deadlineSurat');
